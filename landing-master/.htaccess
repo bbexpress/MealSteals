@@ -1,0 +1,6 @@
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^mealsteals\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.mealsteals\.com$
+RewriteRule ^business$ "https\:\/\/www\.mealsteals\.com\/business\.html" [R=301,L]
+

@@ -1,0 +1,46 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Geotargeted users</h3>
+        <button ng-if="adPreview=='map'" class="btn btn-primary btn-ad-modal-toggle" ng-click="previewAd()">Preview</button>
+        <button ng-if="adPreview=='ad'" class="btn btn-primary btn-ad-modal-toggle" ng-click="showMap()">Map</button>
+    </div>
+    <div ng-if="adPreview=='map'">
+        <div id="ad-map" class="ad-map-body modal-body">
+        </div>
+    </div>
+    
+    <div ng-if="adPreview=='ad'" id="ad-map" class="ad-map-body modal-body">
+        <div class="col-md-6">       
+            <div class="popup-phone-container-modal" style="background-image:url('home/phone-map.png')">
+                                <div class="popup-preview-container-modal">
+                                    <span class="glyphicon glyphicon-remove-sign popup-preview-close-modal"></span>
+    <!--
+                                    <div class="popup-preview-head">
+                                        {{adDetails.locName || "Title"}}
+                                    </div>
+    -->
+                                    <div class="popup-preview-img-modal" ng-style="{'background-image':'url('+adDetails.dealFullImage+')'}"></div>
+        <!--                            <img class="popup-preview-img" ng-src='{{adDetails.dealFullImage}}'/>-->
+    <!--                                <div class="popup-preview-name">-->
+                                    <p class="popup-preview-name-modal">{{adDetails.locName || "Ad title"}}</p>
+                                    <p class="popup-preview-description-modal">{{adDetails.name || "Ad text"}}</p>
+    <!--                                </div>-->
+
+                                    <div ng-hide="adDetails.type=='alert'" class="popup-preview-details-button-modal">
+                                        Learn More
+                                    </div>
+
+                                    <div ng-hide="adDetails.type=='alert'" class="popup-preview-details-alert-modal">
+                                        No, Thanks
+                                    </div>
+                                    <div ng-if="adDetails.type=='alert'" class="popup-preview-details-alert-modal">
+                                        Close
+                                    </div>
+                                </div>
+                            </div>
+        </div>
+    </div>
+
+        <button class="btn btn-warning btn-close-modal" type="button" ng-click="closeAdMap()">Close</button>
+
+</div>

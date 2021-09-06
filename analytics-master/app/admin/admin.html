@@ -1,0 +1,6 @@
+
+<h2>Admin</h2>
+
+<div ng-repeat="u in newUserLog">
+{{u.createdAt * 1 | date:'yyyy-MM-dd HH:mm:ss Z'}} - {{u.email}} - {{u.firstName}} - {{u.businessName}}
+</div>

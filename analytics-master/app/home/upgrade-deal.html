@@ -1,0 +1,123 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">{{deal.name}}</h3>
+        <div>({{formatTimestamp(deal.startTime, deal.timezone)}} - {{formatTimestamp(deal.endTime, deal.timezone)}})</div>
+    </div>
+    <div ng-if="type=='boost'" class="modal-body">
+        <h5>{{biz.currentPlan.boostCount || 0}} boost hours remaining</h5>
+        <div ng-if="!boost.type" class="deal-options-container">
+            <div class="deal-type-button-container">
+                <button class="deal-type-button" ng-click="boost.type='recurring'">
+                    <i class="fa fa-cutlery" aria-hidden="true"></i>
+                    <span>Ongoing</span>
+                </button>
+            </div>
+            <div class="deal-type-button-container">
+                <button class="deal-type-button" ng-click="boost.type='onetime'">
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <span>One-time</span>
+                </button>
+            </div>
+            <p style="position: absolute;bottom: 0;text-align: center;width: 100%;" ng-if="newDeal.timeType=='deal'" class="md-caption">
+              <b>Note</b>: FlashSteals are not edible once they have started
+            </p>
+        </div>
+        <div ng-if="boost.type">
+            <div ng-if="boost.type=='recurring'" class="row" style="text-align:center;">
+                    <button ng-if="deal.daysOfWeek.monday=='yes'" ng-class="{'btn-day-active':boost.daysOfWeek.monday=='yes'}" class="btn btn-secondary col" ng-click="selectMonday()">Mon</button>
+                    <button ng-if="deal.daysOfWeek.tuesday=='yes'" ng-class="{'btn-day-active':boost.daysOfWeek.tuesday=='yes'}" class="btn btn-secondary col" ng-click="selectTuesday()">Tue</button>
+                    <button ng-if="deal.daysOfWeek.wednesday=='yes'" ng-class="{'btn-day-active':boost.daysOfWeek.wednesday=='yes'}" class="btn btn-secondary col" ng-click="selectWednesday()">Wed</button>
+                    <button ng-if="deal.daysOfWeek.thursday=='yes'" ng-class="{'btn-day-active':boost.daysOfWeek.thursday=='yes'}" class="btn btn-secondary col" ng-click="selectThursday()">Thur</button>
+                    <button ng-if="deal.daysOfWeek.friday=='yes'" ng-class="{'btn-day-active':boost.daysOfWeek.friday=='yes'}" class="btn btn-secondary col" ng-click="selectFriday()">Fri</button>
+                    <button ng-if="deal.daysOfWeek.saturday=='yes'" ng-class="{'btn-day-active':boost.daysOfWeek.saturday=='yes'}" class="btn btn-secondary col" ng-click="selectSaturday()">Sat</button>
+                    <button ng-if="deal.daysOfWeek.sunday=='yes'" ng-class="{'btn-day-active':boost.daysOfWeek.sunday=='yes'}" class="btn btn-secondary col" ng-click="selectSunday()">Sun</button>
+            </div>
+            
+            <div ng-if="boost.type=='onetime'">
+                <md-datepicker ng-model="boost.date" md-placeholder="Enter date"
+                          md-min-date="minDate"
+                          md-date-filter="availablePopupDates"></md-datepicker>
+            </div>
+
+            <div class="row add-time">
+                <div class="col-time-left">
+                    <center>
+                        <strong style="margin-left:-60px;">Start Time</strong>
+                        <timepicker ng-model="boost.start" hour-step="1" minute-step="60" show-meridian="true"></timepicker>
+                    </center>
+                </div>
+                <div class="col-time-right">
+                    <center>
+                        <strong style="margin-left:-60px;">End Time</strong>
+                        <timepicker ng-model="boost.end" hour-step="1" minute-step="60" show-meridian="true"></timepicker>
+                    </center>
+                </div>
+            </div>    
+            <button class="btn btn-primary" ng-click="boostDeal()">Boost</button>
+        </div>
+        
+    </div>
+    <div ng-if="type=='popup'" class="modal-body">
+        <h5>{{biz.currentPlan.adCount || 0}} popup ads remaining</h5>
+        <div flex-gt-xs>
+          <md-datepicker ng-model="deal.availableDates" md-placeholder="Enter date"
+              md-min-date="minDate"
+              md-date-filter="availablePopupDates"></md-datepicker>
+        </div>
+        <div>{{dayNum}}
+            <strong>End date (optional)</strong>
+            <input type="date" ng-model="deal.endDate" placeholder="end date"/>
+        </div>
+        <div>
+            <strong>Target radius</strong>
+            <input type="number" ng-model="deal.radius" placeholder="default 30km"/>
+        </div>
+        <div>
+            <strong>Impressions</strong>
+            <input type="number" ng-model="deal.impressions" min="0" max="{{bizInfo[displayOptions.currentLoc].currentPlan.adCount}}"/>
+        </div>
+        <div class="row">
+                    <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div>
+                                    <span>{{daysOfWeek(deal)}}</span>
+                                </div>
+                                <div>
+                                    <span>({{formatTimestamp(deal.startTime, deal.timezone)}} - {{formatTimestamp(deal.endTime, deal.timezone)}})</span>
+                                </div>
+                                <div>
+                                    <span>Estimated daily reach: {{(cityCount/30)*((deal.endTime-deal.startTime)/57600000) | number:0}}</span>
+                                <div>
+                                    <span>Estimated Weekly reach: {{(cityCount/4.28571429*daysPerWeek/7)*((deal.endTime-deal.startTime)/57600000) | number:0}}</span>
+                                </div>
+                                <div>
+                                    <span>Estimated Monthly reach: {{(cityCount*daysPerWeek/7)*((deal.endTime-deal.startTime)/57600000) | number:0}}</span>
+                                </div>
+                                </div>
+                            </div>
+                            
+                            <div id="deal-ad-map" style="height:300px;" class="col-md-3">
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                    <button class="btn btn-primary" ng-click="paidPopupAdDeal(deal)">Add</button>
+                    <button class="btn btn-primary" ng-click="deal.impressions='-10';adminPopupAdDeal(deal)">Admin unlimited</button>
+                </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-warning" type="button" ng-click="closeModal()">Close</button>
+        <button style="float:left;" ng-if="boost.type" class="btn btn-warning" type="button" ng-click="boost.type=null">Back</button>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,383 @@
+<!--
+<ion-view title="Tabbed Slide box">
+        <ion-content scroll="false">
+          	<tab-slide-box tab="2" >
+			    	<div class="tsb-icons">
+			    		<div class="tsb-ic-wrp">
+							<a href="javascript:;" class="ion-home"></a>
+							<a href="javascript:;" class="ion-ios-game-controller-b"></a>
+							<a href="javascript:;" class="ion-email"></a>
+							<a href="javascript:;" class="ion-model-s"></a>
+							<a href="javascript:;" class="ion-person"></a>
+						</div>
+			    	</div>
+			        <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
+			            <ion-slide>
+			                <h3>Home content</h3>
+			            </ion-slide>
+			            <ion-slide>
+			                <h3>Games content</h3>
+			            </ion-slide>
+			            <ion-slide>
+			                <h3>Mail content</h3>
+			            </ion-slide>
+						<ion-slide>
+			                <h3>Car content</h3>
+			            </ion-slide>
+			            <ion-slide>
+			                <h3>Profile content</h3>
+			            </ion-slide>
+			            
+			        </ion-slide-box>
+          	</tab-slide-box>
+        </ion-content>
+</ion-view>
+-->
+
+
+<ion-view>
+    
+   
+
+    <ion-nav-buttons side="left">
+      <button style="color:white;" class="button-back button-clear" ng-click="myGoBack()">
+        <i style="font-size: x-large;" class="ion-close-round"></i>
+      </button>
+    </ion-nav-buttons>
+    
+    <ion-nav-title>
+			<h4 style="color:white;"><center>{{biz.businessName}}</center></h4>	
+    </ion-nav-title>    
+    <ion-nav-buttons ng-cloak side="right">
+
+        <button ng-click="followBus();" class="button button-icon button-clear">
+            <i ng-class="{'ion-ios-heart':favoriteBus==true, 'ion-ios-heart-outline':favoriteBus!=true}"></i>
+        </button>
+    </ion-nav-buttons>  
+    
+    
+
+         <ion-content> 
+
+
+			           
+            <div class="biz-detail-slider-row row">
+			    		<span style="margin-right:10px;margin-left:10px;" ng-click="viewOptions.bizPage='detail';" ng-class="{'active-slide':viewOptions.bizPage=='detail'}" class="col col-tab">Details</span>
+                        <span ng-click="viewOptions.bizPage='monday'" ng-class="{'active-slide':viewOptions.bizPage=='monday'}" class="col col-tab">Mon</span>
+                        <span ng-click="viewOptions.bizPage='tuesday'" ng-class="{'active-slide':viewOptions.bizPage=='tuesday'}" class="col col-tab">Tue</span>
+                        <span ng-click="viewOptions.bizPage='wednesday'" ng-class="{'active-slide':viewOptions.bizPage=='wednesday'}" class="col col-tab">Wed</span>
+                        <span ng-click="viewOptions.bizPage='thursday'" ng-class="{'active-slide':viewOptions.bizPage=='thursday'}" class="col col-tab">Thu</span>
+                        <span ng-click="viewOptions.bizPage='friday'" ng-class="{'active-slide':viewOptions.bizPage=='friday'}" class="col col-tab">Fri</span>
+                        <span ng-click="viewOptions.bizPage='saturday'" ng-class="{'active-slide':viewOptions.bizPage=='saturday'}" class="col col-tab">Sat</span>
+                        <span ng-click="viewOptions.bizPage='sunday'" ng-class="{'active-slide':viewOptions.bizPage=='sunday'}" class="col col-tab">Sun</span>
+			    	</div>
+			    	
+
+			       
+                            <div class="biz-body" ng-if="viewOptions.bizPage=='detail'">
+                                <ion-content class="biz-body-content">
+                                <ion-slides class="item-biz-detail-photo-container" options="optionsBiz" slider="data.sliderBiz">
+                                    <ion-slide-page ng-if="photos.length > 0" ng-repeat="photo in photos">
+                                        <div class="item-biz-detail-photos" ng-style="{'background-image':'url('+photo+')'}">
+                                        </div>
+                                    </ion-slide-page>
+                                    <ion-slide-page>
+                                        <div class="item-biz-detail-photos" ng-style="{'background-image':'url('+biz.detailBackground+')'}">  
+                                        </div>
+                                    </ion-slide-page>
+                                </ion-slides>
+                                <div ng-if="placeDetails.permanently_closed==true" class="permanently-closed">
+                                    Permanently Closed
+                                </div>
+                                
+                                    
+                                <div class="biz-detail-head">
+                                    <span class="biz-detail-name">{{biz.businessName}}</span>
+                                    <span class="biz-detail-address">{{biz.address}}</span>
+                                    <span class="biz-detail-phone">{{biz.phone}}</span>
+                                </div>
+                                
+                                <div ng-if="biz.facebook" style="text-align:center;">
+                                    <button class="button button-positive" ng-click="openFBEvents()">Events</button>
+                                </div>
+                                
+                                    
+                                <span class="biz-detail-about">{{biz.about}}</span>
+                                    
+                                <ul class="hours-container">
+                                    <li>{{placeDetails.opening_hours.weekday_text[0]}}</li>
+                                    <li>{{placeDetails.opening_hours.weekday_text[1]}}</li>
+                                    <li>{{placeDetails.opening_hours.weekday_text[2]}}</li>
+                                    <li>{{placeDetails.opening_hours.weekday_text[3]}}</li>
+                                    <li>{{placeDetails.opening_hours.weekday_text[4]}}</li>
+                                    <li>{{placeDetails.opening_hours.weekday_text[5]}}</li>
+                                    <li>{{placeDetails.opening_hours.weekday_text[6]}}</li>
+                                </ul>
+                                
+                                <div style="text-align: center;color: #5d5d5d;" class="row">
+                                    
+                                    <div ng-click="launchNavigator()" class="col col-detail">
+                                           <div>
+                                               <img src="img/directions.png"/>
+                                               <div>Directions</div>
+                                           </div>
+                                    </div>
+
+                                    <div ng-click="launchUber()" class="col col-detail">
+                                           <div>
+                                                <img src="img/uber.png"/>
+                                               <div>Uber</div>
+                                           </div>
+                                    </div>
+                                </div>
+                                    
+                                <div style="display:none;" id="bizDetailMap" data-tap-disabled="true" class="biz-detail-map"></div>
+                                    
+                                <input type="button" id="routebtnbiz" value="route" style="display:none;" />
+                                <div id="biz-map-canvas"></div>
+                                    
+                                
+                            </ion-content>
+                            </div>
+
+			           
+                            <div class="biz-body" ng-if="viewOptions.bizPage=='monday'">
+                                 <ion-content class="biz-body-content">
+                                <div class="biz-detail-slide">
+                                    <div ng-if="mondayDeals.length > 0" ng-show="deal.daysOfWeek.monday=='yes'" class="item item-thumbnail-left item-biz-detail" ng-repeat="deal in thisRec | orderBy : startTime | filter:isMonday as mondayDeals">
+                                        <div class="list">
+                                            
+                                              <div class="item item-avatar item-button-right">
+                                                <img ng-src={{deal.icon}}>
+                                                <h2>{{deal.name}}</h2>
+                                                <p>{{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}</p>
+                                              </div>
+                                              <div class="item item-body item-biz-body">
+                                                <div class="biz-detail-deal" ng-style="{'background-image':'url('+deal.dealFullImage+')'}" ></div>
+                                                <p>{{deal.description}}</p>
+                                                  
+                                              </div>
+                                            </div>
+                                        </div>
+                                    <div ng-if="mondayDeals.length==0">
+                                        <div class="alert">
+                                            <div>
+                                                <div>
+                                                    <i class="ion-fork"></i>
+                                                    <i class="ion-knife"></i>
+                                                </div>
+                                                <span class="alert-text">No Deals</span>
+                                                <span class="alert-text">Today</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                 </div>
+
+                                </ion-content>
+                            </div>
+			            
+                            <div class="biz-body" ng-if="viewOptions.bizPage=='tuesday'">
+                                 <ion-content class="biz-body-content">
+                                <div class="biz-detail-slide">
+                                    <div ng-if="tuesdayDeals.length > 0" ng-show="deal.daysOfWeek.tuesday=='yes'" class="item item-thumbnail-left item-biz-detail" ng-repeat="deal in thisRec | orderBy : startTime | filter:isTuesday as tuesdayDeals">
+                                        <div class="list">
+                                              <div class="item item-avatar item-button-right">
+                                                <img ng-src={{deal.icon}}>
+                                                <h2>{{deal.name}}</h2>
+                                                <p>{{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}</p>
+                                              </div>
+                                              <div class="item item-body item-biz-body">
+                                                <div class="biz-detail-deal" ng-style="{'background-image':'url('+deal.dealFullImage+')'}" ></div>
+                                                <p>{{deal.description}}</p>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    <div ng-if="tuesdayDeals.length==0">
+                                        <div class="alert">
+                                            <div>
+                                                <div>
+                                                    <i class="ion-fork"></i>
+                                                    <i class="ion-knife"></i>
+                                                </div>
+                                                <span class="alert-text">No Deals</span>
+                                                <span class="alert-text">Today</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                 </div>
+                                </ion-content>
+                            </div>
+			            
+			                <div class="biz-body" ng-if="viewOptions.bizPage=='wednesday'">
+                                 <ion-content class="biz-body-content">
+                                <div class="biz-detail-slide">
+                                    <div ng-if="wednesdayDeals.length > 0" ng-show="deal.daysOfWeek.wednesday=='yes'" class="item item-thumbnail-left item-biz-detail" ng-repeat="deal in thisRec | orderBy : startTime | filter:isWednesday as wednesdayDeals">
+
+                                        <div class="list">
+                                              <div class="item item-avatar item-button-right">
+                                                <img ng-src={{deal.icon}}>
+                                                <h2>{{deal.name}}</h2>
+                                                <p>{{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}</p>
+                                              </div>
+                                              <div class="item item-body item-biz-body">
+                                                <div class="biz-detail-deal" ng-style="{'background-image':'url('+deal.dealFullImage+')'}" ></div>
+                                                <p>{{deal.description}}</p>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    <div ng-if="wednesdayDeals.length==0">
+                                        <div class="alert">
+                                            <div>
+                                                <div>
+                                                    <i class="ion-fork"></i>
+                                                    <i class="ion-knife"></i>
+                                                </div>
+                                                <span class="alert-text">No Deals</span>
+                                                <span class="alert-text">Today</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                 </div>
+                                </ion-content>
+                            </div>
+			           
+			                <div class="biz-body" ng-if="viewOptions.bizPage=='thursday'">
+                                 <ion-content class="biz-body-content">
+                                <div class="biz-detail-slide">
+                                    <div ng-if="thursdayDeals.length > 0" ng-show="deal.daysOfWeek.thursday=='yes'" class="item item-thumbnail-left item-biz-detail" ng-repeat="deal in thisRec | orderBy : startTime | filter:isThursday as thursdayDeals">
+
+                                        <div class="list">
+                                              <div class="item item-avatar item-button-right">
+                                                <img ng-src={{deal.icon}}>
+                                                <h2>{{deal.name}}</h2>
+                                                <p>{{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}</p>
+                                              </div>
+                                              <div class="item item-body item-biz-body">
+                                                <div class="biz-detail-deal" ng-style="{'background-image':'url('+deal.dealFullImage+')'}" ></div>
+                                                <p>{{deal.description}}</p>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    <div ng-if="thursdayDeals.length==0">
+                                        <div class="alert">
+                                            <div>
+                                                <div>
+                                                    <i class="ion-fork"></i>
+                                                    <i class="ion-knife"></i>
+                                                </div>
+                                                <span class="alert-text">No Deals</span>
+                                                <span class="alert-text">Today</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                 </div>
+                                </ion-content>
+                            </div>
+			           
+			                <div class="biz-body" ng-if="viewOptions.bizPage=='friday'">
+                                 <ion-content class="biz-body-content">
+                                <div class="biz-detail-slide">
+                                    <div ng-if="fridayDeals.length > 0" ng-show="deal.daysOfWeek.friday=='yes'" class="item item-thumbnail-left item-biz-detail" ng-repeat="deal in thisRec | orderBy : startTime | filter:isFriday as fridayDeals">
+
+                                        <div class="list">
+                                              <div class="item item-avatar item-button-right">
+                                                <img ng-src={{deal.icon}}>
+                                                <h2>{{deal.name}}</h2>
+                                                <p>{{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}</p>
+                                              </div>
+                                              <div class="item item-body item-biz-body">
+                                                <div class="biz-detail-deal" ng-style="{'background-image':'url('+deal.dealFullImage+')'}" ></div>
+                                                <p>{{deal.description}}</p>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="fridayDeals.length==0">
+                                        <div class="alert">
+                                            <div>
+                                                <div>
+                                                    <i class="ion-fork"></i>
+                                                    <i class="ion-knife"></i>
+                                                </div>
+                                                <span class="alert-text">No Deals</span>
+                                                <span class="alert-text">Today</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                 </div>
+                                </ion-content>
+                            </div>
+			           
+			                <div class="biz-body" ng-if="viewOptions.bizPage=='saturday'">
+                                 <ion-content class="biz-body-content">
+                                <div class="biz-detail-slide">
+                                    <div ng-if="saturdayDeals.length > 0" ng-show="deal.daysOfWeek.saturday=='yes'" class="item item-thumbnail-left item-biz-detail" ng-repeat="deal in thisRec | orderBy : startTime | filter:isSaturday as saturdayDeals">
+
+                                        <div class="list">
+                                              <div class="item item-avatar item-button-right">
+                                                <img ng-src={{deal.icon}}>
+                                                <h2>{{deal.name}}</h2>
+                                                <p>{{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}</p>
+                                              </div>
+                                              <div class="item item-body item-biz-body">
+                                                <div class="biz-detail-deal" ng-style="{'background-image':'url('+deal.dealFullImage+')'}" ></div>
+                                                <p>{{deal.description}}</p>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    <div ng-if="saturdayDeals.length==0">
+                                        <div class="alert">
+                                            <div>
+                                                <div>
+                                                    <i class="ion-fork"></i>
+                                                    <i class="ion-knife"></i>
+                                                </div>
+                                                <span class="alert-text">No Deals</span>
+                                                <span class="alert-text">Today</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                 </div>
+                                </ion-content>
+                            </div>
+			            
+			                <div class="biz-body" ng-if="viewOptions.bizPage=='sunday'">
+                                 <ion-content class="biz-body-content">
+                                <div class="biz-detail-slide">
+                                    <div ng-if="sundayDeals.length > 0" ng-show="deal.daysOfWeek.sunday=='yes'" class="item item-thumbnail-left item-biz-detail" ng-repeat="deal in thisRec | orderBy : startTime | filter:isSunday as sundayDeals">
+
+                                        <div class="list">
+                                              <div class="item item-avatar item-button-right">
+                                                <img ng-src={{deal.icon}}>
+                                                <h2>{{deal.name}}</h2>
+                                                <p>{{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}</p>
+                                              </div>
+                                              <div class="item item-body item-biz-body">
+                                                <div class="biz-detail-deal" ng-style="{'background-image':'url('+deal.dealFullImage+')'}" ></div>
+                                                <p>{{deal.description}}</p>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    <div ng-if="sundayDeals.length==0">
+                                        <div class="alert">
+                                            <div>
+                                                <div>
+                                                    <i class="ion-fork"></i>
+                                                    <i class="ion-knife"></i>
+                                                </div>
+                                                <span class="alert-text">No Deals</span>
+                                                <span class="alert-text">Today</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                 </div>
+                                </ion-content> 
+                            </div>
+			            
+        
+    
+    </ion-content>
+        
+
+ 			
+</ion-view>
+   

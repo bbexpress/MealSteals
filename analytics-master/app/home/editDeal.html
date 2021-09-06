@@ -1,0 +1,159 @@
+<div class="modal-header">
+    <h3 class="modal-title">Edit Deal</h3>
+    <button class="btn btn-primary" type="button" ng-click="addDealObj()">Save</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
+<div class="modal-body">
+    
+
+
+    <div class="row" style="text-align:center;" ng-if="dealObj.daysOfWeek">
+        <button ng-class="{'btn-day-active':dealObj.daysOfWeek.monday=='yes'}" class="btn btn-secondary col" ng-click="selectMonday()">Mon</button>
+        <button ng-class="{'btn-day-active':dealObj.daysOfWeek.tuesday=='yes'}" class="btn btn-secondary col" ng-click="selectTuesday()">Tue</button>
+        <button ng-class="{'btn-day-active':dealObj.daysOfWeek.wednesday=='yes'}" class="btn btn-secondary col" ng-click="selectWednesday()">Wed</button>
+        <button ng-class="{'btn-day-active':dealObj.daysOfWeek.thursday=='yes'}" class="btn btn-secondary col" ng-click="selectThursday()">Thur</button>
+        <button ng-class="{'btn-day-active':dealObj.daysOfWeek.friday=='yes'}" class="btn btn-secondary col" ng-click="selectFriday()">Fri</button>
+        <button ng-class="{'btn-day-active':dealObj.daysOfWeek.saturday=='yes'}" class="btn btn-secondary col" ng-click="selectSaturday()">Sat</button>
+        <button ng-class="{'btn-day-active':dealObj.daysOfWeek.sunday=='yes'}" class="btn btn-secondary col" ng-click="selectSunday()">Sun</button>
+    </div>
+    
+    <div ng-if="!dealObj.daysOfWeek" style="text-align: center;margin-right: 50px;" flex-gt-xs>
+          <md-datepicker ng-model="dealObj.date" md-placeholder="Enter date"
+              md-min-date="minDate"></md-datepicker>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+           <div style="max-width:240px;float:right;">
+                Start:
+                <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                    <center><timepicker ng-model="dealObj.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div style="max-width:240px;float:left;">
+            End:
+                <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                    <center><timepicker ng-model="dealObj.endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <div style="max-width: 75%;margin: auto;" class="row">
+            Deal Name:
+            <input type="text" class="form-control" ng-model="dealObj.name" placeholder="Ex. 50 cent Wing Tuesday" />
+        
+    </div>
+    <div style="max-width: 75%;margin: auto;" class="row">
+            Description:
+        <textarea type="text" style="height:200px;" class="form-control" ng-model="dealObj.description" placeholder="Ex. Boneless and bone-in wings are 50 cents all night, so come in and get your fill."></textarea>
+    </div>
+    
+
+    
+    
+    <div class="row" style="margin-top:20px;">
+        <div class="add-container col-md-6">
+            <div ng-if="dealObj.timeType=='deal'" class="row row-type">
+                <button ng-class="{'btn-day-active':dealObj.foodOrDrink=='food'}" class="btn btn-secondary col" ng-click="dealObj.foodOrDrink='food'">Food</button>
+
+                <button ng-class="{'btn-day-active':dealObj.foodOrDrink=='drink'}" class="btn btn-secondary col" ng-click="dealObj.foodOrDrink='drink'">Drink</button>
+
+                <button ng-class="{'btn-day-active':dealObj.foodOrDrink=='both'}" class="btn btn-secondary col" ng-click="dealObj.foodOrDrink='both'">Both</button>
+
+            </div>
+            <div class="row" style="margin-top:20px;">
+                <button ng-class="{'btn-day-active':dealObj.exclusive=='yes'}" class="btn btn-secondary col" ng-click="selectExclusive()">Exclusive</button>
+                <button ng-class="{'btn-day-active':dealObj.redeemable=='yes'}" class="btn btn-secondary col" ng-click="selectRedeemable()">Redeemable</button>
+            </div>
+            <md-content class="md-padding" layout="column">
+                <md-chips
+                    ng-model="dealObj.tags"
+                    readonly="readonly"
+                    md-removable="removable"
+                    placeholder="Enter a tag"
+                    delete-button-label="Remove Tag"
+                    delete-hint="Press delete to remove tag"
+                    secondary-placeholder="+Tag">
+                </md-chips>
+            </md-content>
+        </div>
+        
+        <div class="col-md-6">
+            Deal Image:
+            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+            <img style="width:100%;" ng-src="{{dealObj.dealFullImage}}" />
+           <button style="color:white;font-weight:bold;margin-left: 12%!important;margin-top: 10px!important;" type="file" ngf-select="uploadFilesEdit($file, 'dealFullImage', 800, 600)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB" class="button button-clear button-icon-container-left">Upload</button>
+              
+              
+              
+            </div>
+        </div>
+    </div>
+
+<!--
+    <div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-md-4" ng-show="dealObj.daysOfWeek">
+                Days:
+                <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.monday" ng-true-value="'yes'" ng-false-value="'no'"> Monday</label></div>
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.tuesday" ng-true-value="'yes'" ng-false-value="'no'"> Tuesday</label></div>
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.wednesday" ng-true-value="'yes'" ng-false-value="'no'"> Wednesday</label></div>
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.thursday" ng-true-value="'yes'" ng-false-value="'no'"> Thursday</label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.friday" ng-true-value="'yes'" ng-false-value="'no'"> Friday</label></div>
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.saturday" ng-true-value="'yes'" ng-false-value="'no'"> Saturday</label></div>
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.sunday" ng-true-value="'yes'" ng-false-value="'no'"> Sunday</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                 
+            <div class="row" style="margin-top:15px;margin-bottom:15px;">
+                 <div class="col-md-4" ng-show="dealObj.daysOfWeek == undefined">
+
+                    Enter Date:
+                    <input style="margin-left:10px;" ng-model='dealObj.date' type="date" name="event">
+
+
+                </div>
+            </div>
+            
+            
+            <div class="col-md-4">
+                Start:
+                <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                <center><timepicker ng-model="dealObj.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+            </div>
+            </div>
+            <div class="col-md-4">
+                End:
+                <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                <center><timepicker ng-model="dealObj.endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+            </div>
+            </div>
+        </div>
+    </div>
+-->
+
+
+    
+    <!-- Button to only upload high quality
+    <button type="file" ngf-select="uploadFiles($file, dealObj, 'dealFullImage', 1000)"accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+							  	Upload New
+							  </button> 
+    -->
+
+
+<!--
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="addDealObj()">Save</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>-->

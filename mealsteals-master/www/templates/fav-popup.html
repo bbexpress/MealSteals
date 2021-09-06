@@ -1,0 +1,79 @@
+
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Favorites</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeFavPopup()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+
+      
+       
+      <div ng-if="userAuthEmail=='Not logged In'">
+            <div class="alert">
+                <div>
+                    <span class="alert-text no-deals">Must be</span>
+                    <span class="alert-text no-deals">logged in</span>
+                    <span class="alert-text no-deals">to favorite</span>
+<!--                    <span class="alert-text">Today</span>-->
+                </div>
+            </div> 
+      </div>
+      <div ng-if="userAuthEmail!='Not logged In'" style="display:flex;flex-wrap: wrap;">   
+            <div ng-if="currentFavsBizArray.length>0" style="width:25%;" ng-repeat="b in busObj | orderBy:distanceSort" 
+                 
+                 ng-show="favoritesSort(b) &&
+                          b.businessName!='' && 
+                          b.businessName!=undefined &&
+                          b.fakeBusiness!=true &&
+                          distanceSort(b)<30 &&
+                          b.approved!=false &&
+                          b.icon!=undefined">
+           <!-- removed  distanceSort(d)<30 && --
+                <!-- add active class "followed-business" -->
+                 <!--exploreBusiness(d.$id, d);-->
+<!--             <i ng-show="favoriteBus==true" class="ion-heart explore-favorite"></i>-->
+                
+<!--                on-hold="followBusiness(b)-->
+             <div class="list biz-list" ng-click="go('/deals/biz/'+b.$id,80);triggerMapResize();businessClick();closeFavPopup()" on-hold="followBusiness(b)">  
+                    
+                    <img style="max-width:100%;width:auto;border-radius:10px;height:60px;padding:5px;" ng-src="{{b.icon}}"/>
+<!--                    <div class="biz-explore-icon" ng-style="{'background-image':'url('+b.icon+')'}" class="trending-background"></div>-->
+<!--                    <i ng-show="favoriteBus==true" class="ion-heart explore-favorite"></i>-->
+                    <div class="" style="text-align:center;">
+<!--
+                        <span class="explore-businessname" ng-if="favoriteBus==true">Following</span>
+                        <div style="height:20px;" ng-if="favoriteBus!=true"> </div>
+-->
+                        <span class="explore-businessname">
+<!--                            <i ng-show="favoriteBus==true" class="ion-heart explore-favorite"></i>-->
+                            {{b.businessName}}</span>
+                        <p class="explore-mileaway">{{kmToMile(distAway([b.lat, b.lon])) | number:1}} mi away</p>
+                        
+<!--
+                        <ion-checkbox ng-model="pushNotification.checked"
+                                      ng-change="pushNotificationChange()">
+                          Push Notifications
+                        </ion-checkbox>
+-->
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <div ng-if="currentFavsBizArray.length==0">
+                <div class="alert">
+                <div>
+                    <span class="alert-text no-deals">No</span>
+                    <span class="alert-text no-deals">Favrorites</span>
+                    <span class="alert-text no-deals">Added</span>
+<!--                    <span class="alert-text">Today</span>-->
+                </div>
+            </div> 
+            </div>
+        </div>   
+
+      
+
+  </ion-content>

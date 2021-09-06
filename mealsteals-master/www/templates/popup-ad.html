@@ -1,0 +1,122 @@
+
+  <!--<div ng-if="thisAd.locName!=undefined">
+        <div class="row popup-head-div">
+                <h4>{{thisAd.locName}}</h4>
+
+            <button class="popup-close-button" ng-click="closeAd()">
+                <i class="ion-close-round"></i>
+            </button>
+        </div>
+        <div style="background-image: url('img/loading.gif');z-index: 99999999;background-size: cover;background-position: center;">
+            <img id="" class="circle-popup" ng-src="{{thisAd.dealFullImage}}" />
+        </div>
+        <div ng-if="thisAd.type!='general' && thisAd.type!='alert'">
+            <div class="row" style="padding-top:15px;">
+                <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;;margin-bottom:3px;">{{thisAd.name}}</h4></div>
+            </div>
+
+            <div class="popup-today">
+                <h5 style="text-align:center;color:rgb(62, 62, 62);font-size:17px;line-height:30px;">Today {{thisAd.startTime | date : 'shortTime'}} - {{thisAd.endTime | date : 'shortTime'}}</h5>
+            </div>
+        </div>
+
+        <div ng-if="thisAd.type=='general'">
+            <div class="row" style="padding-top:15px;">
+                <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;;margin-bottom:3px;">{{thisAd.name}}</h4></div>
+            </div>
+             <div class="popup-today">
+                <h5 style="text-align:center;color:rgb(62, 62, 62);font-size:17px;line-height:30px;"></h5>
+            </div>
+        </div>
+      
+        <div ng-if="thisAd.type=='alert'">
+            <div class="row" style="padding-top:15px;">
+                <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;;margin-bottom:3px;">{{thisAd.name}}</h4></div>
+            </div>
+            <p style="padding: 10px 10px 15px 10px;text-align:center;color: #787878;">{{thisAd.description}}</p>
+        </div>
+    
+  
+        <div ng-if="thisAd.type!='general' && thisAd.type!='alert'" ng-click="go('/deals/ad/'+thisAd.$id,80);popupClick();closeAd()" class="popup-more-button">
+            <span style="color:#4b7fd8;">View Deal</span>
+        </div>
+
+        <div ng-if="thisAd.type=='general'" ng-click="learnMore();popupClick();closeAd()" class="popup-more-button">
+            <span style="color:#4b7fd8;">Learn More</span>
+        </div>
+      
+</div>
+-->
+<div>
+        <div class="div-img-popup" style="background-image: url('img/loading.gif');z-index: 99999999;background-size: cover;background-position: center;">
+            <button ng-click="closeAd()" class="button icon ion-close-circled popup-close-x"></button>
+            <img id="" class="img-popup" ng-src="{{thisAd.dealFullImage}}" />
+        </div>
+    
+        <div class="popup-content-container">
+            
+            <!-- deal ad -->
+            <div ng-if="thisAd.type!='general' && thisAd.type!='alert'">
+                <div class="row" style="display:block;">
+                    <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;;margin-bottom:3px;font-size:22px;">{{thisAd.locName}}</h4>
+                    </div>
+                    <h5 style="text-align: center;color: rgb(137, 137, 137);font-size: 10px;line-height: 30px;font-weight: 400;display: block;margin-top: -12px;">(Today {{thisAd.startTime | date : 'shortTime'}} - {{thisAd.endTime | date : 'shortTime'}})</h5>
+                    <h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;;margin-bottom:12px;font-size:14px;">{{thisAd.name}}</h4>
+                </div>
+<!--
+                <div class="row">
+                    <div class="col col-100">
+                        
+                    </div>
+                </div>
+                <div class="row" style="padding-top:15px;">
+                    <div class="col col-100"></div>
+                </div>
+-->
+                
+            </div>
+            
+            <!-- general/linked ad -->
+            <div ng-if="thisAd.type=='general'">
+                <div class="row">
+                    <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;;margin-bottom:3px;font-size:16px;">{{thisAd.locName}}</h4></div>
+                </div>
+                <div class="row" style="padding-top:5px;">
+                    <div class="col col-100"><h4 style="text-align:center;color:rgb(107, 107, 107);margin-top:-5px;;margin-bottom:3px;font-size:12px;">{{thisAd.name}}</h4></div>
+                </div>
+            </div>
+            
+            <!-- alert ad -->
+            <div ng-if="thisAd.type=='alert'">
+                <div class="row">
+                    <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;;margin-bottom:3px;font-size:16px;">{{thisAd.locName}}</h4></div>
+                </div>
+                <div class="row" style="padding-top:15px;">
+                    <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;;margin-bottom:3px;font-size:12px;">{{thisAd.name}}</h4></div>
+                </div>
+            </div>
+    
+  
+<!--
+            <div ng-if="thisAd.type!='general' && thisAd.type!='alert'" ng-click="go('/deals/ad/'+thisAd.$id,80);popupClick();closeAd()" class="popup-more-button">
+                <span style="color:#4b7fd8;">View Deal</span>
+            </div>
+-->
+            <button ng-if="thisAd.type!='general' && thisAd.type!='alert'" ng-click="go('/deals/ad/'+thisAd.$id,80);popupClick();closeAd()" class="button button-popupad button-positive">View Deal</button>
+            
+            <button ng-if="thisAd.type=='general'" ng-click="learnMore();popupClick();closeAd()" class="button button-popupad button-positive">Learn More</button>
+        </div>
+<!--
+        <div ng-if="thisAd.type=='general'" ng-click="learnMore();popupClick();closeAd()" class="popup-more-button">
+            <span style="color:#4b7fd8;">Learn More</span>
+        </div>
+-->
+        <div ng-click="closeAd()" class="popup-more-button">
+            <span ng-if="thisAd.type=='general'" style="color: #b9b9b9;font-size: large;">No, Thanks</span>
+            <span ng-if="thisAd.type!='general'" style="color: #b9b9b9;font-size: large;">Close</span>
+        </div>
+      
+
+</div>
+        
+

@@ -1,0 +1,860 @@
+/* ----------------------------------------------------------------
+	Custom CSS
+-----------------------------------------------------------------*/
+.black-overlay {
+    background: linear-gradient(
+                     rgba(20,20,20, .5), 
+                     rgba(20,20,20, .5));
+}
+
+.ads-background {
+    background: linear-gradient(0deg,rgba(0, 0, 0, 0.48),rgba(0, 0, 0, 0.65)),url('images/mealsteals/mealstealsads.jpg') center;
+}
+
+.video_contain{
+    display: block;
+    position: absolute;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.row-phone {
+    max-width: 1200px;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto
+}
+
+.phone-image {
+    width:250px;
+    margin-top:-50px;
+}
+
+.container-press {
+    margin-top:40px;
+    border-top:1px solid black;
+/*    margin-bottom:40px;*/
+}
+
+.featured-press {
+    text-align: center;
+    width:150px;
+    right:0;
+    left:0;
+    margin-right:auto;
+    margin-left:auto;
+    margin-top:-14px;
+    background-color:white;
+    
+}
+
+
+.featured-head {
+    font-size:large;
+}
+
+.row-press {
+    text-align:center;
+    max-width:1000px;
+    right:0;
+    left:0;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+video {
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -100;
+    background-position: center;
+    background-size: cover;
+}
+
+.coming-soon {
+    width:300px;
+    margin-right:auto;
+    margin-left:auto;
+    margin-top:15px;
+}
+
+.btn-coming {
+    background-color:#3c95f9;
+}
+
+.btn-create-ad {
+    background-color:#3c95f9;
+    float: initial;
+    margin-top: 30px;
+}
+
+.slider-business > h2 {
+    font-size:43px;
+    margin-bottom:10px!important;
+}
+
+
+.section {
+	
+}
+
+.content-wrap {
+	padding: 0 0 0 0;
+}
+
+i.icon-reorder {
+	color:#404040;
+}
+
+#header.full-header #logo {
+	border: none;
+}
+
+#header.transparent-header.full-header #header-wrap {
+	border: none;
+}
+
+.heading-block:after {
+	border-top:none !important;
+}
+
+#header.full-header #primary-menu > ul {
+	border: none;
+}
+
+.mealstealsblue {
+	color: #6698CB;
+}
+
+.mealstealsred {
+	color: #C9443D;
+}
+
+div.mealsteals.heading-block.center {
+	margin-left: -30%;
+	margin-bottom: 250px;
+	
+}
+
+div.mealsteals.heading-block.center::after {
+	border-top: none;
+} 
+
+img.header-icon {
+	height:45px;
+	float:right;
+	margin-top:-52px;
+	margin-right:5px;
+}
+
+button.btn.btn-default.nav-border	{
+	font-weight:bold;
+	text-transform:uppercase;
+	font-size:13px;
+	background-color:transparent;
+	border-radius: 6px;
+}
+
+
+
+
+/* ----------------------------------------------------------------
+	Footer
+-----------------------------------------------------------------*/
+
+.dark .widget_nav_menu li a, .dark .widget_links li a, .dark .widget_meta li a, .dark .widget_archive li a, .dark .widget_recent_comments li a, .dark .widget_recent_entries li a, .dark .widget_categories li a, .dark .widget_pages li a, .dark .widget_rss li a {
+	background-image: none;
+	margin-left:-15px;
+}
+
+
+
+
+
+/* ----------------------------------------------------------------
+	Slider
+-----------------------------------------------------------------*/
+
+#slider {
+	height:700px;
+}
+
+#slider > div.swiper-container.swiper-parent > div.swiper-wrapper > div.swiper-slide.dark.swiper-slide-visible.swiper-slide-active > div.slider-caption.slider-caption-right.dark {
+	z-index:-9;
+}
+
+.slider-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: -480px;
+    z-index: 9;
+    text-align:center;
+}
+
+.slider-text {
+    text-shadow: #000 2px 2px 25px;
+    margin-bottom:0px;
+    font-size:50px;
+    color:white;
+    text-align:center;
+}
+
+img.mealstealsphone {
+	max-height:700px;
+	margin-top:100px;
+	float:right;
+	z-index
+}
+
+.btn-how-it-works {
+	background: rgba(255,255,255,0.5)!important;
+	border:none!important;
+	font-size:18px;
+	padding:9px 27px;
+}
+
+.btn-how-it-works:hover {
+	background-color:rgba(0,0,0,0.35)!important;
+}
+
+.btn-what-is-mealsteals {
+	background: rgba(255,255,255,0.5)!important;
+	border:none!important;
+}
+
+.btn-what-is-mealsteals:hover {
+	background-color:rgba(0,0,0,0.35)!important;
+}
+
+
+.download-button {
+	position:absolute;
+	bottom:100px;
+	z-index:99;
+	width:auto;
+	display:inline-flex;
+	left:50%;
+	margin-left:-250px;
+}
+
+.how-it-works {
+	position:absolute;
+	width:300px;
+	z-index:99;
+	
+}
+
+.slider-download-button {
+	position:absolute;
+	bottom:40px;
+	z-index:99;
+	width:auto;
+	display:inline-flex;
+	left:50%;
+	margin-left:-202px;
+}
+
+.slider-download-button-business {
+	position:absolute;
+	bottom:0px;
+	z-index:99;
+	width:auto;
+	display:inline-flex;
+	left:50%;
+	margin-left:-202px;
+}
+
+/*
+.features {
+    margin-left:-40px;
+}
+*/
+
+.responsive-download-button {
+	position:absolute;
+	bottom:120px;
+	z-index:99;
+	width:auto;
+	display:inline-flex;
+	left:50%;
+	margin-left:-202px;
+}
+
+img.apple-slider {
+	height:50px;
+	float:right;
+	width:auto;
+    min-width:150px;
+}
+
+img.google-slider {
+	height:50px;
+	float:right;
+	width:auto;
+    min-width:150px;
+}
+
+.slider-margin {
+	margin-top:-10%!important;
+}
+
+.how-it-works-app {
+	display:inline-flex;
+}
+
+.slider-business {
+    top:270px!important;
+}
+
+.business-phone {
+    margin-top:-75px;
+    max-width:95%;
+    
+}
+
+.business-cta {
+    max-width:400px;
+    left:0;
+    right:0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.business-app-desktop {
+    margin-top:-10px;
+    margin-bottom:30px;
+}
+
+.col_one_third.phone {
+    margin-right:-2%;
+    width:300px;
+}
+
+.p-phone {
+    width:80%;
+    margin-right:auto;
+    margin-left:auto;
+    height:50px;
+}
+
+.business.p-phone {
+    width:80%;
+    margin-right:auto;
+    margin-left:auto;
+    height:80px;
+}
+
+.show-phone {
+    max-width:260px;
+}
+
+.mealsteals-showcase {
+    margin-right:auto;
+    margin-left:auto;
+    width:900px;
+}
+
+.app-header {
+    margin:0px;
+}
+
+.user-video {
+    margin-left:-400px;
+    left:50%;
+}
+
+.biz-icon {
+    margin:5px;
+}
+
+#slider > div.slider-banner > div:hover {
+    background-color:none;
+}
+
+/* ----------------------------------------------------------------
+	Responsive
+-----------------------------------------------------------------*/
+
+@media (max-width: 1800px) {
+
+
+    #slider {
+        height:700px;
+    }
+
+    .buttonactive {
+        background-color:#C9443D!important;
+        color:white!important;
+        border:none!important;
+        }
+
+}
+
+@media (max-width: 1300px) {
+#slider {
+	height:600px;
+}	
+    .phone-image {
+    width:250px;
+    margin-top:0px;
+    }
+    
+}
+
+@media (max-width:891px){
+    .phone-image {
+        margin-top: -75px;
+    }
+}
+
+@media (max-width: 991px) {
+
+    
+    
+    .business-cta {
+        margin-top:50px;
+    }
+    
+    #slider {
+        height:500px!important;
+    }
+    
+    .slider-business {
+    top:160px!important;
+	}
+    
+    .video-wrap {
+        display:none;
+    }
+    
+    div.how-it-works {
+        bottom:60px;
+    }
+
+    .slider-margin {
+        margin-top:0%!important;
+    }	
+    
+    .mobile-no {
+	display:none;
+    }
+
+    #header.transparent-header.full-header #header-wrap {
+            box-shadow: 0 .125rem .25rem rgba(51,61,71,.4);
+
+    } 
+
+    .heading-block {
+        text-align:center;
+    }
+
+    .logo-desktop {
+        display:none!important;
+    }
+
+    div.nav-dropdown {
+        color: #444;
+    }
+
+    .sliderheader {
+        margin-top:160px!important;
+    }
+    
+    .col_one_third.phone {
+    margin-right:-2%;
+    width:230px;
+}
+
+.p-phone {
+    width:80%;
+    margin-right:auto;
+    margin-left:auto;
+    height:50px;
+}
+    
+.business.p-phone {
+    width:80%;
+    margin-right:auto;
+    margin-left:auto;
+    height:100px;
+    max-width:300px;
+}
+
+.show-phone {
+    max-width:200px;
+}
+
+.mealsteals-showcase {
+    margin-right:auto;
+    margin-left:auto;
+    width:690px;
+}
+
+.app-header {
+    margin:0px;
+}
+    
+.user-video {
+    margin-left:-270px;
+    left:50%;
+}
+    
+    .mealsteals-poster {
+        margin-top:35px;
+    }
+
+.show-desktop {
+        display:none;
+    }    
+    
+    }
+
+@media (max-width: 849px) {
+
+    .video-wrap {
+        display:none;
+    }
+    
+}
+
+@media (max-width: 767px) {
+
+    #slider {
+        height:500px!important;
+    }
+    .feature-box.fbox-right .fbox-icon {
+        left:0;
+        right:auto;
+    }
+
+    .feature-box.fbox-right {
+        text-align: left;
+        padding: 0 0 0 80px;
+    }
+
+    .col_one_third.phone {
+    left:50%;
+    margin-left:-230px;
+    width:230px;
+}
+
+.p-phone {
+    width:100%;
+    margin-right:auto;
+    margin-left:auto;
+    height:50px;
+}
+    
+.business.p-phone {
+    width:100%;
+    margin-right:auto;
+    margin-left:auto;
+    height:80px;
+}
+
+.show-phone {
+    max-width:300px;
+    margin-left:-30px;
+}
+
+.mealsteals-showcase {
+    margin-right:auto;
+    margin-left:auto;
+    width:690px;
+}
+
+.app-header {
+    margin:0px;
+}
+    
+.user-video {
+    margin-left:-177px;
+    left:50%;
+}
+    
+    .mealsteals-poster {
+        margin-top:35px;
+    }
+
+    .instructions-desktop {
+        display:none;
+    }    
+    
+    .footer-app-btn {
+    display:none;
+    }
+    
+    
+    }
+
+
+
+
+@media (max-width: 600px) {
+
+    #slider {
+        margin-top:-15px;
+        height:500px!important;
+    }
+    .slider-text {
+        font-size:40px;
+    }
+    .user-video {
+    margin-left:-177px!important;
+    left:50%;
+}
+
+    }
+
+@media (max-width: 480px) {
+    .show-phone {
+        max-width:200px;
+        margin-left:0px;
+}
+     .col_one_third.phone {
+    left:50%;
+    margin-left:-300px;
+    width:230px;
+}
+}
+
+@media (max-width: 400px) {
+
+
+    #slider {
+        height:400px!important;
+        margin-top:-15px;
+    }
+    
+    .slider-business {
+    top:140px!important;
+}
+    
+    .slider-text {
+        margin-top:125px!important;
+    }
+    
+    div.container.clearfix {
+        margin-top: -15px !important;
+    }
+
+    img.header-logo {
+        height: 45px !important;
+        margin-top: 15px;
+    }
+
+    div#primary-menu-trigger {
+        margin-top: 6px;
+    }
+
+    section#slider.slider-parallax.full-screen {
+        margin-top:-15px;
+    }
+
+    img.header-icon {
+        height:30px;
+        margin-top:-37px;
+    }
+
+    .mobile-no {
+        display:none;
+    }
+
+    .slider-text {
+        font-size:30px!important;
+
+    }
+
+    .sliderheader {
+        margin-top:10px!important;
+    }
+
+
+        }
+
+
+@media (min-width: 1100px){
+    .row-phone {
+        padding-left:250px;
+        padding-right:250px;
+    }
+}
+
+
+@media (min-width: 768px) {
+
+.mobile-slider {
+	display:none;
+	
+}
+    
+    .row-phone {
+        padding-left:75px;
+        padding-right:75px;
+    }
+
+}
+
+@media (min-width: 992px) {
+
+.mobile-only {
+	display:none;
+}
+
+
+
+.logo-mobile {
+	display:none;
+}
+
+.how-it-works-app {
+	display:none!important;
+}
+
+   
+    
+}
+
+@media (min-width: 1299px) {
+.sliderheader {
+        margin-top:300px!important;
+    }
+    
+
+}
+
+
+@media (min-width: 992px) {
+
+    .responsive-download-button {
+        display:none!important;
+    }
+    
+    
+
+	
+}
+
+@media (max-width: 500px) {
+
+    .responsive-download-button {
+        display:none!important;
+    }
+    
+    .business-cta-desktop {
+        display:none!important;
+    }
+    
+    .business-cta {
+    max-width:250px;
+    }
+
+	
+}
+
+/* ----------------------------------------------------------------
+	Phone detection
+-----------------------------------------------------------------*/
+
+@media (min-width: 501px) {
+    
+    .show-ios {
+        display:none!important;
+    }
+    .show-android {
+        display:none!important;
+    }
+    
+    .business-cta-mobile {
+        display:none!important;
+    }
+
+}
+
+@media (width:320px) {
+    
+    .show-android {
+        display:none!important;
+    }
+    
+    .show-desktop {
+        display:none!important;
+    }
+    
+}
+
+@media (width:375px) {
+    
+    .show-android {
+        display:none!important;
+    }
+    
+    .show-desktop {
+        display:none!important;
+    }
+    
+}
+
+@media (width:414px) {
+    
+    .show-android {
+        display:none!important;
+    }
+    
+    .show-desktop {
+        display:none!important;
+    }
+    
+}
+
+@media (min-width: 0px) and (max-width: 319px) {
+
+    .show-ios {
+        display:none;
+    }
+    
+    .show-desktop {
+        display:none;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 374px) {
+
+    .show-ios {
+        display:none;
+    }
+    
+    .show-desktop {
+        display:none;
+    }
+}
+
+@media (min-width: 376px) and (max-width: 413px) {
+
+    .show-ios {
+        display:none;
+    }
+    
+    .show-desktop {
+        display:none;
+    }
+}
+
+@media (min-width: 415px) and (max-width: 500px) {
+
+    .show-ios {
+        display:none;
+    }
+    
+    .show-desktop {
+        display:none;
+    }
+}

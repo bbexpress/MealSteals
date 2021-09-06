@@ -1,0 +1,166 @@
+
+  <ion-content scroll="y" scrollbar-y="false" has-bouncing="false" has-header="false" hide-nav-bar="true" has-tabs="false" style="top:0px;background-color:white;">
+    <div id="popup" style="" ng-controller="AdCtrl">
+        
+         <div class="row" style="margin-bottom:35px;border-top:1px solid #fff;padding-top:15px;background-color:#e4e4e4;">
+            <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;">{{rand.locName}}</h4></div>
+        </div>
+        
+        <div class="">
+        <img id="" class="circle-popup" ng-src="{{rand.dealFullImage}}" style="margin-left:auto;margin-right:auto;object-fit:cover;object-position: 50% 0%;" />
+        </div>
+        
+        <div class="row" style="border-top:1px solid #fff;padding-top:15px;">
+            <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;">{{rand.name}}</h4></div>
+        </div>
+        
+        <div class="row" style="border-top:1px solid #fff;">
+            <div class="col col-100">
+                <h5 style="text-align:center;color:rgb(62, 62, 62);margin-top:-10px;margin-bottom:15px;" ng-show="rand.daysOfWeek==undefined">
+                    {{rand.startTime | date : 'fullDate'}}
+                </h5>
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;">{{rand.startTime | date : 'shortTime'}} - {{rand.endTime | date : 'shortTime'}}</h6>
+                
+                
+                
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:10px;margin-bottom:15px;" ng-show="
+                               rand.daysOfWeek.monday=='yes' &&
+                               rand.daysOfWeek.tuesday=='yes' &&
+                               rand.daysOfWeek.wednesday=='yes' &&
+                               rand.daysOfWeek.thursday=='yes' &&
+                               rand.daysOfWeek.friday=='yes' &&
+                               rand.daysOfWeek.saturday=='yes' &&
+                               rand.daysOfWeek.sunday=='yes'
+                               ">Everyday of the week!
+                </h6>
+                
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:10px;margin-bottom:15px;" ng-show="
+                               rand.daysOfWeek.monday=='yes' &&
+                               rand.daysOfWeek.tuesday=='yes' &&
+                               rand.daysOfWeek.wednesday=='yes' &&
+                               rand.daysOfWeek.thursday=='yes' &&
+                               rand.daysOfWeek.friday=='yes' &&
+                               rand.daysOfWeek.saturday=='no' &&
+                               rand.daysOfWeek.sunday=='no'
+                               ">Monday - Friday
+                </h6>
+                
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:10px;margin-bottom:15px;" ng-show="
+                               rand.daysOfWeek.monday=='no' &&
+                               rand.daysOfWeek.tuesday=='no' &&
+                               rand.daysOfWeek.wednesday=='no' &&
+                               rand.daysOfWeek.thursday=='no' &&
+                               rand.daysOfWeek.friday=='no' &&
+                               rand.daysOfWeek.saturday=='yes' &&
+                               rand.daysOfWeek.sunday=='yes'
+                               ">Saturday & Sunday
+                </h6>
+                
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:10px;margin-bottom:15px;" ng-show="
+                               rand.daysOfWeek.monday=='yes' &&
+                               rand.daysOfWeek.tuesday=='no' &&
+                               rand.daysOfWeek.wednesday=='no' &&
+                               rand.daysOfWeek.thursday=='no' &&
+                               rand.daysOfWeek.friday=='no' &&
+                               rand.daysOfWeek.saturday=='no' &&
+                               rand.daysOfWeek.sunday=='no'
+                               ">Monday's
+                </h6>
+                
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:10px;margin-bottom:15px;" ng-show="
+                               rand.daysOfWeek.monday=='no' &&
+                               rand.daysOfWeek.tuesday=='yes' &&
+                               rand.daysOfWeek.wednesday=='no' &&
+                               rand.daysOfWeek.thursday=='no' &&
+                               rand.daysOfWeek.friday=='no' &&
+                               rand.daysOfWeek.saturday=='no' &&
+                               rand.daysOfWeek.sunday=='no'
+                               ">Tuesday's
+                </h6>
+                
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:10px;margin-bottom:15px;" ng-show="
+                               rand.daysOfWeek.monday=='no' &&
+                               rand.daysOfWeek.tuesday=='no' &&
+                               rand.daysOfWeek.wednesday=='yes' &&
+                               rand.daysOfWeek.thursday=='no' &&
+                               rand.daysOfWeek.friday=='no' &&
+                               rand.daysOfWeek.saturday=='no' &&
+                               rand.daysOfWeek.sunday=='no'
+                               ">Wednesday's
+                </h6>
+                
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:10px;margin-bottom:15px;" ng-show="
+                               rand.daysOfWeek.monday=='no' &&
+                               rand.daysOfWeek.tuesday=='no' &&
+                               rand.daysOfWeek.wednesday=='no' &&
+                               rand.daysOfWeek.thursday=='yes' &&
+                               rand.daysOfWeek.friday=='no' &&
+                               rand.daysOfWeek.saturday=='no' &&
+                               rand.daysOfWeek.sunday=='no'
+                               ">Thursday's
+                </h6>
+                
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:10px;margin-bottom:15px;" ng-show="
+                               rand.daysOfWeek.monday=='no' &&
+                               rand.daysOfWeek.tuesday=='no' &&
+                               rand.daysOfWeek.wednesday=='no' &&
+                               rand.daysOfWeek.thursday=='no' &&
+                               rand.daysOfWeek.friday=='yes' &&
+                               rand.daysOfWeek.saturday=='no' &&
+                               rand.daysOfWeek.sunday=='no'
+                               ">Friday's
+                </h6>
+                
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:10px;margin-bottom:15px;" ng-show="
+                               rand.daysOfWeek.monday=='no' &&
+                               rand.daysOfWeek.tuesday=='no' &&
+                               rand.daysOfWeek.wednesday=='no' &&
+                               rand.daysOfWeek.thursday=='no' &&
+                               rand.daysOfWeek.friday=='no' &&
+                               rand.daysOfWeek.saturday=='yes' &&
+                               rand.daysOfWeek.sunday=='no'
+                               ">Saturday's
+                </h6>
+                
+                <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:10px;margin-bottom:15px;" ng-show="
+                               rand.daysOfWeek.monday=='no' &&
+                               rand.daysOfWeek.tuesday=='no' &&
+                               rand.daysOfWeek.wednesday=='no' &&
+                               rand.daysOfWeek.thursday=='no' &&
+                               rand.daysOfWeek.friday=='no' &&
+                               rand.daysOfWeek.saturday=='no' &&
+                               rand.daysOfWeek.sunday=='yes'
+                               ">Sunday's
+                </h6>
+                
+            
+                
+            </div>
+        </div>
+        
+        <div style="width:90%;margin-left:auto;margin-right:auto;">
+            <p style="text-align:center;font-size:smaller;color:rgb(80, 80, 80);font-style:italic;" ng-bind-html="rand.description"></p>
+        </div>
+        
+<!--
+        <a href="#/ad-detail"><div ng-click="closePopup();" style="width:100%;height:60px;border-top: solid #e4e4e4 1px;position:absolute;bottom:0px;text-align: center;font-size: x-large;line-height: 2.4;">
+            <span style="color:#4b7fd8;">View Deal</span>
+            </div></a>
+-->
+<!--        <button ng-click="go('/deals/'+d.key,80);" class="btn positive">Deal</button>-->
+    </div>
+  </ion-content>
+
+        <!--<div class="mg-image">
+        <img id="deal-image" class="deal-detail-image" ng-src="{{deal.dealFullImage}}" style="width:100%;height:40vh;margin-left:auto;margin-right:auto;object-fit:cover;object-position: 50% 0%;" />
+        </div>
+
+        <div class="row" style="border-top:1px solid #fff;padding-top:15px;">
+            <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;">{{deal.name}}</h4></div>
+        </div>
+
+
+
+        <div style="width:90%;margin-left:auto;margin-right:auto;">
+            <p style="text-align:center;font-size:smaller;color:rgb(80, 80, 80);font-style:italic;" ng-bind-html="deal.description"></p>
+        </div>-->

@@ -1,0 +1,93 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Manage Ads</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closePopupAdModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+       <ion-list>
+        <ion-item class="item item-divider">
+          Active Popup Ads
+          <span class="item-note">
+            {{myUpgrades.adCount || 0}} remaining
+          </span>
+        </ion-item>   
+        
+        <ion-item ng-click="deletePopupAdNative(ad)" ng-if="myPopupAds.length>0" ng-repeat="ad in myPopupAds" style="padding:0px;">
+            <div class="list">
+                <div class="item item-thumbnail-left">
+                    <img style="border-radius:10px;" ng-src="{{ad.dealFullImage}}">
+                    <h2>{{ad.name}}</h2>
+                    
+                    <span ng-show="ad.daysOfWeek.monday=='yes'" class="item-note" style="float:left;">
+                        Mon&nbsp; 
+                    </span>
+                    <span ng-show="ad.daysOfWeek.tuesday=='yes'" class="item-note" style="float:left;">
+                        Tues&nbsp; 
+                    </span>
+                    <span ng-show="ad.daysOfWeek.wednesday=='yes'" class="item-note" style="float:left;">
+                        Wed&nbsp; 
+                    </span>
+                    <span ng-show="ad.daysOfWeek.thursday=='yes'" class="item-note" style="float:left;">
+                        Thur&nbsp; 
+                    </span>
+                    <span ng-show="ad.daysOfWeek.friday=='yes'" class="item-note" style="float:left;">
+                        Fri&nbsp; 
+                    </span>
+                    <span ng-show="ad.daysOfWeek.saturday=='yes'" class="item-note" style="float:left;">
+                        Sat&nbsp; 
+                    </span>
+                    <span ng-show="ad.daysOfWeek.sunday=='yes'" class="item-note" style="float:left;">
+                        Sun&nbsp; 
+                    </span>
+                    <span class="impressions-text">{{ad.impressions}} impressions remaining</span>
+                </div>
+                
+            </div>
+            
+        </ion-item>
+        <ion-item ng-if="myPopupAds.length==0">
+                No current ads running 
+        </ion-item>
+           
+        <ion-item class="item item-divider">
+          Available 
+        </ion-item>  
+
+        <ion-item ng-click="addPopupNative(deal)" ng-repeat="deal in myRecurringDeals" style="padding:0px;">
+            <div class="list">
+                <a class="item item-thumbnail-left" href="#">
+                    <img style="border-radius:10px;" ng-src="{{deal.dealFullImage}}">
+                    <h2>{{deal.name}}</h2>
+                    
+                    <span ng-show="deal.daysOfWeek.monday=='yes'" class="item-note" style="float:left;">
+                        Mon&nbsp; 
+                    </span>
+                    <span ng-show="deal.daysOfWeek.tuesday=='yes'" class="item-note" style="float:left;">
+                        Tues&nbsp; 
+                    </span>
+                    <span ng-show="deal.daysOfWeek.wednesday=='yes'" class="item-note" style="float:left;">
+                        Wed&nbsp; 
+                    </span>
+                    <span ng-show="deal.daysOfWeek.thursday=='yes'" class="item-note" style="float:left;">
+                        Thur&nbsp; 
+                    </span>
+                    <span ng-show="deal.daysOfWeek.friday=='yes'" class="item-note" style="float:left;">
+                        Fri&nbsp; 
+                    </span>
+                    <span ng-show="deal.daysOfWeek.saturday=='yes'" class="item-note" style="float:left;">
+                        Sat&nbsp; 
+                    </span>
+                    <span ng-show="deal.daysOfWeek.sunday=='yes'" class="item-note" style="float:left;">
+                        Sun&nbsp; 
+                    </span>
+                    
+                </a>
+            </div>
+        </ion-item>
+
+      </ion-list>    
+
+  </ion-content>
+</ion-modal-view>

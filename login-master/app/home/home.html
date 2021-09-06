@@ -1,0 +1,2696 @@
+<!-- template from http://startbootstrap.com/template-overviews/sb-admin/ -->
+<div ng-show="displayOptions.section=='newLoc'" class="blackout"></div>
+
+<div style="z-index:99999;position:fixed;width:300px;top:100px;right: 0;left: 0;margin-right: auto;margin-left: auto;" class="col-md-10" ng-show="displayOptions.section=='newLoc'">
+                <div class="panel panel-default" style="height:400px;overflow-y:auto;">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Add New Location</h3>
+                  </div>
+                  <div class="panel-body">
+
+                    <div class="row">
+                        <div style="padding:5px;">
+                            Business Name:
+                            <input type="text" class="form-control" ng-model="newLocName" />
+                            <br>
+                            <button class="btn btn-primary" ng-click="addNewLoc(newLocName);displayOptions.mainTab='profile'">Add New Location</button>
+                            
+                        </div>
+                        
+                        <div class="padding" ng-repeat="bizID in bizInfo" style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)">
+                        {{bizInfo[bizID.$id].businessName}}
+                            
+                        </div>
+                        
+                        <div ng-show="bizIDs.length==0" style="padding:10px;">
+                            <i>No locations</i>
+                        </div>
+                    </div>
+                    
+
+                  </div>
+                </div>
+</div>
+
+<div ng-show="loadingImage==true" style="position:absolute;">
+    <div style="opacity:0.85;width:100%;height:100%;position:fixed;top:0;left:0;z-index:10000 !important;background-color:black;">
+    </div>
+    <div style="width:100%;height:100%;position:fixed;top:0;left:0;z-index:11000 !important;color:#fff;">
+      <table style="width:100%;height:100%;text-align:center;">
+        <tr><td style="font-size:22px;">
+          <i class="fa fa-spinner fa-spin" style="font-size:32px;"></i>&nbsp; Please Wait a Moment...
+        </td></tr>
+      </table>
+    </div>
+</div>
+
+<div id="wrapper">
+    <div class="slideout-nav">
+        <ul id="mealsteals-nav" class="nav-open nav navbar-nav side-nav">
+            <li style="display:inline-flex;">
+
+<!--
+                <h3 style="color:white;margin-left:13px;font-weight:100;">
+                    <span style="font-weight:200;">meal</span>steals
+                </h3>
+                
+                
+                <span style="color: #BD6565;font-size: 23px;margin-top: 20px;" class="glyphicon glyphicon-map-marker
+    " aria-hidden="true"></span>
+                
+                <img class="slideout-img" style="float:right;" ng-src="{{bizInfo[displayOptions.currentLoc].icon}}" ng-show="bizInfo[displayOptions.currentLoc].icon" />
+-->
+                
+                <div class="slideout-button" ng-show="navState=='open'" ng-click="closeNav();" style="float:right;">
+                    <span class="glyphicon glyphicon-align-justify custom-navicon"></span>
+                </div>
+
+                <div class="slideout-button" ng-show="navState=='closed'" ng-click="openNav();" style="float:right;">
+                    <span class="glyphicon glyphicon-align-justify custom-navicon"></span>
+                </div>
+
+
+            </li>
+
+            <li ng-mouseover="hoverDash();" ng-mouseleave="unHoverDash();" role="presentation" ng-class="{active:displayOptions.mainTab=='dashboard'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='dashboard'">
+
+                    <div class="row">
+                        <div class="text">Dashboard</div>
+                        <div class="icon"><span class="glyphicon glyphicon-dashboard
+    "></span></div>
+                    </div>
+                </a>
+               
+            </li>
+            
+            <li ng-show="bizIDs.length==0" role="presentation" ng-class="{active:displayOptions.mainTab=='dashboard'}">
+                <a href="#/home" ng-click="displayOptions.section='newLoc';newLocName=''">
+                    <div class="row">
+                        <div class="text">Add Location</div>
+                        <div class="icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
+                    </div>
+                </a>
+               
+            </li>
+
+            <li ng-mouseover="hoverProfile();" ng-mouseleave="unHoverProfile();" ng-show="bizIDs.length!=0" role="presentation" ng-class="{active:displayOptions.mainTab=='profile'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='profile'">
+                    <div class="row">
+                        <div class="text">Profile</div>
+                        <div class="icon"><span class="glyphicon glyphicon-user
+    "></span></div>
+                    </div>
+                </a>
+            </li>
+
+            <li ng-mouseover="hoverDeals();" ng-mouseleave="unHoverDeals();" ng-show="bizIDs.length!=0" role="presentation" ng-class="{active:displayOptions.mainTab=='mydeals'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='mydeals';loadMyDeals();">
+                    <div class="row">
+                        <div class="text">View Deals</div>
+                        <div class="icon"><span class="glyphicon glyphicon-cutlery
+    "></span></div>
+                    </div>
+                </a>
+            </li>
+
+            <li ng-mouseover="hoverAdd();" ng-mouseleave="unHoverAdd();" ng-show="bizIDs.length!=0" role="presentation" ng-class="{active:displayOptions.mainTab=='newdeal'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='newdeal';startNewDeal();">
+                    <div class="row">    
+                        <div class="text">Add Deal</div>
+                        <div class="icon"><span class="glyphicon glyphicon-plus-sign
+    "></span></div>
+                    </div>
+                </a>
+            </li>
+            
+            <li ng-show="userOptions.superadmin=='yes' || userOptions.admin=='yes'" style="border-top: #c3c3c3 solid 1px;width: 90%;margin-left: 5%;margin-top: 10px;">
+            </li>
+            
+            <li style="" role="presentation" ng-show="userOptions.superadmin=='yes' || userOptions.admin=='yes'" ng-class="{active:displayOptions.mainTab=='payment'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='payment'">
+                    <div class="row">
+                        <div class="text">Payment</div>
+                        <div class="icon"><span class="glyphicon glyphicon-credit-card"></span></div>
+                    </div>
+                </a>
+            </li>
+            
+            <li style="" role="presentation" ng-show="userOptions.superadmin=='yes' || userOptions.admin=='yes'" ng-class="{active:displayOptions.mainTab=='adspace'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='adspace';loadMyDeals();">
+                    <div class="row">
+                        <div class="text">Popup Ads</div>
+                        <div class="icon"><span class="glyphicon glyphicon-cog"></span></div>
+                    </div>
+                </a>
+            </li>
+
+            <li role="presentation" ng-show="userOptions.superadmin=='yes' || userOptions.admin=='yes'" ng-class="{active:displayOptions.mainTab=='useraccess'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='useraccess';">
+                    <div class="row">
+                        <div class="text">User Access</div>
+                        <div class="icon"><span class="glyphicon glyphicon-wrench
+    "></span></div>
+                    </div>
+                </a>
+            </li>
+            
+            <li role="presentation" ng-show="userOptions.superadmin=='yes' || userOptions.admin=='yes'" ng-class="{active:displayOptions.mainTab=='feedback'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='feedback';loadFeedback()">
+                    <div class="row">
+                        <div class="text">Feedback</div>
+                        <div class="icon"><span class="glyphicon glyphicon glyphicon-envelope"></span></div>
+                    </div>
+                </a>
+            </li>
+
+            <li role="presentation" ng-show="userOptions.superadmin=='yes' || userOptions.admin=='yes'" ng-class="{active:displayOptions.mainTab=='ads'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='ads';loadAdminDeals();">
+                    <div class="row">
+                        <div class="text">Admin Ads</div>
+                        <div class="icon"><span class="glyphicon glyphicon-usd"></span></div>
+                    </div>
+                </a>
+            </li>
+            
+            
+            <li ng-show="userOptions.superadmin=='yes'" role="presentation" ng-class="{active:displayOptions.mainTab=='events'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='events';loadAdminEvents();">
+                    <div class="row">
+                        <div class="text">Events</div>
+                        <div class="icon"><span class="fa fa-calendar
+"></span></div>
+                    </div>
+                </a>
+            </li>
+            <li ng-show="userOptions.superadmin=='yes' || userOptions.admin=='yes'" role="presentation" ng-class="{active:displayOptions.mainTab=='adminAnalytics'}">
+                <a href="#/home" ng-click="displayOptions.mainTab='adminAnalytics'; loadAdminAnalytics(bizInfo[displayOptions.currentLoc]);userAnalytics();">
+                    <div class="row">
+                        <div class="text">Admin Dashboard</div>
+                        <div class="icon"><span class="fa fa-tachometer
+"></span></div>
+                    </div>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    
+    <div class="hover-menu dash hide" style="top: 82px;">
+         Dashboard
+    </div>
+    <div class="hover-menu profile hide" style="top: 136px;">
+         Profile
+    </div>
+    <div class="hover-menu deals hide" style="top: 188px;">
+         Current Deals
+    </div>
+    <div class="hover-menu add hide" style="top: 245px;">
+         Add Deal
+    </div>
+    
+    <div class="header">
+    
+        <div style="display:inline-block;vertical-align:middle;padding-right:30px;width:50%;">
+                    <div style="margin-left:300px;display:inline-flex;">
+                        <h4 style="color: #545454;">{{bizInfo[displayOptions.currentLoc].businessName}}
+                        </h4>
+                        <img ng-src="{{bizInfo[displayOptions.currentLoc].icon}}" ng-show="bizInfo[displayOptions.currentLoc].icon" />
+                    </div>
+        </div>
+
+
+
+                <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                <ul class="dropdown-menu alert-dropdown">
+                    <li>
+                        <a href="/app/#/account">Alert Name <span class="label label-default">Alert Badge</span></a>
+                    </li>
+
+                </ul>
+            </li>
+
+        </ul> 
+    </div>
+    
+    <div id="slideout-container" class="slideout-container container container-open" style="margin-left:55px;">
+        
+<!--
+        <div class="col-md-10" ng-show="bizIDs.length==0">
+             wait for account to be approved
+        </div>
+-->
+        
+        <div class="subhead margin" 
+             
+             ng-hide="displayOptions.mainTab=='adminAnalytics' || 
+                      displayOptions.mainTab=='ads' || 
+                      displayOptions.mainTab=='events' ||
+                      displayOptions.mainTab=='payment'
+                      ">
+            <div ng-hide="bizIDs.length==0" class="biz-header">
+                <h2 class="business-header">{{bizInfo[displayOptions.currentLoc].businessName}}
+                    <div ng-if="bizInfo[displayOptions.currentLoc].approved=='yes'" class="approved"></div>
+                    <div ng-hide="bizInfo[displayOptions.currentLoc].approved=='yes'" class="waiting"></div>
+                </h2>
+                <span class="glyphicon glyphicon-map-marker"></span><span> {{bizInfo[displayOptions.currentLoc].address}}</span>
+            </div>
+            <div ng-show="userOptions.superadmin=='yes'" class="biz-header-stats">
+                <span ng-if="bizInfo[displayOptions.currentLoc].approved=='yes'"><div class="approved"></div>Approved</span>
+                <span ng-hide="bizInfo[displayOptions.currentLoc].approved=='yes'"><div class="waiting"></div>Waiting on approval</span>
+                <!--<span ng-show="bizInfo[displayOptions.currentLoc].approved=='no'"><div class="denied"></div>Denied</span> -->
+            </div>
+        </div>
+
+<!-- DASHBOARD -->
+        <div ng-show="displayOptions.mainTab=='dashboard'">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li class="active">
+                            <i class="fa fa-dashboard"></i> Dashboard
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            
+            <button style="width:100%;background:none;border:none;">
+                <div  ng-click="displayOptions.section='newLoc';newLocName=''" ng-show="bizIDs.length==0" class="alert alert-danger">
+                <strong>No location added!</strong> You must add a location before continuing.
+                </div>
+            </button>
+            
+            <div id="featured" class="row hidden-alert">
+                <div class="col-lg-12">
+                    <div class="alert alert-info alert-dismissable">
+                        <button type="button" class="close" ng-click="removeFeaturedAlert()" aria-hidden="true">&times;</button>
+                        <i class="fa fa-info-circle"></i> <strong>Featured Deals</strong> are deals that have the higest click rates. These deals have their own featured tab. You earn a spot in the featured tab by posting the best deals! 
+                    </div>
+                </div>
+              </div>
+            
+            <div ng-show="displayOptions.section=='newLoc' && bizIDs.length!=0" class="alert alert-danger" style="text-align:center;" role="alert">No location selected! Either add new location or select existing one.</div>
+            
+            <!--
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <i class="fa fa-info-circle"></i>  <strong>Like MealSteals?</strong> Try out our additional features!
+                    </div>
+                </div>
+            </div>
+            -->
+            
+            <!-- Panel Mobile -->
+            <div class="row small">
+                <div class="col-sm-3 col-xs-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading panel-dashboard">
+                            <div class="row">
+                                <div class="col-xs-9 text-right">
+                                    <div class="mobile-huge">N/A</div>
+                                    <div>Weekly Views</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">More</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-3">
+                    <div class="panel panel-green">
+                        <div class="panel-heading panel-dashboard">
+                            <div class="row">
+                                
+                                <div class="col-xs-9 text-right">
+                                    <div ng-show="myRecurringDeals.length!=undefined" class="mobile-huge">{{myRecurringDeals.length}}</div>
+                                    <div  ng-show="myRecurringDeals.length==undefined" class="mobile-huge">0</div>
+                                    <div>Total Deals</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#/home" ng-click="displayOptions.mainTab='mydeals';loadMyDeals();">
+                            <div class="panel-footer">
+                                <span class="pull-left">Deal's</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-3">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading panel-dashboard">
+                            <div class="row">
+                                
+                                <div class="col-xs-9 text-right">
+                                    <div ng-show="bizInfo[displayOptions.currentLoc].currentPlan.plan!=undefined" class="mobile-huge">{{bizInfo[displayOptions.currentLoc].currentPlan.plan}}</div>
+                                    <div ng-show="bizInfo[displayOptions.currentLoc].currentPlan.plan==undefined" class="mobile-huge">Free</div>
+                                    <div>Plan</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#/home" ng-click="displayOptions.mainTab='payment'">
+                            <div class="panel-footer">
+                                <span class="pull-left">Upgrade</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-3">
+                    <div class="panel panel-red">
+                        <div class="panel-heading panel-dashboard">
+                            <div class="row">
+                                
+                                <div class="col-xs-9 text-right">
+                                    <div class="mobile-huge">3,301</div>
+                                    <div>Total Users</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#/home" ng-click="displayOptions.mainTab='mydeals';loadMyDeals();">
+                            <div class="panel-footer">
+                                <span class="pull-left">Info</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Panel Desktop -->
+            <div class="row large">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading panel-dashboard">
+                            <div class="row">
+                                <div class="col-xs-3 mobile">
+                                    <i class="fa fa-bar-chart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">N/A</div>
+                                    <div>Weekly Views</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#/home">
+                            <div class="panel-footer">
+                                <span class="pull-left">Coming Soon</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="panel panel-green">
+                        <div class="panel-heading panel-dashboard">
+                            <div class="row">
+                                <div class="col-xs-3 mobile">
+                                    <i class="fa fa-cutlery fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div ng-show="myRecurringDeals.length!=undefined" class="huge">{{myRecurringDeals.length}}</div>
+                                    <div ng-show="myRecurringDeals.length==undefined" class="huge">0</div>
+                                    <div>Total Deals</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#/home" ng-click="displayOptions.mainTab='mydeals';loadMyDeals();">
+                            <div class="panel-footer">
+                                <span class="pull-left">Deal List</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading panel-dashboard">
+                            <div class="row">
+                                <div class="col-xs-3 mobile">
+                                    <i class="fa fa-star fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div ng-show="bizInfo[displayOptions.currentLoc].currentPlan.plan!=undefined" class="huge">{{bizInfo[displayOptions.currentLoc].currentPlan.plan}}</div>
+                                    <div ng-show="bizInfo[displayOptions.currentLoc].currentPlan.plan==undefined" class="huge">Free</div>
+                                    <div>Plan</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#/home" ng-click="displayOptions.mainTab='payment'">
+                            <div class="panel-footer">
+                                <span class="pull-left">Upgrade</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="panel panel-red">
+                        <div class="panel-heading panel-dashboard">
+                            <div class="row">
+                                <div class="col-xs-3 mobile">
+                                    <i class="fa fa-users fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">3,301</div>
+                                    <div>Total Milwaukee Dealhunters</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#/home" ng-click="displayOptions.mainTab='mydeals';loadMyDeals();">
+                            <div class="panel-footer">
+                                <span class="pull-left">Deal List</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="row">
+                
+                <div class="col-lg-4">
+                    <div ng-model="displayOptions.viewDealsType" class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Upcoming Deals</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div ng-show="isUpcoming(d)" ng-repeat="d in myDeals | orderBy:'d.description'" class="list-group">
+                                <a href="#/home" class="list-group-item">
+                                    <span ng-show="isActive(d)" style="background-color:#25AD25;" class="badge">{{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}}</span>
+                                    <span ng-show="!isActive(d)" class="badge">{{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}}</span>
+                                    <i class="fa fa-fw fa-calendar"></i> {{d.name}}
+                                </a>
+
+                            </div>
+                            <div class="text-right">
+                                <a href="#/home" ng-click="displayOptions.mainTab='mydeals';loadMyDeals();">View All Deals <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div ng-model="displayOptions.viewDealsType" class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-star fa-fw"></i>Featured Deals<span class="pull-right"><button class="info-button" ng-click="featuredAlert()"> <i class="fa fa-info-circle"></i></button></span></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div ng-show="isFeatured(d)" ng-repeat="d in myRecurringDeals | filter:query as filtered" class="list-group">
+                                <a href="#/home" class="list-group-item">
+                                    <span ng-show="isActive(d)" style="background-color:#25AD25;" class="badge">{{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}}</span>
+                                    <span ng-show="!isActive(d)" class="badge">{{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}}</span>
+                                    <i class="fa fa-fw fa-calendar"></i> {{d.name}}
+                                </a>
+
+                            </div>
+                            <div class="text-right">
+                                <a href="#/home" ng-click="displayOptions.mainTab='mydeals';loadMyDeals();">View All Deals <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                     
+                </div>
+                
+                
+                
+                
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Notifications
+                            <span ng-show="bizInfo[displayOptions.currentLoc].message!=undefined" class="message-count pull-right">1</span>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                
+                                <span ng-show="bizInfo[displayOptions.currentLoc].message!=undefined" class="list-group-item">
+                                    <i class="fa fa-envelope fa-fw"></i> Message
+                                    
+                                    <div style="border-top: solid #DADADA 1px;padding-top:10px;">
+                                        <p>
+                                        {{bizInfo[displayOptions.currentLoc].message}}
+                                        </p>
+                                        <p>
+                                        
+                                        </p>
+                                    </div>
+                                    
+                                </span>
+                                <span class="list-group-item">
+                                    <i class="fa fa-envelope fa-fw"></i> Welcome to MealSteals
+                                    <div style="border-top: solid #DADADA 1px;padding-top:10px;">
+                                        <p>
+                                        Welcome! MealSteals allows you to add, manage and update all of your happy hours, weekly specials, events and exclusive deals all in real-time.
+                                        </p>
+                                        <p>
+                                        
+                                        </p>
+                                    </div>
+                                    
+                                </span>
+                                
+                               
+                            </div>
+                            
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    
+                    <div ng-show="userOptions.superadmin=='yes'" class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Send Message to {{bizInfo[displayOptions.currentLoc].businessName}}
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="">
+                            
+                            <div style="width:100%;">
+                            <textarea class="form-control" ng-model="bizInfo[displayOptions.currentLoc].message"></textarea>
+                            </div> 
+                            <button style="margin-top:10px;" ng-click="sendUniqueBizMessage()" class="btn btn-primary">Send</button>
+                            </div>
+                            
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Upgrade</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="list-group">
+                                <span style="border:none;" class="list-group-item">
+                                    <p>Upgrade to be seen sooner and with more frequency, upgraded businesses will be front and center on the app! You will be able to upgrade for a better placement on the list view, larger map icon, unique deal popup box and more.</p>
+                                    <p>Don't worry, our core service will always be free!</p>
+                                </span>
+                               
+                            </div>
+                            <!-- /.list-group -->
+                            <a href="" ng-click="displayOptions.mainTab='payment'" class="btn btn-primary btn-block">Upgrade</a>
+                        </div>
+                    </div>
+                    <!-- /.panel -->
+                    
+                    
+                </div>
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="height:54px;">
+                            <div>
+                                <h3 class="panel-title" style="float:left;"><i class="glyphicon glyphicon-map-marker"></i>Locations</h3>
+                                <div ng-show="userOptions.superadmin=='yes'" class="btn-group pull-right">
+                                  <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">{{displayOptions.selectCity}} <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                      <li style="padding:5px;">
+                                          <input type="radio" selected ng-model="displayOptions.selectCity" value="milwaukee">
+                                          Milwaukee
+                                      </li>
+                                      <li style="padding:5px;">
+                                          <input type="radio" selected ng-model="displayOptions.selectCity" value="southmilwaukee">
+                                          South Milwaukee
+                                      </li>
+                                      <li style="padding:5px;">
+                                          <input type="radio" selected ng-model="displayOptions.selectCity" value="wauwatosa">
+                                          Wauwatosa
+                                      </li>
+                                                                         
+                                       <li style="padding:5px;">
+                                          <input type="radio" selected ng-model="displayOptions.selectCity" value="waukesha">
+                                          Waukesha
+                                      </li>        
+                                      <li style="padding:5px;">
+                                         <input type="radio" selected ng-model="displayOptions.selectCity" value="massachusetts">
+                                          Massachusetts
+                                      </li>
+                                       <li style="padding:5px;">
+                                          <input type="radio" selected ng-model="displayOptions.selectCity" value="minnesota">
+                                          Minnesota
+                                        <li style="padding:5px;">
+                                          <input type="radio" selected ng-model="displayOptions.selectCity" value="illinois">
+                                          Illinois
+                                      </li>       
+                                      <li style="padding:5px;">
+                                         <input type="radio" selected ng-model="displayOptions.selectCity" value="other">
+                                          Other
+                                      </li>
+                                      <li ng-show="userOptions.superadmin=='yes'" style="padding:5px;">
+                                         <input type="radio" selected ng-model="displayOptions.selectCity" value="fake">
+                                          Fake Businesses
+                                      </li>
+                                      <li style="padding:5px;">
+                                          <input type="radio" selected ng-model="displayOptions.selectCity" value="all">
+                                          All
+                                      </li>
+                                      <!-- Other items -->
+                                    </ul>
+                                </div>
+                            </div>
+                           <!-- <div>
+                                <input type="search" ng-model="search.businessName" placeholder="search">
+                            </div>-->
+                           
+                        </div>
+                        
+                          <div ng-show="displayOptions.selectCity=='all'">
+
+                            <div ng-repeat="bizID in bizInfo | filter:search:strict" style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)" ng-class="{locSelected:displayOptions.currentLoc==bizID.$id, approved:bizInfo[displayOptions.currentLoc].emails==true}">
+                            {{bizInfo[bizID.$id].businessName}}
+                                
+                                <div ng-show="bizInfo[bizID.$id].placeId != undefined" class="glyphicon glyphicon-ok profile-ok"></div>
+                    
+                                
+                            </div>
+                          </div>
+                        
+                         <div ng-show="displayOptions.selectCity=='milwaukee'">
+                             
+                            <div ng-repeat="bizID in bizInfo | filter:searchBiz" 
+                                 ng-show="bizInfo[bizID.$id].city=='Milwaukee' ||
+                                          bizInfo[bizID.$id].city=='Shorewood' && 
+                                          bizInfo[bizID.$id].fakeBusiness!=true"
+                                 
+                                          
+                                 
+                             style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)" ng-class="{locSelected:displayOptions.currentLoc==bizID.$id, approved:bizInfo[displayOptions.currentLoc].emails==true}">
+                            {{bizInfo[bizID.$id].businessName}}
+                            </div>
+                        </div>
+                        
+                        <div ng-show="displayOptions.selectCity=='wauwatosa'">
+                            <div ng-repeat="bizID in bizInfo | filter:''" ng-show="bizInfo[bizID.$id].city=='Wauwatosa' && bizInfo[bizID.$id].fakeBusiness!=true" style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)" ng-class="{locSelected:displayOptions.currentLoc==bizID.$id, approved:bizInfo[displayOptions.currentLoc].emails==true}">
+                            {{bizInfo[bizID.$id].businessName}}
+                            </div>
+                        </div>
+
+                        <div ng-show="displayOptions.selectCity=='waukesha'">
+                            <div ng-repeat="bizID in bizInfo | filter:''" ng-show="bizInfo[bizID.$id].city=='Waukesha' && bizInfo[bizID.$id].fakeBusiness!=true" style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)" ng-class="{locSelected:displayOptions.currentLoc==bizID.$id, approved:bizInfo[displayOptions.currentLoc].emails==true}">
+                            {{bizInfo[bizID.$id].businessName}}
+                            </div>
+                        </div>
+                        
+                        <div ng-show="displayOptions.selectCity=='southmilwaukee'">
+                            <div ng-repeat="bizID in bizInfo | filter:''" ng-show="bizInfo[bizID.$id].city=='South Milwaukee' && bizInfo[bizID.$id].fakeBusiness!=true" style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)" ng-class="{locSelected:displayOptions.currentLoc==bizID.$id, approved:bizInfo[displayOptions.currentLoc].emails==true}">
+                            {{bizInfo[bizID.$id].businessName}}
+                            </div>
+                        </div>
+                        
+                        <div ng-show="displayOptions.selectCity=='massachusetts'">
+                            <div ng-repeat="bizID in bizInfo | filter:''" ng-show="bizInfo[bizID.$id].state=='MA' && bizInfo[bizID.$id].fakeBusiness!=true" style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)" ng-class="{locSelected:displayOptions.currentLoc==bizID.$id, approved:bizInfo[displayOptions.currentLoc].emails==true}">
+                            {{bizInfo[bizID.$id].businessName}}
+                            </div>
+                        </div>
+
+                        <div ng-show="displayOptions.selectCity=='minnesota'">
+                            <div ng-repeat="bizID in bizInfo | filter:''" ng-show="bizInfo[bizID.$id].state=='MN' && bizInfo[bizID.$id].fakeBusiness!=true" style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)" ng-class="{locSelected:displayOptions.currentLoc==bizID.$id, approved:bizInfo[displayOptions.currentLoc].emails==true}">
+                            {{bizInfo[bizID.$id].businessName}}
+                            </div>
+                        </div>
+
+                        <div ng-show="displayOptions.selectCity=='illinois'">
+                            <div ng-repeat="bizID in bizInfo | filter:''" ng-show="bizInfo[bizID.$id].state=='IL' && bizInfo[bizID.$id].fakeBusiness!=true" style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)" ng-class="{locSelected:displayOptions.currentLoc==bizID.$id, approved:bizInfo[displayOptions.currentLoc].emails==true}">
+                            {{bizInfo[bizID.$id].businessName}}
+                            </div>
+                        </div>
+                        
+                        <div ng-show="displayOptions.selectCity=='fake'">
+                            <div ng-repeat="bizID in bizInfo | filter:''" ng-show="bizInfo[bizID.$id].fakeBusiness==true" style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)" ng-class="{locSelected:displayOptions.currentLoc==bizID.$id, approved:bizInfo[displayOptions.currentLoc].emails==true}">
+                            {{bizInfo[bizID.$id].businessName}}
+                            </div>
+                        </div>
+                        
+                        <div ng-show="displayOptions.selectCity=='other'">
+                            <div ng-repeat="bizID in bizInfo | orderBy: businessName" 
+                                 ng-show="
+                                          bizInfo[bizID.$id].state!='MA' &&  
+                                          bizInfo[bizID.$id].city!='Milwaukee' &&
+                                          bizInfo[bizID.$id].city!='Wauwatosa' && 
+                                          bizInfo[bizID.$id].city!='Waukesha' &&
+                                          bizInfo[bizID.$id].city!='Wauwatosa' && 
+                                          bizInfo[bizID.$id].fakeBusiness!=true &&
+                                          bizInfo[bizID.$id].city!='Shorewood' &&
+                                          bizInfo[bizID.$id].state!='IL' &&
+                                          bizInfo[bizID.$id].state!='MN' &&                                     
+                                          bizInfo[bizID.$id].city!='South Milwaukee'
+                                          
+                                          " 
+                                 
+                                 
+                                 style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)" ng-class="{locSelected:displayOptions.currentLoc==bizID.$id, approved:bizInfo[displayOptions.currentLoc].emails==true}">
+                            {{bizInfo[bizID.$id].businessName}}
+                            </div>
+                        </div>
+                        
+                        <div ng-show="bizIDs.length==0" style="padding:10px;">
+                            <i>No locations</i>
+                        </div>
+                        <button style="margin-left:10px;margin-top:20px;" class="btn btn-primary" ng-click="displayOptions.section='newLoc';newLocName=''"><i class="fa fa-plus"></i> &nbsp;New Location</button>
+
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <!-- /.row -->
+
+        </div>
+
+<!-- ADD NEW LOCATION -->        
+
+<!--
+        <div style="z-index:99999;position:fixed;width:300px;top:100px;right:auto;left:auto;" class="col-md-10" ng-show="displayOptions.section=='newLoc'">
+                <div class="panel panel-default" style="height:400px;overflow-y:auto;">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Add New Location</h3>
+                  </div>
+                  <div class="panel-body">
+
+                    <div class="row">
+                        <div style="padding:5px;">
+                            Business Name:
+                            <input type="text" class="form-control" ng-model="newLocName" />
+                            <br>
+                            <button class="btn btn-primary" ng-click="addNewLoc(newLocName)">Add New Location</button>
+                            
+                        </div>
+                        
+                        <div class="padding" ng-repeat="bizID in bizInfo" style="padding:10px;color:blue;font-weight:500;cursor:pointer;" ng-click="chooseLocation(bizID.$id)">
+                        {{bizInfo[bizID.$id].businessName}}
+                        </div>
+                        <div ng-show="bizIDs.length==0" style="padding:10px;">
+                            <i>No locations</i>
+                        </div>
+                    </div>
+                    
+
+                  </div>
+                </div>
+        </div>
+-->
+
+<!-- PROFILE & DEALS -->
+
+        <div class="" ng-show="displayOptions.section=='locView' && displayOptions.currentLoc != null">
+
+                <p class="status good" ng-show="loggedIn">
+<!-- DEALS -->
+                <div class="" ng-show="displayOptions.mainTab=='mydeals'">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="fa fa-dashboard"></i> Deals
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-info alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <i class="fa fa-info-circle"></i> The Recurring tab shows all of your weekly specials. It does not include one time deals. The history tab shows all of your previous deals as well as one time deals. Changes on edited deals are effective the following day. 
+                            </div>
+                        </div>
+                  </div>
+                    
+                    
+                    
+                    
+
+                  <div class="panel-body" style="padding-left:30px;padding-right:30px;">
+
+                    <div style="margin-left:-10px;margin-bottom:10px;">
+
+
+                    <label>
+                      <input type="radio" ng-model="displayOptions.viewDealsType" value="recurring">
+                        Recurring Deals
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>
+                    <input type="radio" ng-model="displayOptions.viewDealsType" value="actual">
+                        History
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>
+                    <input type="radio" ng-model="displayOptions.viewDealsType" value="flash">
+                        Flash Deals
+                    </label>
+                    &nbsp;&nbsp;
+                    <label ng-show="userOptions.superadmin=='yes'">
+                    <input type="radio" ng-model="displayOptions.viewDealsType" value="popupad">
+                        Popup Ad
+                    </label>
+                    &nbsp;&nbsp;    
+                    <label ng-show="userOptions.superadmin=='yes'">
+                    <input type="radio" ng-model="displayOptions.viewDealsType" value="practice">
+                        Practice
+                    </label>
+                        
+                    </div>
+                      
+                    <div ng-show="userOptions.superadmin=='yes'" style="float:right;">
+                        <button ng-show="showHistoryAnalytics=='no'" ng-click="showAnalytics()" class="btn btn-info">Show Analytics</button>
+                        <button ng-show="showHistoryAnalytics=='yes'" ng-click="showAnalytics()" class="btn btn-info">Hide Analytics</button>
+                    </div>
+                      
+                    <div ng-show="displayOptions.viewDealsType=='practice'">
+                        
+                        <accordion>
+                            <accordion-group heading="{{d.name}}Map Analytics:{{mapClicks}}" ng-click="loadRecurringHistory(d.$id);" ng-repeat="d in myRecurringDeals">
+                              <table>
+                                <tr>
+                                    <td class="col-md-4">Deal Name</td>
+                                    <td class="col-md-2">Map Click</td> 
+                                    <td class="col-md-2">List Click</td>
+                                    <td class="col-md-2">Detail Click</td> 
+                                    <td class="col-md-2">Redeem Click</td> 
+                                </tr>
+                                <tr ng-repeat="d in individualRecurringDeal | orderBy: '-startTime'" ng-init='recurringAnalytics(d)'>
+                                    <td class="col-md-4"><strong>{{d.startTime | date:'shortDate'}}</strong>  <span style="float:right;">{{d.startTime | date:'shortTime'}} - {{d.endTime | date:'shortTime'}}</span></td>
+                                    <td ng-show="d.analytics.mapAnalytics!=undefined" class="col-md-2">Map Clicks: {{d.analytics.mapAnalytics}}</td>
+                                    <td ng-show="d.analytics.mapAnalytics==undefined" class="col-md-2">Map Clicks: 0</td>
+                                    <td ng-show="d.analytics.listAnalytics!=undefined" class="col-md-2">List Clicks: {{d.analytics.listAnalytics}}</td>
+                                    <td ng-show="d.analytics.listAnalytics==undefined" class="col-md-2">List Clicks: 0</td>
+                                    <td ng-show="d.analytics.iconAnalytics!=undefined" class="col-md-2">Icon Clicks: {{d.analytics.iconAnalytics}}</td> 
+                                    <td ng-show="d.analytics.iconAnalytics==undefined" class="col-md-2"class="col-md-2">Icon Clicks: 0</td> 
+                                    <td ng-show="d.analytics.redeemAnalytics!=undefined" class="col-md-2" class="col-md-2">redeems: {{d.analytics.redeemAnalytics}}</td>
+                                    <td ng-show="d.analytics.redeemAnalytics==undefined" class="col-md-2">redeems: 0</td>
+                                </tr>
+                                
+                              </table>
+                                
+                            </accordion-group>   
+                        </accordion>
+                        
+                        <!--<div ng-repeat="d in myRecurringDeals" class="row">
+                            <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        {{d.name}}
+                                         <div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-if="d.featured=='yes'">Featured</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{d.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{daysOfWeek(d)}}&nbsp; ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})
+                                    </div>
+                                    <div class="col-md-2">
+
+                                        <button class="btn btn-danger btn-xs" ng-click="deleteRecurringDeal(d.$id)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-times"></i></button>
+                                        <button class="btn btn-warning btn-xs" ng-click="openEditBox(d.$id, 'recurring')" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-success btn-xs" ng-click="popupAdDeal(d.$id, d)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-usd"></i></button>
+                                    </div>
+                                    <button ng-click="loadRecurringHistory(d.$id);">History</button>
+
+                                </div>
+                                    
+                            </div>
+                            
+                        </div>  
+                        <div ng-repeat="d in individualRecurringDeal" class="row">
+                                {{d.name}}
+                        </div>-->
+                        
+                      </div>
+
+                    <div ng-repeat="d in myDeals | orderBy: '-startTime'" class="row" ng-show="displayOptions.viewDealsType=='actual'">
+				  		<div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="padding:10px;" ng-init="checkinCalc(d)">
+				  			<div class="row">
+				  				<div class="col-md-4">
+				  					{{d.name}} <div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-show="isActive(d)">ACTIVE</div>
+                                    
+<!--                                    <div style="display:inline-block;background:#e3bd60;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-show="!isActive(d)">EXPIRED</div>-->
+				  				</div>
+				  				<div class="col-md-3">
+				  					{{d.description}}
+				  				</div>
+				  				<div class="col-md-3">
+				  					{{timestampDay(d.startTime, d.timezone)}}&nbsp; ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})
+				  				</div>
+				  				<div class="col-md-2">
+                                    <button ng-show="userOptions.superadmin=='yes' || userOptions.admin=='yes'" class="btn btn-primary btn-xs" ng-click="boostDeal(d.$id, d)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-bold"></i></button>
+				  					<button class="btn btn-danger btn-xs" ng-click="deleteDeal(d.key)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-times"></i></button> 
+				  					<button class="btn btn-warning btn-xs" ng-click="openEditBox(d.key, 'actual')" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-pencil"></i></button>
+                                    
+				  				</div>
+				  			</div>
+                            <div style="background-color:white;" ng-show="showHistoryAnalytics=='yes'" class="row">
+                                
+                                <div ng-show="d.analytics.iconAnalytics!=undefined" class="col-md-3">
+                                    Icon Clicks: {{d.analytics.iconAnalytics}}
+                                </div>
+                                
+                                <div ng-show="d.analytics.iconAnalytics==undefined" class="col-md-3">
+                                    Icon Clicks: 0
+                                </div>
+                                <div ng-show="d.analytics.mapAnalytics!=undefined" class="col-md-3">
+                                    Map Clicks: {{d.analytics.mapAnalytics}}
+                                </div>
+                                
+                                <div ng-show="d.analytics.mapAnalytics==undefined" class="col-md-3">
+                                    Map Clicks: 0
+                                </div>
+                                
+                                <div ng-show="d.analytics.listAnalytics!=undefined" class="col-md-3">
+                                    List Clicks: {{d.analytics.listAnalytics}}
+                                </div>
+                                
+                                <div ng-show="d.analytics.listAnalytics==undefined" class="col-md-3">
+                                    List Clicks: 0
+                                </div>
+                                <div ng-show="d.checkIn!=undefined" class="col-md-3">
+                                    Check-Ins: {{checkin}}
+                                </div>
+                                
+                                <div ng-show="d.checkIn==undefined" class="col-md-3">
+                                    Check-Ins: 0
+                                </div>
+                            </div>
+				  		</div>
+                        
+				  	</div>
+                    <div ng-show="displayOptions.viewDealsType=='flash'">
+                        <div ng-repeat="d in myDeals" ng-show="d.flashDeal=='yes'" class="row" >
+                            <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        {{d.name}} <div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-show="isActive(d)">ACTIVE</div><div style="display:inline-block;background:#e3bd60;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-show="!isActive(d)">EXPIRED</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{d.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{timestampDay(d.startTime, d.timezone)}}&nbsp; ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-danger btn-xs" ng-click="deleteDeal(d.key)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-times"></i></button>
+                                        <button class="btn btn-warning btn-xs" ng-click="openEditBox(d.key, 'actual')" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-pencil"></i></button>
+<button ng-show="userOptions.superadmin=='yes'" class="btn btn-success btn-xs" ng-click="oneTimePopupAdDeal(d.$id, d)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-usd"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>  
+                    </div>  
+				  	<div ng-repeat="d in myRecurringDeals" class="row" ng-show="displayOptions.viewDealsType=='recurring'">
+				  		<div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="padding:10px;">
+				  			<div class="row">
+				  				<div class="col-md-4">
+				  					{{d.name}} 
+                                    <div ng-show="userOptions.superadmin=='yes' || userOptions.admin=='yes'"><button ng-show="d.verified!=undefined" ng-click="verifyDeal(d.$id, d);" style="float:right;" type="button" class="btn btn-primary">{{ d.verified | date:'shortDate' }}</button>
+                                    
+                                    <button ng-show="d.verified==undefined" ng-click="verifyDeal(d.$id, d);" style="float:right;" type="button" class="btn btn-primary">Update</button></div>
+                                    
+				  					 <div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-if="d.featured=='yes'">Featured</div>
+				  				</div>
+				  				<div class="col-md-3">
+				  					{{d.description}}
+				  				</div>
+				  				<div class="col-md-3">
+				  					{{daysOfWeek(d)}}&nbsp; ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})
+				  				</div>
+				  				<div class="col-md-2">
+				  					
+				  					<button class="btn btn-danger btn-xs" ng-click="deleteRecurringDeal(d.$id)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-times"></i></button>
+				  					<button class="btn btn-warning btn-xs" ng-click="openEditBox(d.$id, 'recurring')" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-pencil"></i></button>
+                                    <button ng-show="userOptions.superadmin=='yes'" class="btn btn-success btn-xs" ng-click="popupAdDeal(d.$id, d)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-usd"></i></button>
+				  				</div>
+				  			</div>
+				  		</div>
+				  	</div>
+                    <div ng-repeat="d in myPopupAdDeals" class="row" ng-show="displayOptions.viewDealsType=='popupad'">
+				  		<div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="padding:10px;">
+				  			<div class="row">
+				  				<div class="col-md-4">
+				  					{{d.name}}
+				  					 <div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-if="d.featured=='yes'">Featured</div>
+				  				</div>
+				  				<div class="col-md-3">
+				  					{{d.description}}
+				  				</div>
+				  				<div class="col-md-3">
+				  					{{daysOfWeek(d)}}&nbsp; ({{d.startTime | date: 'hh:mm a'}} - {{d.endTime | date: 'hh:mm a'}})
+				  				</div>
+				  				<div class="col-md-2">
+				  					
+				  					<button class="btn btn-danger btn-xs" ng-click="deletePopupAdDeal(d.$id)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-times"></i></button>
+				  					
+				  				</div>
+				  			</div>
+				  		</div>
+				  	</div>  
+                      
+                  </div>
+                </div>
+<!-- PROFILE -->
+                <div class="" ng-show="displayOptions.mainTab=='profile'">
+                  <div class="row">
+                        <div class="col-lg-12">
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="fa fa-dashboard"></i> Profile
+                                </li>
+                            </ol>
+                        </div>
+                    </div>    
+                    
+<!--
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-info alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <i class="fa fa-info-circle"></i> Currently all profile changes must be approved before the changes will take effect. Email contact@mealsteals.com if you wish to change any information or images. 
+                            </div>
+                        </div>
+                  </div>
+-->
+                    
+                    <div id="saved" class="alert alert-success saved" style="text-align:center;" role="alert">Saved</div>
+
+                  <div class="panel-body">
+
+                    <div class="row" ng-show="userOptions.superadmin=='yes'">
+                        <div class="col-md-9">
+                            <label>
+                                <input type="radio" ng-model="bizInfo[displayOptions.currentLoc].approved" value="yes"> Approved
+                                <input type="radio" ng-model="bizInfo[displayOptions.currentLoc].approved" value="no"> Unapproved
+                            </label>
+                        </div>
+                    </div>
+                      
+                    <div class="row" ng-show="userOptions.superadmin=='yes'">
+                        <div class="col-md-2">
+                            <label>
+                                <input type="checkbox" ng-model="bizInfo[displayOptions.currentLoc].fakeBusiness" value="yes"> Fake Business
+                            </label>
+                        </div>
+                        <div class="col-md-2">
+                            <label>
+                                <input type="checkbox" ng-model="bizInfo[displayOptions.currentLoc].patio" value="yes"> 
+                                Outdoor dining/drinking
+                            </label>
+                        </div>
+                        <div class="col-md-2">
+                            <label>
+                                <input type="checkbox" ng-model="bizInfo[displayOptions.currentLoc].vegan" value="yes"> 
+                                Vegan options
+                            </label>
+                        </div>
+                        <div class="col-md-2">
+                            <label>
+                                <input type="checkbox" ng-model="bizInfo[displayOptions.currentLoc].games" value="yes"> 
+                                Games
+                            </label>
+                        </div>
+                    </div>
+
+          <button ng-click="addPlace(bizInfo[displayOptions.currentLoc].place, bizInfo[displayOptions.currentLoc].lat, bizInfo[displayOptions.currentLoc].lon, bizInfo[displayOptions.currentLoc].city, bizInfo[displayOptions.currentLoc].state)" class="button button-positive button-block add-biz-button">Add business</button>
+        
+            <button 
+                    ng-click="bizInfo[displayOptions.currentLoc].place=undefined;
+                              bizInfo[displayOptions.currentLoc].placeId=undefined;
+                              bizInfo[displayOptions.currentLoc].lat=undefined;
+                              bizInfo[displayOptions.currentLoc].lon=undefined;
+                              bizInfo[displayOptions.currentLoc].state=undefined;
+                              bizInfo[displayOptions.currentLoc].city=undefined;
+                              bizInfo[displayOptions.currentLoc].state=undefined;
+                              clearMessage()" 
+                    
+                    class="button button-clear">Clear Place</button>
+            
+                    <div class="row row-profile"> 
+                        <span class="profile-head">Business Name:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <input vs-google-autocomplete="options"
+
+                             ng-disabled="bizInfo[displayOptions.currentLoc].placeId"   
+                                    
+                             ng-model="bizInfo[displayOptions.currentLoc].place.name" 
+                             vs-latitude="bizInfo[displayOptions.currentLoc].lat"
+                             vs-longitude="bizInfo[displayOptions.currentLoc].lon"
+                             vs-place="bizInfo[displayOptions.currentLoc].place" 
+                             vs-place-id="bizInfo[displayOptions.currentLoc].placeId"
+                             vs-city="bizInfo[displayOptions.currentLoc].city"
+                             vs-state="bizInfo[displayOptions.currentLoc].state"
+                                   
+                             type="text" 
+                             name="address"
+                             id="address"
+                             class="form-control" 
+                             placeholder="Business">
+                            <span ng-show="bizInfo[displayOptions.currentLoc].businessName != undefined" class="glyphicon glyphicon-ok profile-ok" ></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].businessName == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok" ></span>
+
+                        </div>
+                    </div>
+                    <div class="row row-profile">
+                        <span class="profile-head">Address
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <form style="width:100%;">
+                              <input type="text" disabled class="form-control" ng-model="bizInfo[displayOptions.currentLoc].place.formatted_address"/>
+
+                            </form>
+                             <span ng-show="bizInfo[displayOptions.currentLoc].lat != undefined" class="glyphicon glyphicon-ok profile-ok" ></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].lat == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok" ></span>
+
+                        </div>
+                    </div>
+                        <!--  ng-model="bizInfo[displayOptions.currentLoc].address" 
+                              vs-latitude="bizInfo[displayOptions.currentLoc].lat"
+                              vs-longitude="bizInfo[displayOptions.currentLoc].lon"
+                        -->
+                       
+                        
+                    <div class="row row-profile">
+                        <span class="profile-head">Restaurant/bar phone:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <input type="tel" class="form-control" ng-model="bizInfo[displayOptions.currentLoc].phone" />
+                             <span ng-show="bizInfo[displayOptions.currentLoc].phone != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].phone == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+                    </div>
+                    <div class="row row-profile">
+                        <span class="profile-head">Contact Name:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <input type="text" class="form-control" ng-model="bizInfo[displayOptions.currentLoc].contactName" />
+                             <span ng-show="bizInfo[displayOptions.currentLoc].contactName != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].contactName == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+                    </div>
+                    
+
+                    
+
+                    <div class="row row-profile">
+                        <span class="profile-head">Timezone:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <select class="form-control" ng-model="bizInfo[displayOptions.currentLoc].timezone">
+                                <option ng-repeat="tz in timezones | filter:'Chicago'" value="{{tz}}">{{tz}}</option>
+                            </select>
+                             <span ng-show="bizInfo[displayOptions.currentLoc].timezone != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].timezone == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+                    </div>
+                      
+                    <div class="row row-profile">
+                        <span class="profile-head">Business Description:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <div style="width:100%;">
+                            <textarea class="form-control" ng-model="bizInfo[displayOptions.currentLoc].about"></textarea>
+                            </div>
+                             <span ng-show="bizInfo[displayOptions.currentLoc].about != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].about == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+
+
+
+                    </div>
+                      
+                    <div class="row row-profile">
+                        <span class="profile-head">Website:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <input type="text" class="form-control" ng-model="bizInfo[displayOptions.currentLoc].website" />
+                             <span ng-show="bizInfo[displayOptions.currentLoc].website != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].website == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+                    </div>
+                        
+                    <div class="row row-profile">
+                        <span class="profile-head">Facebook:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <input type="text" class="form-control" ng-model="bizInfo[displayOptions.currentLoc].facebook" />
+                             <span ng-show="bizInfo[displayOptions.currentLoc].facebook != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].facebook == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+                    </div>
+                        
+                    <div class="row row-profile">
+                        <span class="profile-head">Twitter:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <input type="text" class="form-control" ng-model="bizInfo[displayOptions.currentLoc].twitter" />
+                             <span ng-show="bizInfo[displayOptions.currentLoc].twitter != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].twitter == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+                    </div>
+                        
+                    <div class="row row-profile">
+                        <span class="profile-head">Instagram:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <input type="text" class="form-control" ng-model="bizInfo[displayOptions.currentLoc].instagram" />
+                             <span ng-show="bizInfo[displayOptions.currentLoc].instagram != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].instagram == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+                    </div>
+                      
+                    <div style="text-align:center;margin-top:15px;" class="row">
+                        <div class="col-md-3">
+                            <div style="float:right;">
+                                <button style="max-height:40px;" class="btn btn-outline-primary" type="file" ngf-select="uploadFiles($file, bizInfo[displayOptions.currentLoc], 'icon', 160, 160)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">Upload Icon</button>
+                                <div style="margin-top:30px;">
+                                    <div ng-show="bizInfo[displayOptions.currentLoc].icon==undefined" style="background-color: #f1f1f1;border: 1px black dashed;color: #656565;height: 80px;min-height:80px;width:80px;min-width:80px;margin-top: 5px;left: 0;right: 0;margin-right: auto;margin-left: auto;padding-top:10px;">
+                                        <span style="display:block;">Map Icon</span>
+                                        <span style="font-size:10px;">160px X 160px</span>    
+                                    </div>
+                                    <img ng-show="bizInfo[displayOptions.currentLoc].icon!=undefined" style="width:80px;" ng-src="{{bizInfo[displayOptions.currentLoc].icon}}" ng-show="bizInfo[displayOptions.currentLoc].icon!=undefined" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div style="float:right;">
+                                <button style="max-height:40px;" class="btn btn-outline-primary" type="file" ngf-select="uploadFiles($file, bizInfo[displayOptions.currentLoc], 'detailBackground', 1000)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">Upload Business Image</button>
+                                <div style="margin-top:5px;">
+                                    <div ng-show="bizInfo[displayOptions.currentLoc].detailBackground==undefined" style="background-color: #f1f1f1;border: 1px black dashed;color: #656565;height: 140px;min-height:140px;width:200px;min-width:200px;margin-top: 5px;left: 0;right: 0;margin-right: auto;margin-left: auto;padding-top:10px;" ng-show="bizInfo[displayOptions.currentLoc].detailBackground!=undefined">
+                                        <span style="display:block;margin-top:30px;">Business Image</span>
+                                        <span style="font-size:10px;">Any dimensions</span>
+                                    </div>
+                                    <img style="width:200px;" ng-show="bizInfo[displayOptions.currentLoc].detailBackground!=undefined" ng-src="{{bizInfo[displayOptions.currentLoc].detailBackground}}"/>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                    <span>Exact dimensions are not required. If you would like a custom icon, please email contact@mealsteals.com</span>
+                      
+<!--
+                    <div class="row row-profile">
+                        <div class="col-md-5 profile-input">
+                            <button style="max-height:40px;" class="btn btn-outline-primary" type="file" ngf-select="uploadFiles($file, bizInfo[displayOptions.currentLoc], 'icon', 160, 160)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+                                <span style="display:block;">Upload Map Icon</span>
+                            </button>
+                            <div ng-show="bizInfo[displayOptions.currentLoc].icon==undefined">
+                            <div style="background-color: #f1f1f1;border: 1px black dashed;color: #565656;height: 80px;min-height:80px;width:80px;min-width:80px;margin-top: 5px;margin-right:5px;">
+                                <span style="display:block;">Map Icon</span>
+                                <span>160px X 160px</span>    
+                            </div>
+                            <span>Ideal icon is 160px X 160px. </span>
+                            <span>
+                                Contact contact@mealsteals.com if you would like us to create a custom icon for you.</span>
+                            </div>
+                            <img ng-src="{{bizInfo[displayOptions.currentLoc].icon}}" ng-show="bizInfo[displayOptions.currentLoc].icon" />
+
+                        </div>
+                       
+                    </div>
+                    <div class="row row-profile">
+                        <div class="col-md-5 profile-input">
+                            <button style="max-height:40px;" class="btn btn-outline-primary active profile-head" type="file" ngf-select="uploadFiles($file, bizInfo[displayOptions.currentLoc], 'detailBackground', 1000)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+                                <span style="display:block;">Upload Business Image</span>
+                            </button>
+                            <div style="background-color: #f1f1f1;border: 1px black dashed;color: #565656;height: 80px;margin-top: 5px;margin-right:5px;" ng-show="bizInfo[displayOptions.currentLoc].detailBackground==undefined">
+                                <span style="display:block;">Upload</span>
+                                <span>Business Image</span></div>
+                            <img ng-src="{{bizInfo[displayOptions.currentLoc].detailBackground}}" ng-show="bizInfo[displayOptions.currentLoc].detailBackground" />
+
+                        </div>
+                    </div>
+-->
+
+
+
+                    <div ng-show="userOptions.superadmin=='yes'" class="row">
+
+                        <div class="col-md-9">
+                            All Deals On/Off:
+                            <label>
+                                <input type="radio" ng-model="bizInfo[displayOptions.currentLoc].allDealsToggle" value="yes"> On (normal)
+                                <input type="radio" ng-model="bizInfo[displayOptions.currentLoc].allDealsToggle" value="no"> All deals off!
+                            </label>
+                        </div>
+                    </div>
+
+                    <button style="display:block;margin-top:20px;margin-bottom:30px;" class="btn btn-primary" ng-click="addPlace(bizInfo[displayOptions.currentLoc].place, bizInfo[displayOptions.currentLoc].lat, bizInfo[displayOptions.currentLoc].lon, bizInfo[displayOptions.currentLoc].city, bizInfo[displayOptions.currentLoc].state)">Save</button>
+<!--                      saveProfile()-->
+                      <button ng-show="userOptions.superadmin=='yes'" style="display:block;margin-top:20px;margin-bottom:30px;" class="btn btn-danger" ng-click="deleteBiz(bizInfo[displayOptions.currentLoc])">Delete</button>
+                    
+                </div>		
+            </div>
+                    
+
+    <!-- ADD A DEAL -->
+        <div class="" ng-show="displayOptions.mainTab=='newdeal'">
+
+              <div class="row">
+                        <div class="col-lg-12">
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="fa fa-dashboard"></i> Add Deal
+                                </li>
+                            </ol>
+                        </div>
+              </div>
+            
+              <div ng-show="bizInfo[displayOptions.currentLoc].address != undefined && bizInfo[displayOptions.currentLoc].timezone != undefined && bizInfo[displayOptions.currentLoc].icon != undefined" class="row">
+                <div class="col-lg-12">
+<!--
+                    <div class="alert alert-info alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <i class="fa fa-info-circle"></i> Deals are added to the app within seconds! Add all of your recurring weekly specials and then add one time deals based on your daily business needs. 
+                    </div>
+-->
+                </div>
+              </div>
+            
+               <div ng-hide="bizInfo[displayOptions.currentLoc].address != undefined && bizInfo[displayOptions.currentLoc].timezone != undefined && bizInfo[displayOptions.currentLoc].icon != undefined" class="alert alert-danger">
+                    <strong>Finish completing profile before adding deals.</strong> missing details: <span ng-show="bizInfo[displayOptions.currentLoc].address == undefined">address, </span> <span ng-show="bizInfo[displayOptions.currentLoc].timezone == undefined">timezone, </span><span ng-show="bizInfo[displayOptions.currentLoc].icon == undefined">icon</span>
+               </div>
+              
+            
+               <div id="redeemable" class="row hidden-alert">
+                <div class="col-lg-12">
+                    <div class="alert alert-info alert-dismissable">
+                        <button type="button" class="close" ng-click="removeRedeemableAlert()" aria-hidden="true">&times;</button>
+                        <i class="fa fa-info-circle"></i> <strong>Redeemable: </strong>Checking this will generate a coupon screen within the app in which the dealhunter must show to redeem.  Only check this if you wish to verify each deal redeemed. 
+                    </div>
+                </div>
+              </div>
+            
+              <div id="exclusive" class="row hidden-alert">
+                <div class="col-lg-12">
+                    <div class="alert alert-info alert-dismissable">
+                        <button type="button" class="close" ng-click="removeExclusiveAlert()" aria-hidden="true">&times;</button>
+                        <i class="fa fa-info-circle"></i> <strong>Exclusive: </strong>Check this ONLY if this deal is not a regularly scheduled deal. Exclusive deals are organized within the app to get more views than regularly scheduled deals. 
+                    </div>
+                </div>
+              </div>
+            
+            
+
+<!--
+              <div class="panel-heading">
+                <h3 class="panel-title">Add a Deal</h3>
+              </div>
+-->
+              <div class="panel-body" style="margin-top:-15px;">
+                  
+                <div class="row">
+                    <input ng-class="{'btn-primary':newDeal.type=='recurring' && newDeal.timeType=='happyhour'}" class="btn btn-lg" type="button" ng-click="newDeal.type='recurring';newDeal.timeType='happyhour'" value="Weekly Special">   
+                    
+<!--                    <input ng-class="{'btn-primary':newDeal.type=='onetime' && newDeal.timeType=='happyhour' && dealDay=='today'}" class="btn btn-lg" type="button" ng-click="newDeal.type='onetime';newDeal.timeType='happyhour';dealDay='today';flashDeal()" value="Flash Deal">-->
+                    
+                    <input ng-class="{'btn-primary':newDeal.type=='onetime' && newDeal.timeType=='happyhour' && dealDay=='future'}" class="btn btn-lg" type="button" ng-click="newDeal.type='onetime';newDeal.timeType='happyhour';dealDay='future';" value="Flash Deal">
+                    
+                    <input ng-class="{'btn-primary':newDeal.timeType=='event'}" class="btn btn-lg" type="button" ng-click="newDeal.timeType='event'" value="Event">
+                </div>
+                  
+                <div style="margin-left:-20px;">  
+                    <button ng-show="displayOptions.advancedOptions=='hide'" ng-click="displayOptions.advancedOptions='show'" type="button" class="btn btn-link">Show Advanced Options</button>
+                    <button ng-show="displayOptions.advancedOptions=='show'" ng-click="displayOptions.advancedOptions='hide'" type="button" class="btn btn-link">Hide Advanced Options</button>
+                </div>
+                  
+                <div class="row" style="margin-top:20px;margin-bottom:15px;">
+                    <div class="col-md-4">
+                        
+                        <div style="">
+                        <label>
+
+                        <input type="radio" ng-model="newDeal.foodOrDrink" value="food">
+                            Food
+                        </label>
+                        &nbsp;&nbsp;
+                        <label>
+                          <input type="radio" ng-model="newDeal.foodOrDrink" value="drink">
+                            Drink
+                        </label>
+                        &nbsp;&nbsp;
+                        <label>
+                          <input type="radio" ng-model="newDeal.foodOrDrink" value="both">
+                            Both
+                        </label>
+                    </div>
+                    </div>
+                </div>  
+                  
+                <div style="margin-bottom:15px;" class="row">
+                    <div class="col-md-6">
+                    Deal Name:
+                    <input type="text" class="form-control" ng-model="newDeal.name" placeholder="Ex. 50 cent Wing Tuesday" />
+                    </div>
+                </div>
+                    
+                <div style="margin-bottom:15px;" class="row">
+                    <div class="col-md-6">
+                    Detailed Description:
+                    <input type="text" class="form-control" ng-model="newDeal.description" placeholder="Ex. Boneless and bone-in wings are 50 cents all night, so come in and get your fill." />
+                    </div>
+                </div>
+                  
+                
+                  
+                <div ng-show="displayOptions.advancedOptions=='show'" class="row" style="margin-top:20px;">
+                    <div class="col-md-3">
+                        Exclusive: <button class="info-button" ng-click="exclusiveAlert()"> <i class="fa fa-info-circle"></i></button>
+                        <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                        <label>
+                        <input type="radio" ng-model="newDeal.exclusive" value="yes">
+                            Yes
+                        </label>
+                        &nbsp;&nbsp;
+                        <label>
+                          <input type="radio" ng-model="newDeal.exclusive" value="no">
+                            No
+                        </label>
+                    </div>
+                    </div>
+                    <div class="col-md-3">
+                        Redeemable: <button class="info-button" ng-click="redeemableAlert()"> <i class="fa fa-info-circle"></i></button>
+                        <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                        <label>
+                        <input type="radio" ng-model="newDeal.redeemable" value="yes">
+                            Yes
+                        </label>
+                        &nbsp;&nbsp;
+                        <label>
+                          <input type="radio" ng-model="newDeal.redeemable" value="no">
+                            No
+                        </label>
+                    </div>
+                    </div>
+                    <div class="col-md-3" ng-show="userOptions.superadmin=='yes'">
+                        Featured:
+                        <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                        <label>
+                        <input type="radio" ng-model="newDeal.featured" value="yes">
+                            Yes
+                        </label>
+                        &nbsp;&nbsp;
+                        <label>
+                          <input type="radio" ng-model="newDeal.featured" value="no">
+                            No
+                        </label>
+                    </div>
+                    </div>
+                    
+                </div>
+                
+                
+                
+                <div class="row" style="margin-top:15px;">
+                    <div class="col-md-3">
+                    
+                        Deal Image:
+                        
+                        <div>
+                        <img style="margin-top:5px;height: 90px;border-radius: 5px;" ng-src="{{newDeal.dealFullImage}}" />
+                    </div>
+                    </div>
+                </div>
+                <div style="margin-top:15px;">
+                    Select Image:
+                    <div style="display:flex;flex-wrap: wrap;">
+                        <button style="background-color: #f1f1f1;border: 1px black dashed;color: #565656;height: 80px;margin-top: 5px;margin-right:5px;" class="btn btn-primary" type="file" ngf-select="uploadFiles($file, newDeal, 'img', 100); uploadFiles($file, newDeal, 'dealFullImage', 1000)" accept="image/*" ngf-max-height="10000" ngf-max-size="3MB">
+                                Upload New
+                        </button>
+                        <div ng-repeat="d in myRecurringDeals">
+                            <span>    
+                            <img ng-click="newDeal.dealFullImage=d.dealFullImage;" style="max-width:100%;width:auto;border-radius:10px;height:90px;padding:5px;" ng-src="{{d.dealFullImage}}"/>
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                  
+                <div ng-show="newDeal.timeType=='event'" class="row" style="margin-left:0px;margin-top:15px;">
+                  
+                    <input ng-class="{'btn-primary':newDeal.type=='recurring'}" class="btn btn-lg" type="button" ng-click="newDeal.type='recurring';" value="Weekly">
+                    
+                    <input ng-class="{'btn-primary':newDeal.type=='onetime'}" class="btn btn-lg" type="button" ng-click="newDeal.type='onetime';dealDay='future'" value="One Time">
+                    
+                </div>
+                  
+                <!-- <div ng-show="newDeal.type=='onetime'">
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-md-3">
+                            Start:
+                            <timepicker ng-model="newDeal.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+                        </div>
+                        <div class="col-md-3">
+                            End:
+                            <timepicker ng-model="newDeal.endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+                        </div>
+                    </div>
+                </div> -->
+
+
+                <div>
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-md-4" ng-show="newDeal.type=='recurring'">
+                            Days:
+                            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div><label><input type="checkbox" ng-model="newDeal.daysOfWeek.monday" ng-true-value="'yes'" ng-false-value="'no'"> Monday</label></div>
+                                        <div><label><input type="checkbox" ng-model="newDeal.daysOfWeek.tuesday" ng-true-value="'yes'" ng-false-value="'no'"> Tuesday</label></div>
+                                        <div><label><input type="checkbox" ng-model="newDeal.daysOfWeek.wednesday" ng-true-value="'yes'" ng-false-value="'no'"> Wednesday</label></div>
+                                        <div><label><input type="checkbox" ng-model="newDeal.daysOfWeek.thursday" ng-true-value="'yes'" ng-false-value="'no'"> Thursday</label></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div><label><input type="checkbox" ng-model="newDeal.daysOfWeek.friday" ng-true-value="'yes'" ng-false-value="'no'"> Friday</label></div>
+                                        <div><label><input type="checkbox" ng-model="newDeal.daysOfWeek.saturday" ng-true-value="'yes'" ng-false-value="'no'"> Saturday</label></div>
+                                        <div><label><input type="checkbox" ng-model="newDeal.daysOfWeek.sunday" ng-true-value="'yes'" ng-false-value="'no'"> Sunday</label></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="margin-top:15px;margin-bottom:15px;">
+                         <div class="col-md-4" ng-show="dealDay=='future' && newDeal.type=='onetime'">
+                            
+                            Enter Date:
+                            <input style="margin-left:10px;" ng-model='dealDate' type="date" name="event">
+                            
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            Start:
+                            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                            <center><timepicker ng-model="newDeal.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                            End:
+                            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                            <center><timepicker ng-model="newDeal.endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+                        </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                  
+
+                <br />
+                <button class="btn btn-primary" ng-click="addNewDeal()">Add Deal Now!</button>
+
+              </div>
+        </div>
+
+    <!-- USER ACCESS -->
+        <div class="panel panel-default" ng-show="displayOptions.mainTab=='useraccess'">
+          <div class="panel-heading">
+            <h3 class="panel-title">User Access</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" ng-model="uEmail" />
+                </div>
+                <div class="col-md-2">
+                    <button ng-click="addUserAccess(uEmail, displayOptions.currentLoc);uEmail=''" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul>
+                        <li ng-repeat="email in bizInfo[displayOptions.currentLoc].emails">{{email.comma_email || email}} 
+                            <button class="btn btn-danger" ng-click="removeUserAccess(email, displayOptions.currentLoc)">remove</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+            
+    <!-- Ads/featured -->
+            
+        <div class="" ng-show="displayOptions.mainTab=='ads'">
+           <div class="row">
+                        <div class="col-lg-12">
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="fa fa-dashboard"></i> Ads
+                                </li>
+                            </ol>
+                        </div>
+            </div>
+            <div class="panel-body" style="padding-left:30px;padding-right:30px;">
+
+                    <div style="margin-left:-10px;margin-bottom:10px;">
+
+
+                    <label>
+                      <input type="radio" selected ng-model="displayOptions.viewDealsAdmin" value="featured">
+                        Featured
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>
+                      <input type="radio" selected ng-model="displayOptions.viewDealsAdmin" value="all">
+                        All
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>
+                    <input type="radio" ng-model="displayOptions.viewDealsAdmin" value="popupad">
+                        Pop Up Ad
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>
+                    <input type="radio" ng-model="displayOptions.viewDealsAdmin" value="exclusive">
+                        Exclusive
+                    </label>
+                    <label>
+                    <input type="radio" ng-model="displayOptions.viewDealsAdmin" value="onetime">
+                        One Time
+                    </label>
+                    </div>
+                    
+                    <div ng-show="displayOptions.viewDealsAdmin=='all'">
+                    <button>Monday</button>
+                        <div ng-repeat="d in allDeals" class="row" ng-show="isMonday(d)">
+                            
+                            <div class="col-md-12" style="padding:10px;">
+                                <div class="row">
+
+                                    <div class="col-md-2">
+                                          
+                                        {{ d.verified | date:'shortDate' }}
+                                    </div>
+                                    <div class="col-md-2">
+                                          
+                                        {{d.locName}}
+                                    </div>
+                                    <div class="col-md-2">
+
+                                        {{d.name}}
+                                         
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{d.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})&nbsp;<span style="font-size:10px;">{{daysOfWeek(d)}}</span>
+                                    </div>
+                                    <div class="col-md-2">
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <button>Tuesday</button>
+                    <button>Wednesday</button>
+                    <button>Thursday</button>
+                    <button>Friday</button>
+                    <button>Saturday</button>
+                    <button>Sunday</button>
+                    
+                    </div>
+                    
+                    
+                    <div ng-show="displayOptions.viewDealsAdmin=='featured'">
+                        <div class="col-md-12 greybg" style="margin-left:-10px;padding:10px;">
+                            Monday
+                        </div>
+                        <div ng-repeat="d in allDeals" class="row" ng-show="isFeaturedMonday(d)">
+                            
+                            <div class="col-md-12" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        {{d.locName}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{d.name}}
+                                         
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{d.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})&nbsp;<span style="font-size:10px;">{{daysOfWeek(d)}}</span>
+                                    </div>
+                                    <div class="col-md-2">
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 greybg" style="margin-left:-10px;padding:10px;">
+                            Tuesday
+                        </div>
+                        <div ng-repeat="d in allDeals" class="row" ng-show="isFeaturedTuesday(d)">
+                            
+                            <div class="col-md-12" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        {{d.locName}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{d.name}}
+                                         
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{d.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})&nbsp;<span style="font-size:10px;">{{daysOfWeek(d)}}</span>
+                                    </div>
+                                    <div class="col-md-2">
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 greybg" style="margin-left:-10px;padding:10px;">
+                            Wednesday
+                        </div>
+                        <div ng-repeat="d in allDeals" class="row" ng-show="isFeaturedWednesday(d)">
+                            
+                            <div class="col-md-12" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        {{d.locName}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{d.name}}
+                                         
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{d.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})&nbsp;<span style="font-size:10px;">{{daysOfWeek(d)}}</span>
+                                    </div>
+                                    <div class="col-md-2">
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 greybg" style="margin-left:-10px;padding:10px;">
+                            Thursday
+                        </div>
+                        <div ng-repeat="d in allDeals" class="row" ng-show="isFeaturedThursday(d)">
+                            
+                            <div class="col-md-12" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        {{d.locName}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{d.name}}
+                                         
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{d.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})&nbsp;<span style="font-size:10px;">{{daysOfWeek(d)}}</span>
+                                    </div>
+                                    <div class="col-md-2">
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 greybg" style="margin-left:-10px;padding:10px;">
+                            Friday
+                        </div>
+                        <div ng-repeat="d in allDeals" class="row" ng-show="isFeaturedFriday(d)">
+                            
+                            <div class="col-md-12" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        {{d.locName}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{d.name}}
+                                         
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{d.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})&nbsp;<span style="font-size:10px;">{{daysOfWeek(d)}}</span>
+                                    </div>
+                                    <div class="col-md-2">
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 greybg" style="margin-left:-10px;padding:10px;">
+                            Saturday
+                        </div>
+                        <div ng-repeat="d in allDeals" class="row" ng-show="isFeaturedSaturday(d)">
+                            
+                            <div class="col-md-12" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        {{d.locName}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{d.name}}
+                                         
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{d.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})&nbsp;<span style="font-size:10px;">{{daysOfWeek(d)}}</span>
+                                    </div>
+                                    <div class="col-md-2">
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 greybg" style="margin-left:-10px;padding:10px;">
+                            Sunday
+                        </div>
+                        <div ng-repeat="d in allDeals" class="row" ng-show="isFeaturedSunday(d)">
+                            
+                            <div class="col-md-12" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        {{d.locName}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{d.name}}
+                                         
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{d.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})&nbsp;<span style="font-size:10px;">{{daysOfWeek(d)}}</span>
+                                    </div>
+                                    <div class="col-md-2">
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="displayOptions.viewDealsAdmin=='popupad'">
+                        <div ng-repeat="d in allPopupAdDeals" class="row">
+                            <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="padding:10px;">
+                                <div class="row">
+                                    
+                                    <div class="col-md-2">
+                                        {{d.locName}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{d.name}}
+                                         <div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-if="d.featured=='yes'">Featured</div>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                        {{daysOfWeek(d)}}&nbsp; ({{d.startTime | date: 'hh:mm a'}} - {{d.endTime | date: 'hh:mm a'}})
+                                    </div>
+                                    
+                                    <div class="col-md-1">
+                                        {{d.impressions}}
+                                    </div>
+                                    
+                                    <div class="col-md-1">
+
+                                        <button class="btn btn-danger btn-xs" ng-click="deletePopupAdDeal(d.$id)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-times"></i></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      
+                  </div>
+             
+          
+        </div> 
+            
+    <!-- PAYMENT -->
+            
+        <div class="" ng-show="displayOptions.mainTab=='payment'">
+            
+           <div class="row">
+
+               <div class="payment">
+                    <div style="width:1020px;margin-bottom:30px;">
+                        <h1><center>Stand out from the competition.</center></h1>
+                        <span><center>Be the first seen by listing your deals ahead of everyone else.</center></span>
+                    </div>
+                    <div style="margin-left:20px;" class='wrapper'>
+                      <div class='package'>
+                        <div class='name'>à la carte</div>
+                        <div class='alacarte'>$0.10</div>
+                        
+                        <hr>
+                        <ul>
+                          <li stye="text-align:center;">
+                            $10 minimum
+                          </li>
+                          <li>
+                            <form style="display:flex;" name="myForm">
+                              <input placeholder="number of ads" style="" type="number" ng-model="purchaseAd"><br>
+                            </form>
+                        
+                          </li>
+<!--                              <button  ng-click="payCustom(displayOptions.currentLoc, purchaseAd)" class="btn btn-primary btn-block btn-purchase">Pay ${{purchaseAd/10}}</button>-->
+                              <button ng-click="payCustom(displayOptions.currentLoc, purchaseAd)" class="btn btn-primary btn-block btn-purchase">
+                                  <span ng-show="purchaseAd > 99">Pay ${{purchaseAd/10}}</span>
+                                  <span ng-show="purchaseAd < 100 || purchaseAd==undefined">100 ad min.</span>
+                            
+                              </button>
+                        </ul>
+                      </div>
+                        
+                      <div class='package'>
+                        <div class='name'>Starter</div>
+                        <div class='price'>$39.00</div>
+                        <div class='trial'>10x Views</div>
+                        <hr>
+                        <ul>
+                          <li>
+                            <strong>500</strong>
+                            Popup ads served
+                          </li>
+                          <li>
+                            <strong>5</strong>
+                            Featured Deals
+                          </li>
+                              <button type="button" ng-click="payStarter()" class="btn btn-primary btn-block btn-purchase">Purchase</button>
+                        </ul>
+                      </div>
+                      <div class='package'>
+                        <div class='name'>Plus</div>
+                        <div class='price'>$79.00</div>
+                        <div class='trial'>20x Views</div>
+                        <hr>
+                        <ul>
+                          <li>
+                            <strong>1000</strong>
+                            Popup ads served
+                          </li>
+                          <li>
+                            <strong>10</strong>
+                            Featured Deals
+                          </li>
+<!--
+                          <li>
+                            30 Day Free Trial
+                          </li>
+-->
+                            
+                          <button type="button" ng-click="payPlus()" class="btn btn-primary btn-block btn-purchase">Purchase</button>
+
+                        </ul>
+                          
+                      </div>
+                      <div class='package'>
+                        <div class='name'>Premium</div>
+                        <div class='price'>$119.00</div>
+                        <div class='trial'>25x Views</div>
+                        <hr>
+                        <ul>
+                          <li>
+                            <strong>1000</strong>
+                            Popup ads served
+                          </li>
+                          <li>
+                            <strong>12</strong>
+                            Featured Deals
+                          </li>
+                          <li>
+                            Managed service
+                          </li>
+                          <button type="button" ng-click="payPremium()" class="btn btn-primary btn-block btn-purchase">Purchase</button>
+                        </ul>
+                          
+                      </div>
+                    </div>
+                   
+                   
+                 
+<!--
+                   <div class="col-lg-4">
+                   <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Starter<span class="pull-right"></span></h3>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="list-group">
+                                <span style="border:none;" class="list-group-item">
+                                    <ul class="list-unstyled">
+                                        <li>10x views (estimated)</li>
+                                        <li>100 ads per month</li>
+                                    </ul>
+                                </span>
+                               
+                            </div>
+                            
+                            <button type="button" ng-click="payStarter()" class="btn btn-primary btn-block">Purchase $59.99/mo</button>
+                        </div>
+                    </div>
+                   </div>
+                   <div class="col-lg-4">
+                   <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Plus<span class="pull-right"><div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:12px;padding:3px;">Most Popular</div></span></h3>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="list-group">
+                                <span style="border:none;" class="list-group-item">
+                                    <ul class="list-unstyled">
+                                        <li>20x views (estimated)</li>
+                                        <li>30 day free trial</li>
+                                        <li>100 ads per month</li>
+                                    </ul>
+                                </span>
+                               
+                            </div>
+                            
+                            <button type="button" ng-click="payPlus()" class="btn btn-primary btn-block">Purchase $79.99/mo</button>
+                        </div>
+                    </div>
+                   </div>
+                   <div class="col-lg-4">
+                   <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Premium<span class="pull-right"></span></h3>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="list-group">
+                                <span style="border:none;" class="list-group-item">
+                                    <ul class="list-unstyled">
+                                        <li>30x views (estimated)</li>
+                                        <li>30 day free trial</li>
+                                        <li>100 ads per month</li>
+                                    </ul>
+                                </span>
+                               
+                            </div>
+                           
+                            <button type="button" ng-click="payPremium()" class="btn btn-primary btn-block">Purchase $119.99/mo</button>
+                        </div>
+                    </div>
+                   </div>
+-->
+                   
+<!--
+                   <button ng-click="commencePayment()">Pay</button>
+                   
+                   <button ng-click="premium()">Premium</button>
+-->
+   
+               </div>
+               
+            </div>
+        </div>
+            
+<!-- ADS SETTINGS -->
+            
+        <div ng-show="displayOptions.mainTab=='adspace'">
+            <div class="col-lg-4">
+                    <div ng-model="displayOptions.viewDealsType" class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Deal</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form name="myForm">
+                              Ads <input type="number" ng-model="adValue" max="{{bizInfo[displayOptions.currentLoc].currentPlan.adCount}}"><br>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+            
+            <div class="col-lg-4">
+                    <div ng-model="displayOptions.viewDealsType" class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Ad's remaining</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div ng-show="bizInfo[displayOptions.currentLoc].currentPlan!=undefined" class="mobile-huge">{{bizInfo[displayOptions.currentLoc].currentPlan.adCount}}</div>
+                            <div ng-show="bizInfo[displayOptions.currentLoc].currentPlan==undefined" class="mobile-huge">0</div>
+                        </div>
+                    </div>
+            </div>
+            
+             <div class="col-lg-4">
+                    <div ng-model="displayOptions.viewDealsType" class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Admin Credits</h3>
+                        </div>
+                        <div style="display:flex;" class="panel-body">
+                            <form style="display:flex;" name="myForm">
+                              <input placeholder="number of ads" style="" type="number" ng-model="adCredits"><br>
+                            </form>
+                              <button style="margin-left:10px;" ng-click="adminPopupCredits(displayOptions.currentLoc, adCredits)" class="btn btn-primary btn-block">Add
+                              </button>
+                        </div>
+                    </div>
+            </div>
+        
+             <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li class="active">
+                            <i class="fa fa-dashboard"></i>Upgraded
+                        </li>
+                        <button ng-click="openTransactionHistory(bizInfo[displayOptions.currentLoc].$id, bizInfo[displayOptions.currentLoc])" style="float:right;" type="button" class="btn btn-secondary">Transaction History</button>                                                              
+                    </ol>
+                    
+                </div>   
+            </div>
+            <div ng-repeat="d in myPopupAdDeals" class="row">
+                <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="margin-left:1.5%;width:97%;padding:10px;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{d.name}}
+                             <div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-if="d.featured=='yes'">Featured</div>
+<!--                             <button ng-click="adServed(d.$id, d, displayOptions.currentLoc,  bizInfo[displayOptions.currentLoc].currentPlan.adCount)" type="button" style="float:right;" class="btn btn-info">Ad Served</button>-->
+                        </div>
+                        
+                        
+                        <div class="col-md-3">
+                            {{d.description}}
+                        </div>
+                        <div class="col-md-3">
+                            {{daysOfWeek(d)}}&nbsp; ({{d.startTime | date: 'hh:mm a'}} - {{d.endTime | date: 'hh:mm a'}})
+                        </div>
+                        <div class="col-md-2">
+
+                            <button class="btn btn-warning btn-xs" style="margin-left:10px;">{{d.impressions}}/{{bizInfo[displayOptions.currentLoc].currentPlan.adCount}}</button>
+                            <button class="btn btn-danger btn-xs" ng-click="deletePaidPopupAdDeal(d.$id, d, bizInfo[displayOptions.currentLoc].currentPlan.adCount)" style="float:right;margin-left:10px;">X</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top:15px;" class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li class="active">
+                            <i class="fa fa-dashboard"></i>Deals
+                        </li>
+                    </ol>
+                </div>   
+            </div>
+            <div ng-repeat="d in myRecurringDeals" class="row">
+                <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="margin-left:1.5%;width:97%;padding:10px;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{d.name}} 
+
+                             <div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-if="d.featured=='yes'">Featured</div>
+                        </div>
+                        <div class="col-md-3">
+                            {{d.description}}
+                        </div>
+                        <div class="col-md-3">
+                            {{daysOfWeek(d)}}&nbsp; ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-info btn-xs" ng-click="adminPopupAdDeal(d.$id, d)" style="float:right;margin-left:10px;">Admin</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-success btn-xs" ng-click="paidPopupAdDeal(d.$id, d, adValue, bizInfo[displayOptions.currentLoc].currentPlan.adCount)" style="float:right;margin-left:10px;">Boost {{adValue}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+<!-- EVENTS SECTION -->
+            
+        <div class="" ng-show="displayOptions.mainTab=='events'">
+        
+           <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li class="active">
+                            <i class="fa fa-dashboard"></i>Events
+                        </li>
+                    </ol>
+                </div>
+               
+               
+            </div>
+            
+            <div class="row row-profile"> 
+                        <span class="profile-head">Event Name:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <input type="text" class="form-control" ng-model="eventObj.eventName" />
+                            <span ng-show="eventObj.eventName != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="eventObj.eventName == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+
+                        </div>
+                    </div>
+                    <div class="row row-profile">
+                        <span class="profile-head">Address
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <form style="width:100%;">
+                              <input vs-google-autocomplete
+                 
+                                 ng-model="eventObj.eventAddress" 
+                                 vs-latitude="eventObj.eventLat"
+                                 vs-longitude="eventObj.eventLon"
+                                 vs-place="address.place" 
+                                 vs-place-id="address.components.placeId"
+                                 vs-street-number="address.components.streetNumber" 
+                                 vs-street="address.components.street"
+                                 vs-city="eventObj.eventCity"
+                                 vs-state="eventObj.eventState"
+                                 vs-country-short="address.components.countryCode"
+                                 vs-country="address.components.country"
+                                 vs-post-code="address.components.postCode"
+                                 vs-district="address.components.district"
+
+                                 type="text" 
+                                 name="address"
+                                 id="address"
+                                 class="form-control" 
+                                 placeholder="Enter address">
+
+                            </form>
+                             <span ng-show="bizInfo[displayOptions.currentLoc].lat != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].lat == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+
+                        </div>
+                    </div>
+                        <!--  ng-model="bizInfo[displayOptions.currentLoc].address" 
+                              vs-latitude="bizInfo[displayOptions.currentLoc].lat"
+                              vs-longitude="bizInfo[displayOptions.currentLoc].lon"
+                        -->
+
+                    <div class="row row-profile">
+                        <span class="profile-head">Timezone:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <select class="form-control" ng-model="bizInfo[displayOptions.currentLoc].timezone">
+                                <option ng-repeat="tz in timezones" value="{{tz}}">{{tz}}</option>
+                            </select>
+                             <span ng-show="bizInfo[displayOptions.currentLoc].timezone != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].timezone == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+                    </div>
+                      
+                    <div class="row row-profile">
+                        <span class="profile-head">Event Description:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <div style="width:100%;">
+                            <textarea class="form-control" ng-model="eventObj.eventDesc"></textarea>
+                            </div>
+                             <span ng-show="eventDesc != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="eventDesc == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+
+
+
+                    </div>
+            
+                    <div class="row row-profile">
+                        <span class="profile-head">phone:
+                        </span>
+                        <div class="col-md-5 profile-input">
+                            
+                            <input type="text" class="form-control" ng-model="eventObj.eventPhone" />
+                             <span ng-show="bizInfo[displayOptions.currentLoc].phone != undefined" class="glyphicon glyphicon-ok profile-ok"></span>
+                            <span ng-show="bizInfo[displayOptions.currentLoc].phone == undefined" class="glyphicon glyphicon-exclamation-sign profile-not-ok"></span>
+                        </div>
+                    </div>
+                      
+                    <div class="row row-profile">
+                        <div class="col-md-5 profile-input">
+                            
+                            <!--
+                                
+
+                            -->
+                            
+                            <button style="max-height:40px;" class="btn btn-default active profile-head" type="file" ngf-select="uploadFiles($file, eventObj, 'eventIcon', 160, 160)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+                                Map Icon
+                            </button>
+                            <img ng-src="{{eventObj.eventIcon}}" ng-show="eventObj.eventIcon" />
+
+                        </div>
+                    </div>
+                    <div class="row row-profile">
+                        <div class="col-md-5 profile-input">
+                            <button style="max-height:40px;" class="btn btn-default active profile-head" type="file" ngf-select="uploadFiles($file, eventObj, 'eventLargeImage', 1000)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+                                Event Image
+                            </button>
+                            <img ng-src="{{eventObj.eventLargeImage}}" ng-show="eventObj.eventLargeImage" />
+
+                        </div>
+                    </div>
+            
+            
+    
+<!--
+                <div class="col-md-3">
+                        Event Image:
+                        <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                        
+                        <button style=";" class="btn btn-primary" type="file" ngf-select="uploadFiles($file, eventObj, 'eventImg', 100); uploadFiles($file, eventObj, 'eventFullImage', 1000)" accept="image/*" ngf-max-height="10000" ngf-max-size="3MB">
+                            Upload New
+                          </button>
+                        <img style="margin-left:10px;" ng-src="{{eventObj.eventImg}}" />
+
+                <br>
+                <label>Image:
+                
+                </label>
+-->
+            
+            
+                
+            
+                <div>
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-md-4" ng-show="newDeal.type=='recurring'">
+                          
+                            </div>
+                        </div>
+                         <div class="col-md-4">
+                            Enter Date:
+                            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+
+                                <center>
+                                <input ng-model='dealDate' type="date" name="event">
+                                </center>
+                        </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            Start:
+                            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                            <center><timepicker ng-model="eventObj.eventStartTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                            End:
+                            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                            <center><timepicker ng-model="eventObj.eventEndTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+                        </div>
+                        </div>
+                    </div>
+             <br />    
+            
+            
+                <br>
+                <button class="btn btn-primary" ng-click="addNewEvent();addNewDeal()">Add New Event</button>
+            
+            <!-- event list 
+
+
+-->
+            
+            <div ng-show="d.recurringDealID==undefined" ng-repeat="d in allEventDeals | orderBy: '-startTime'" class="list-group">
+                                <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="padding:10px;">
+				  			<div class="row">
+				  				<div class="col-md-4">
+				  					{{d.name}}
+                                    
+                                    
+				  					 <div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-if="d.featured=='yes'">Featured</div>
+				  				</div>
+				  				<div class="col-md-3">
+				  					{{d.description}}
+				  				</div>
+				  				<div class="col-md-3">
+				  					{{d.startTime | date:'shortDate'}}&nbsp; ({{formatTimestamp(d.startTime, d.timezone)}} - {{formatTimestamp(d.endTime, d.timezone)}})
+				  				</div>
+				  				<div class="col-md-2">
+				  					
+                                    <button class="btn btn-danger btn-xs" ng-click="deleteDeal(d.key)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-times"></i></button>
+				  					<button class="btn btn-warning btn-xs" ng-click="openEditBox(d.key, 'actual')" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-pencil"></i></button>
+                                    <button ng-show="userOptions.superadmin=='yes'" class="btn btn-success btn-xs" ng-click="oneTimePopupAdDeal(d.$id, d)" style="width:24px;float:right;margin-left:10px;"><i class="fa fa-usd"></i></button>
+				  				</div>
+				  			</div>
+				  		</div>
+
+            </div>
+               
+        </div>
+            
+<!-- FEEDBACK -->
+            
+        <div ng-show="displayOptions.mainTab=='feedback'">
+            <div ng-repeat="feedback in feedback" class="list-group">
+                <div style="margin-top:30px;" class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'">
+                    <div class="row">
+                        <div class="col-md-6">{{feedback.message}}</div>
+                        <div class="col-md-3">{{feedback.username}}</div>
+                        <div style="font-size:10px;" class="col-md-3">{{feedback.id}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+              
+<!-- ADMIN ANALYTICS SECTION -->
+ 
+        <div class="adminAnalytics" ng-show="displayOptions.mainTab=='adminAnalytics'">
+            
+            <button ng-click="restoreDeals()">Restore Deals</button>
+            <button ng-show="displayOptions.analyticsTab=='businesses'" ng-click="displayOptions.analyticsTab='users'">Users</button>
+            <button ng-show="displayOptions.analyticsTab=='users'" ng-click="displayOptions.analyticsTab='businesses';loadBizUsers()">Businesses</button>
+            <button ng-show="displayOptions.analyticsTab=='businesses'" ng-click="displayOptions.analyticsTab='images';loadImages()">Image Verification</button>
+            
+            <div ng-show="displayOptions.analyticsTab=='images'">
+                <span>Recurring</span>
+                        <div ng-repeat="thisRec in recurringObj">
+                            
+                            <div ng-repeat="images in thisRec.sharedImages">
+                                <img style="max-width:100%;width:auto;border-radius:10px;height:90px;padding:5px;" ng-src="{{thisRec.icon}}"/>
+                            {{thisRec.locName}}
+                            {{thisRec.name}}
+                                <span>    
+                                    <img style="max-width:100%;width:auto;border-radius:10px;height:90px;padding:5px;" ng-src="{{images.url}}"/>
+
+                                </span>
+                                <button ng-show="userOptions.superadmin=='yes'" class="btn btn-success" ng-click="verifyImage()" style="width:24px;float:right;margin-left:10px;">Verify</button>
+                                 <button ng-show="userOptions.superadmin=='yes'" class="btn btn-danger" ng-click="deleteImage()" style="width:24px;float:right;margin-left:10px;">Delete</button>
+                            </div>
+                        </div>
+                <span>One-Time</span>
+                        <div ng-repeat="thisDeal in flashDeals">
+                            <div ng-repeat="images in thisDeal.sharedImages">
+                                <span>    
+                                    <img style="max-width:100%;width:auto;border-radius:10px;height:90px;padding:5px;" ng-src="{{images.url}}"/>
+<!--ng-show="images.verified == false"-->
+                                </span>
+                            </div>
+                        </div>
+            </div>
+            
+            
+            
+            
+            
+            <div ng-show="displayOptions.analyticsTab=='businesses'">
+                
+                <div ng-repeat="biz in bizLocations" class="list-group">
+                            <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <span>{{biz.businessName}}</span>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span ng-hide="biz.emails.comma_email=='bmkopp10@gmail.com' ||
+                                                       biz.emails.comma_email=='brian@mealsteals.com' ||
+                                                       biz.emails.comma_email=='bourge22@uwm.edu' ||
+                                                       biz.emails.comma_email=='dow487@gmail.com' ||
+                                                       biz.emails.comma_email=='bmkopp@ymail.com' ||
+                                                       biz.emails.comma_email=='aram@mealsteals.com' ||
+                                                       biz.emails.comma_email=='ben@mealsteals.com'
+                                                       ">{{biz.emails.comma_email}}
+                                        </span>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+
+                </div>
+            
+            </div>
+            
+            
+            
+            <div ng-show="displayOptions.analyticsTab=='users'">
+                <div ng-show="rec.obj.businessID==bizInfo[displayOptions.currentLoc].$id" ng-repeat="rec in recurringAnalytics" class="list-group">
+                                    <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        Checkins: {{rec.checkin}}
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        Favs: {{rec.favs}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        rating: {{rec.rating}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{rec.obj.description}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{rec.obj.startTime | date:'shortDate'}}&nbsp; ({{formatTimestamp(rec.obj.startTime, rec.obj.timezone)}} - {{formatTimestamp(rec.obj.endTime, rec.obj.timezone)}})
+                                    </div>
+
+                                </div>
+                            </div>
+
+                </div>
+
+
+                <div ng-repeat="use in user" class="list-group">
+                                    <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{use.email}}
+
+                                    </div>
+<!--
+                                    <div class="col-md-3">
+                                        UID: {{use.key}}
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        Favs: {{use.favorites}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        follows: {{use.follows}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        checkins: {{use.checkins}}
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        logins: {{use.logins}}
+                                    </div>
+-->
+
+                                </div>
+                            </div>
+
+                </div>
+            </div>
+               
+        </div>       
+            
+            
+<!--
+
+               
+            End Admin Analytics               
+                
+                 
+-->
+            </div>
+        </div>
+
+        <p class="status" ng-hide="loggedIn">Welcome. You are not <a href="#/login">logged in</a></p>
+    </div>  
+
+
+
+
+
+
+
+
+
+        
+        
+        
+
+        
+        
+
+        
+     
+
+		
+        
+
+
+
+				
+
+			
+
+
+			
+
+			
+
+
+
+	
+	

@@ -1,0 +1,95 @@
+
+<!--
+<ion-view  hide-nav-bar="true" view-title="Location">
+<ion-content style="background-color:#f0f0f0;" scroll="false">
+    <div class="walkthrough-container">
+          <img class="iphone-wt" src="img/iphone-wt.png"/>
+          <ion-slides class="walkthrough"  options="options" slider="data.slider">
+                <ion-slide-page>
+                    <div class="ion-slide-page-walkthrough"><h1>BLUE</h1></div>
+                </ion-slide-page>
+                <ion-slide-page>
+                    <div class="ion-slide-page-walkthrough"><h1>YELLOW</h1></div>
+                </ion-slide-page>
+                <ion-slide-page>
+                    <div class="ion-slide-page-walkthrough"><h1>PINK</h1></div>
+                </ion-slide-page>
+                  <ion-slide-page>
+                    <div class="ion-slide-page-walkthrough"><h1>BLUE</h1></div>
+                </ion-slide-page>
+                <ion-slide-page>
+                    <div class="ion-slide-page-walkthrough"><h1>YELLOW</h1></div>
+                </ion-slide-page>
+                <ion-slide-page>
+                    <div class="ion-slide-page-walkthrough"><h1>PINK</h1></div>
+                </ion-slide-page>
+          </ion-slides>
+          <div class="walkthrough-bottom">
+                <button ng-click="gotIt()">Got it</button>
+          </div>
+    </div>
+</ion-content>
+</ion-view>-->
+<ion-view  hide-nav-bar="true" view-title="Location">
+    <ion-content scroll="false">
+            <img ng-if="activeIndex==1 || activeIndex==2 || activeIndex==3 || activeIndex==4 || activeIndex==5" class="wt-newfeature" src="img/newfeature.png"/>
+            <div class="walkthrough-blue">
+                <div class="walkthrough-background-png">
+                     <img ng-if="activeIndex==0 || activeIndex==null" src="img/iphone-wt.png"/>
+                     <img ng-if="activeIndex==1" src="img/iphone-wt-add.png"/>
+                     <img ng-if="activeIndex==2" src="img/iphone-wt-userverified.png"/>
+                     <img ng-if="activeIndex==3" src="img/iphone-wt-edit.png"/>
+                     <img ng-if="activeIndex==4" src="img/iphone-wt-usersubmitted.png"/>
+                     <img ng-if="activeIndex==5" src="img/iphone-wt-bizverified.png"/>
+                     <img ng-if="activeIndex==6" src="img/iphone-wt-trending.png"/>
+                     <img ng-if="activeIndex==7" src="img/iphone-wt-explore.png"/>
+                </div>
+            </div>
+            <i ng-if="activeIndex==0 || activeIndex==null" class="ion-clock icon-wt"></i>
+            <i ng-if="activeIndex==1" style="padding-left:14px;" class="ion-plus icon-wt"></i>
+            <i ng-if="activeIndex==2" class="ion-android-checkmark-circle icon-wt"></i>
+            <i ng-if="activeIndex==3" class="ion-edit icon-wt"></i>
+            <i ng-if="activeIndex==4" class="ion-person-add icon-wt"></i>
+            <i ng-if="activeIndex==5" class="ion-android-cloud-done icon-wt"></i>
+            <i ng-if="activeIndex==6" class="ion-pound icon-wt"></i>
+            <i ng-if="activeIndex==7" class="ion-earth icon-wt"></i>
+            <ion-slides class="walkthrough-2"  options="options" slider="data.slider">
+                    <ion-slide-page>
+                        <div class="ion-slide-page-walkthrough"><h3>Real-time radar</h3></div>
+                        <p>At a quick glance, see which happy hours, nightly specials and brunches are happening near you.</p>
+                    </ion-slide-page>
+                    <ion-slide-page>
+                        <div class="ion-slide-page-walkthrough"><h3>Add new deals</h3></div>
+                        <p>Don't see your favorite deal? Adding a new deal only takes a minute and will be displayed for everyone to see after a brief review process.</p>
+                    </ion-slide-page>
+                    <ion-slide-page>
+                        <div class="ion-slide-page-walkthrough"><h3>Verify existing deals</h3></div>
+                        <p>After redeeming a deal, make sure to verify the deal so that other users know it's still available.</p>
+                    </ion-slide-page>
+                    <ion-slide-page>
+                        <div class="ion-slide-page-walkthrough"><h3>Edit existing deals</h3></div>
+                        <p>Notice that a deal has changed? Edit the outdated deal to help keep MealSteals current.</p>
+                    </ion-slide-page>
+                    <ion-slide-page>
+                        <div class="ion-slide-page-walkthrough"><h3>User submitted deals</h3></div>
+                        <p>It's easy to sort through all user added/edited deals, simply look for the unique user icon next to each deal.</p>
+                    </ion-slide-page>
+                      <ion-slide-page>
+                        <div class="ion-slide-page-walkthrough"><h3>Business controlled accounts</h3></div>
+                          <p>Only interested in deals that were submitted directly from businesses? Simply look for the verified icon next to each business name. </p>
+                    </ion-slide-page>
+                    <ion-slide-page>
+                        <div class="ion-slide-page-walkthrough"><h3>Trending</h3></div>
+                        <p>See the most popular specials happening now.</p>
+                    </ion-slide-page>
+                    <ion-slide-page>
+                        <div class="ion-slide-page-walkthrough"><h3>Explore</h3></div>
+                        <p>If you're looking for specials that aren't in real-time, use the explore feature to see what's up another day. </p>
+                    </ion-slide-page>
+            </ion-slides>
+              
+            <button ng-class="{'walkthrough-button-active':allowGotIt==true}" ng-click="gotIt()" class="walkthrough-get-started">Get Started</button>
+              
+        
+    </ion-content>
+</ion-view>

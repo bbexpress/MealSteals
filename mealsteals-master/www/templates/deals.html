@@ -1,0 +1,506 @@
+<ion-view>
+    <ion-nav-title>
+        <div ng-hide="viewOptions.displayType=='featured' || viewOptions.displayType=='explore'">
+            <div class="item item-input-inset search">
+                <label class="item-input-wrapper">
+                    <i class="icon ion-ios-search-strong placeholder-icon"></i>
+                    <form ng-submit="searchBoxSubmit($event);storeSearch();">
+                        <input class="search-mealsteals" type="search" placeholder="Search MealSteals" ng-model="filterOptions.searchVal">
+
+
+                        <input class="search-submit" type="submit"/>
+                    </form>
+                </label>
+                </div>
+            
+              <button ng-show="filterOptions.searchVal!=''" ng-click="filterOptions.searchVal='';clearAndAddMarkers();" class="clear-search icon button-clear ion-close-circled" style="color:#aaaaaa!important;font-size: 20px!important;position: absolute!important;right: 12px!important;top: 6px!important;z-index: 99999!important;"></button>
+        </div>
+        <div style="font-size:larger;" ng-show="viewOptions.displayType=='featured'">
+            #Trending
+        </div>
+<!--
+        <div style="font-size:larger;" ng-show="viewOptions.displayType=='explore' && searchBiz==false">
+            Explore {{userCity}}
+        </div>
+-->
+        <div ng-show="viewOptions.displayType=='explore'">
+            <div class="item item-input-inset search">
+                <label class="item-input-wrapper">
+                    <i class="icon ion-ios-search-strong placeholder-icon"></i>
+                    <form ng-submit="searchBoxSubmitBiz($event);storeSearch();">
+                        <input class="search-mealsteals" type="search" placeholder="Explore{{userCity}}" ng-model="filterOptions.searchBiz.businessName">
+
+
+                        <input class="search-submit" type="submit"/>
+                    </form>
+                </label>
+                </div>
+            
+              <button ng-show="filterOptions.searchBiz!=''" ng-click="filterOptions.searchBiz='';" class="clear-search icon button-clear ion-close-circled" style="color:#aaaaaa!important;font-size: 20px!important;position: absolute!important;right: 12px!important;top: 6px!important;z-index: 99999!important;"></button>
+        </div>
+      </ion-nav-title>
+     <ion-nav-buttons side="right">
+        <button ng-hide="viewOptions.displayType=='explore' || viewOptions.displayType=='featured'" class="button button-icon button-clear ion-levels" ng-click="openFilter()"></button>
+<!--        <button ng-hide="viewOptions.displayType=='explore'" class="button button-clear" ng-click="openAddDeal()">Add</button>-->
+        <button ng-click="openFavPopup();" ng-if="viewOptions.displayType=='explore'" class="button button-icon button-clear">
+            <i class="ion-ios-heart" ng-class="{'white':glow!=true}"></i>
+        </button>
+<!--        <button ng-if="viewOptions.displayType=='explore' && searchBiz==true" class="button button-icon button-clear ion-close-round" ng-click="closeSearchBiz()"></button>-->
+      </ion-nav-buttons>
+    <!--flashArray.length>0 && -->
+    <div ng-click="closeFlashStealAlert()" ng-if="flashArray.length>0 && flashStealAlert==true" class="flash-deal-alert">
+        <img src="img/flamegif.gif" class="flash-steal-flame-alert"/>
+        <span>There are {{flashArray.length}} FlashSteals nearby</span>
+        <button ng-click="closeFlashStealAlert()" class="close-flash-alert">X</button>
+    </div>
+  <ion-content overflow-scroll="true" scroll="false">
+      
+      <ul ng-hide="viewOptions.displayType=='featured' || viewOptions.displayType=='explore'" class="filter-show-row">
+        <li ng-if="filterOptions.categoryTab=='food'" class="filter-show" ng-click="filterOptions.categoryTab='all';clearAndAddMarkers()">
+             <img class="filter-img-sm" src="img/hamburger.png"/>
+            <span>Food</span>
+<!--            <button class="button-remove-filter ion-close-circled" ng-click="filterOptions.categoryTab='all';clearAndAddMarkers()"></button>-->
+        </li>
+        <li ng-if="filterOptions.categoryTab=='drinks'" class="filter-show" ng-click="filterOptions.categoryTab='all';clearAndAddMarkers()">
+             <img class="filter-img-sm" src="img/beer.png"/>
+             <span>Drinks</span>
+<!--            <button class="button-remove-filter ion-close-circled" ng-click="filterOptions.categoryTab='all';clearAndAddMarkers()"></button>-->
+        </li>
+        
+        <li ng-if="filterOptions.categoryTab=='events'" class="filter-show" ng-click="filterOptions.categoryTab='all';clearAndAddMarkers()">
+            <img class="filter-img-sm" src="img/event.png"/>
+            <span>Events</span>
+<!--            <button class="button-remove-filter ion-close-circled" ng-click="filterOptions.categoryTab='all';clearAndAddMarkers()"></button>-->
+        </li>
+        
+        <li ng-if="filterOptions.searchVal!=''" class="filter-show" ng-click="filterOptions.searchVal='';clearAndAddMarkers();">
+            <img class="filter-img-sm" src="img/search.png"/>
+            <span>{{filterOptions.searchVal}}</span>
+<!--            <button class="button-remove-filter ion-close-circled" ng-click="filterOptions.searchVal='';clearAndAddMarkers();"></button>-->
+        </li>
+        <li ng-if="filterOptions.showTopRated==true" class="filter-show" ng-click="filterOptions.showTopRated=false;clearAndAddMarkers()">
+            <img class="filter-img-sm" src="img/top.png"/>
+            <span>Rating > 4</span>
+<!--            <button class="button-remove-filter ion-close-circled" ng-click="filterOptions.showTopRated=false;clearAndAddMarkers()"></button>-->
+        </li>
+        <li ng-if="filterOptions.showFlash==true" class="filter-show" ng-click="filterOptions.showFlash=false;clearAndAddMarkers()">
+            <img class="filter-img-sm" src="img/flash.png"/>
+            <span>FlashSteals</span>
+<!--            <button class="button-remove-filter ion-close-circled" ng-click="filterOptions.showFlash=false;clearAndAddMarkers()"></button>-->
+        </li>
+        <li ng-if="filterOptions.showFavorite==true" class="filter-show" ng-click="filterOptions.showFavorite=false;clearAndAddMarkers()">
+            <img class="filter-img-sm" src="img/heart.png"/>
+            <span>Favorites</span>
+<!--            <button class="button-remove-filter ion-close-circled" ng-click="filterOptions.showFavorite=false;clearAndAddMarkers()"></button>-->
+        </li>
+        <li ng-if="filterOptions.showPatio==true" class="filter-show" ng-click="filterOptions.showPatio=false;clearAndAddMarkers()">
+            <img class="filter-img-sm" src="img/summer.png"/>
+            <span>Patios</span>
+<!--            <button class="button-remove-filter ion-close-circled" ng-click="filterOptions.showPatio=false;clearAndAddMarkers()"></button>-->
+        </li>  
+        <li ng-if="filterOptions.showRooftop==true" class="filter-show" ng-click="filterOptions.showRooftop=false;clearAndAddMarkers()">
+            <img class="filter-img-sm" src="img/building.png"/>
+            <span>Rooftops</span>
+<!--            <button class="button-remove-filter ion-close-circled" ng-click="filterOptions.showRooftop=false;clearAndAddMarkers()"></button>-->
+        </li>
+        <li ng-if="filterOptions.showAddedType=='user'" class="filter-show" ng-click="filterOptions.showAddedType=false;clearAndAddMarkers()">
+            <img class="filter-img-sm" src="img/user-added.png"/>
+            <span>User Submitted</span>
+        </li>
+        <li ng-if="filterOptions.showAddedType=='biz'" class="filter-show" ng-click="filterOptions.showAddedType=false;clearAndAddMarkers()">
+            <img class="filter-img-sm" src="img/verified-blue.png"/>
+            <span>Business Verified</span>
+        </li>
+        <li ng-if="filterOptions.showVerifiedMo==6" class="filter-show" ng-click="filterOptions.showVerifiedMo=false;clearAndAddMarkers()">
+            <img class="filter-img-sm" src="img/last6.png"/>
+            <span>Verified within 6 months</span>
+        </li>
+        <li ng-if="filterOptions.showVerifiedMo==12" class="filter-show" ng-click="filterOptions.showVerifiedMo=false;clearAndAddMarkers()">
+            <img class="filter-img-sm" src="img/last12.png"/>
+            <span>Verified within 12 months</span>
+        </li>
+        
+      </ul>
+      
+      <div ng-show="connection==false" class="connection-alert fade">
+          <span><i class="ion-alert-circled" style="margin-right:5px;"></i>No Internet Connection</span>
+      </div>
+
+      <ion-scroll   lazy-scroll style="margin-top:0px;" direction="y" ng-style="{height:fuHeight-130 + 'px'}" ng-if="viewOptions.displayType=='list'">
+ 
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="doRefresh()">
+        </ion-refresher>
+          
+        <div ng-if="deals.length==0 || markers.length==0">
+            <div class="alert">
+                <div>
+                    <div>
+                        <i class="ion-fork"></i>
+                        <i class="ion-knife"></i>
+                    </div>
+                    <span class="alert-text no-deals">No Deals</span>
+<!--                    <span class="alert-text">Today</span>-->
+                </div>
+            </div> 
+        </div>
+
+          <!-- quickHighlight($event);go('/deals/'+d.key,80);-->
+          
+        <ul class="list deal-list">
+
+            <li id="listdeal" class="item item-thumbnail-left" ng-click="go('/deals/'+d.key,80);listAnalytics(d)" 
+                ng-repeat="d in deals | 
+                           filter:topTabFilter(filterOptions.categoryTab) | 
+                           filter:filterTopRated(filterOptions.showTopRated) | 
+                           filter:filterFlash(filterOptions.showFlash) | 
+                           filter:filterFav(filterOptions.showFavorite) | 
+                           filter:verifiedTypeFilter(filterOptions.showAddedType) |
+                           filter:verifiedMoFilter(filterOptions.showVerifiedMo) | 
+                           filter:filterPatio(filterOptions.showPatio) | 
+                           filter:filterRooftop(filterOptions.showRooftop) | 
+                           filter:searchValueFilter(filterOptions.searchVal) | 
+                           filter:featuredFilter(filterOptions.featuredOnly) | 
+                           filter:expiredFilter |
+                           orderBy:distanceSort |
+                           limitTo:dealLimit" 
+                ng-class="{'upgrade-list':d.boost.valid==true, 'flash-list':d.recurringDealID==undefined}">
+              <!--<img class="imagehack" ng-style="{'background-image':'url({{d.img}})'}">-->
+              
+<!--                <div ng-style="{'background-image':'url('+d.dealFullImage+')'}" image-lazy-src="{{d.dealFullImage || d.img}}" image-lazy-distance-from-bottom-to-load="100" image-lazy-loader="lines" class="deallist-background-img"></div>-->
+                
+                <div image-lazy-src="{{d.dealFullImage || d.img}}" image-lazy-background-image="true" image-lazy-distance-from-bottom-to-load="100" image-lazy-loader="lines" class="deallist-background-img"></div>
+                
+<!--                <img image-lazy-src="{{d.dealFullImage || d.img}}" image-lazy-distance-from-bottom-to-load="100" image-lazy-loader="lines" style='border-radius:10px'>-->
+              <span ng-show="d.boost.valid==true" class="sponsored">Sponsored</span>
+              <span ng-show="d.recurringDealID==undefined" class="flash">FlashSteal!</span>
+              <div style="display:flex;">
+                <h2 class="topmargin">
+                  {{d.locName}}
+                </h2>
+                <img ng-if="d.bizAccount==true && d.userSubmitted!=true" style="margin-top: 3px;margin-left: 3px;" src="img/verified-blue.png" class="tag-img">
+              </div>
+              <div class="tag-img-row">
+                  <img src="img/user-added.png" ng-if="d.userSubmitted==true" class="tag-img"/>
+                  <img src="img/hamburger.png" ng-if="d.foodOrDrink == 'food' || d.foodOrDrink == 'both'" class="tag-img"/>
+                  <img src="img/beer.png" ng-if="d.foodOrDrink == 'drink' || d.foodOrDrink == 'both'" class="tag-img"/>
+                  <img src="img/event.png" ng-if="d.timeType=='event'" class="tag-img"/>
+                  <img src="img/exclusive-badge.png" ng-if="d.exclusive=='yes'" class="tag-img"/>
+                  <img src="img/top.png" ng-if="d.totalRating > 4" class="tag-img"/>
+                  <img src="img/summer.png" ng-if="d.patio==true" class="tag-img"/>
+                  <img src="img/heart.png" ng-if="favorites[d.recurringDealID]!=undefined || following[d.businessID]!=undefined" class="tag-img"/>
+                  <img src="img/building.png" ng-if="d.rooftop==true" class="tag-img"/>
+                  <img src="img/flash.png" ng-if="d.recurringDealID==undefined" class="tag-img"/>
+                  
+              </div>
+              <p>{{d.name}}</p>
+<!--              <div ng-if="d.exclusive=='yes'"><img src="img/exclusive.png" class="exclusive-image"/></div>-->
+              <p ng-show="timeAdjusted=='no' || timer.checked==true">
+                <i class="icon ion-ios-clock-outline"></i>&nbsp;
+                <span ng-show="d.endTime-timestamp < 3600000">{{(d.endTime - timestamp)/60000 | number:0}} min left</span>
+                <span ng-show="d.endTime-timestamp >= 3600000">{{(d.endTime - timestamp)/3600000 | number:1}} hrs left</span>
+                &nbsp;&nbsp;<i class="icon ion-ios-location-outline"></i> &nbsp;{{kmToMile(distAway([d.lat, d.lon])) | number:1}} mi away
+              </p>
+              <p ng-show="timeAdjusted=='yes' && timer.checked==false">
+                <span>{{d.startTime | date : 'shortTime'}} - {{d.endTime | date : 'shortTime'}}</span>
+                &nbsp;&nbsp;<i class="icon ion-ios-location-outline"></i> &nbsp;{{kmToMile(distAway([d.lat, d.lon])) | number:1}} mi away
+              </p>  
+                
+                    <div ng-show="d.boost.valid!=true && d.totalRating > 0" class="star-row-list row">
+
+                        <div class="col">
+                            <div>
+                                <i class="rate star-featured" 
+                                   ng-class="{'ion-android-star':(d.totalRating>=0.3), 'ion-ios-star-half':(d.totalRating > 0.3 && d.totalRating < 0.7), 'ion-android-star-outline':(d.totalRating<=0.7)}">
+                                </i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <i class="rate star-featured" 
+                                   ng-class="{'ion-android-star':(d.totalRating>=1.3), 'ion-ios-star-half':(d.totalRating > 1.3 && d.totalRating < 1.7), 'ion-android-star-outline':(d.totalRating<=1.7)}">
+                                </i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <i class="rate star-featured" 
+                                   ng-class="{'ion-android-star':(d.totalRating>=2.3), 'ion-ios-star-half':(d.totalRating > 2.3 && d.totalRating < 2.7), 'ion-android-star-outline':(d.totalRating<=2.7)}">
+                                </i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <i class="rate star-featured" 
+                                   ng-class="{'ion-android-star':(d.totalRating>=3.3), 'ion-ios-star-half':(d.totalRating > 3.3 && d.totalRating < 3.7), 'ion-android-star-outline':(d.totalRating<=3.7)}">
+                                </i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <i class="rate star-featured" 
+                                   ng-class="{'ion-android-star':(d.totalRating>=4.3), 'ion-ios-star-half':(d.totalRating > 4.3 && d.totalRating < 4.7), 'ion-android-star-outline':(d.totalRating<=4.7)}">
+                                </i>
+                            </div>
+                        </div>
+                </div>
+                
+                <div ng-show="d.boost.valid!=true && d.totalRating == 0" class="">
+                        <p class="not-rated">Not yet rated</p>
+                </div>
+          
+         
+                
+            </li>
+            
+  
+            
+            
+            <button ng-if="deals.length>dealLimit && markers.length>0" ng-click="expandDealLimit()" class="show-more">show more</button>
+        </ul>
+        
+
+      </ion-scroll>
+      
+      
+      <ion-scroll direction="y" style="width:100%;border-top: 1px rgb(169, 169, 169) solid;" ng-style="{height:fuHeight-130 + 'px'}" ng-if="viewOptions.displayType=='featured'">
+ 
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="doRefresh()">
+        </ion-refresher>
+          
+        <div ng-if="deals.length==0">
+          <div ng-if="deals.length==0">
+            <div class="alert">
+                <div>
+                    <div>
+                        <i class="ion-fork"></i>
+                        <i class="ion-knife"></i>
+                    </div>
+                    <span class="alert-text no-deals">No Deals</span>
+<!--                    <span class="alert-text">Today</span>-->
+                </div>
+            </div> 
+        </div>
+
+        </div>
+          
+<!--           style="background-image: url('img/trending-background.png');z-index: 99999999;background-size: cover;background-position: center;"-->
+        <ul class="list trending-list">
+            <li id="listdeal" class="" style="background-image: url('img/trending-background.png');z-index: 99999999;background-size: cover;background-position: center;" ng-repeat="d in deals | orderBy: [boostSort, flashSort, clickSort, ratingSort, distanceSort] | limitTo: 10" ng-click="go('/deals/'+d.key,80);topRatedClick(d);">
+                <div ng-style="{'background-image':'url('+d.dealFullImage+')'}" class="trending-background">
+                    <span ng-show="d.boost.valid==true" class="sponsored-trending">Sponsored</span>
+                    <img ng-if="d.recurringDealID==undefined" src="img/flamegif.gif" class="flash-trending"/>
+                </div>
+                <div class="row trending-desc">
+                    <div class="trending-div-icon">
+                        <img class="trending-icon" ng-src="{{d.icon}}">
+                    </div>
+                    <div class="trending-div-desc"  ng-style="{'width': 'calc(100% - 170px)'}">
+                        <div style="display:flex;">
+                            <span class="trending-locname">{{d.locName}}</span>
+                            <img ng-if="d.bizAccount==true && d.userSubmitted!=true" src="img/verified-blue.png" class="trending-tag-img"/>
+                            <img src="img/user-added.png" ng-if="d.userSubmitted==true" class="trending-tag-img"/>
+                        </div>
+                        <span class="trending-dealname">{{d.name}}</span>
+                    </div>
+                    <div ng-show="timeAdjusted=='no' || timer.checked==true" class="trending-div-info">
+                        <span ng-show="d.endTime-timestamp < 3600000"><i class="trending-icon ion-ios-clock-outline"></i>&nbsp;{{(d.endTime - timestamp)/60000 | number:0}} min left</span>
+                        <span ng-show="d.endTime-timestamp >= 3600000"><i class="trending-icon ion-ios-clock-outline"></i>&nbsp;{{(d.endTime - timestamp)/3600000 | number:1}} hrs left</span>
+                        <span><i class="trending-icon ion-ios-location-outline"></i>&nbsp;{{kmToMile(distAway([d.lat, d.lon])) | number:1}} mi away</span>
+                    </div>
+                    <div ng-show="timeAdjusted=='yes' && timer.checked==false" style="width:150px;" class="trending-div-info">
+                        <span style="margin-right:0px;margin-left:0px;"><i class="trending-icon ion-ios-clock-outline"></i>&nbsp;{{d.startTime | date : 'shortTime'}} - {{d.endTime | date : 'shortTime'}}</span>
+                        <span><i class="trending-icon ion-ios-location-outline"></i>&nbsp;{{kmToMile(distAway([d.lat, d.lon])) | number:1}} mi away</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+      </ion-scroll>
+      
+      <ion-scroll direction="y" class="listall" ng-style="{height:fuHeight-90 + 'px'}" ng-if="viewOptions.displayType=='explore'">
+       
+      
+      <div style="display:flex;flex-wrap: wrap;">   
+            <div style="width:20%;" ng-repeat="b in busObj | filter:filterOptions.searchBiz | orderBy:distanceSort" 
+                 
+                 ng-show="b.businessName!='' && 
+                          b.businessName!=undefined &&
+                          b.fakeBusiness!=true &&
+                          distanceSort(b)<30 &&
+                          b.approved!=false &&
+                          b.icon!=undefined &&
+                          b.icon!=''">
+           <!-- removed  distanceSort(d)<30 && --
+                <!-- add active class "followed-business" -->
+                 <!--exploreBusiness(d.$id, d);-->
+             <i ng-show="following[b.$id]!=undefined" class="ion-heart explore-favorite"></i>
+                
+<!--                on-hold="followBusiness(b)-->
+             <div class="list biz-list" ng-click="go('/deals/biz/'+b.$id,80);triggerMapResize();businessClick();" on-hold="followBusiness(b)">  
+                    
+                    <img style="max-width:100%;width:auto;border-radius:10px;height:60px;padding:5px;" ng-src="{{b.icon}}"/>
+<!--                    <div class="biz-explore-icon" ng-style="{'background-image':'url('+b.icon+')'}" class="trending-background"></div>-->
+<!--                    <i ng-show="favoriteBus==true" class="ion-heart explore-favorite"></i>-->
+                    <div class="" style="text-align:center;">
+<!--
+                        <span class="explore-businessname" ng-if="favoriteBus==true">Following</span>
+                        <div style="height:20px;" ng-if="favoriteBus!=true"> </div>
+-->
+                        <span class="explore-businessname">
+<!--                            <i ng-show="favoriteBus==true" class="ion-heart explore-favorite"></i>-->
+                            {{b.businessName}}</span>
+                        <p class="explore-mileaway">{{kmToMile(distAway([b.lat, b.lon])) | number:1}} mi away</p>
+                        
+<!--
+                        <ion-checkbox ng-model="pushNotification.checked"
+                                      ng-change="pushNotificationChange()">
+                          Push Notifications
+                        </ion-checkbox>
+-->
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>   
+
+      </ion-scroll>
+      
+
+    <div class="map-tab" ng-show="viewOptions.displayType=='map'">
+      <div ng-if="mapLoaded==true" ng-click="refreshMapError()" class="map-error-tab">
+          <div class="alert">
+                <div>
+                    <div>
+                        <i class="ion-fork"></i>
+                        <i class="ion-knife"></i>
+                    </div>
+                    <span class="alert-text">Click</span>
+                    <span class="alert-text">To Refresh</span>
+                </div>
+            </div> 
+      </div>
+      <div id="map" data-tap-disabled="true"></div>      
+    </div>
+    
+     <button ng-show="viewOptions.displayType=='map'" ng-click="refreshMap()" class="button button-icon icon ion-android-refresh map-refresh"></button>
+<!--      <span style="position:absolute;bottom:70px;right:20px;width:40px;height:40px;" class="ion-ios-location"></span>-->
+      
+      <ion-drawer-vertical-wrapper ng-hide="viewOptions.displayType=='explore'" style="z-index:5;" direction="up" state="closed" delegate-handle="timeshift">
+         <ion-drawer-vertical-content>
+             <div class="time-drawer-top-container">
+             
+                 <div ng-click="toggleDrawer('timeshift')" class="time-drawer-top">
+                      <div>
+                            <i class="icon ion-clock time-drawer-clock"></i>
+                      </div>
+                    <button class="button button-timeshift-drawer">
+                      <span ng-if="deals.length==0">Time Surf</span>
+                        <span ng-if="deals.length==undefined">Loading deals</span>
+                      <span ng-if="timeAdjusted=='no' && deals.length>0">Available Now{{searchVal}}</span>
+                      <span ng-if="timeAdjusted=='yes' && deals.length>0">Available At {{timestamp | date:'shortTime'}}</span>
+
+                    </button>
+                    <div class="time-drawer-uparrow">
+                        <i class="icon ion-ios-arrow-up"></i>
+
+                      <!--<i class="icon ion-ios-arrow-down" ng-show="drawerIs('opened')"></i>
+                      <i class="icon ion-ios-arrow-down" ng-show="!drawerIs('opened') && !drawerIs('closed')"></i>
+                      <i class="icon ion-ios-arrow-up" ng-show="drawerIs('closed')"></i>-->
+                    </div> 
+
+
+    <!--                <div class="secret-gps-button" on-hold="holdDataButton()" on-release="releaseDataButton()"></div>-->
+    <!--
+                    <ion-toggle ng-show="timeAdjusted=='yes'" ng-model="timer.checked" ng-change="timerChange()" toggle-class="toggle-calm toggle-timer">
+                        <span ng-if="timer.checked==true" class="timer-text">Timer On</span>
+                        <span ng-if="timer.checked==false" class="timer-text">Timer Off</span>
+                     </ion-toggle>
+    -->
+
+                 </div>
+                 <ion-toggle ng-show="timeAdjusted=='yes'" ng-model="timer.checked" ng-change="timerChange()" toggle-class="toggle-calm toggle-timer">
+                        <span ng-if="timer.checked==true" class="timer-text">Timer On</span>
+                        <span ng-if="timer.checked==false" class="timer-text">Timer Off</span>
+                </ion-toggle>
+            </div>
+             
+            <div class="time-selection-bar" ng-if="timeAdjusted=='no'">
+      
+              <div class="range range-positive">
+                {{(timestamp) | date:'shortTime'}}
+                <input type="range" name="volume" min="0" max="28800000" value="{{data.timeSelection}}" ng-model="data.timeSelection">
+                {{(timestamp+28800000) | date:'shortTime'}}
+              </div>
+              <div class="time-buttons">
+
+                
+                <button class="button button-block button-positive button-timeshift" ng-click="setNewTime();toggleDrawer('timeshift');">{{timestamp-(-data.timeSelection) | date:'shortTime'}}
+                </button>
+                  
+                <button class="button button-block button-positive button-timeshift" value="0" ng-click="data.timeSelection = 0;setNewTime();toggleDrawer('timeshift');">Real-time</button>  
+  
+
+              </div>
+            </div>  
+             
+            <div ng-if="timeAdjusted=='yes'" class="time-selection-bar">
+      
+              <div class="range range-positive">
+                {{(timestamp-timeAdjustedBy) | date:'shortTime'}}
+                <input type="range" name="volume" min="0" max="28800000" value="{{data.timeSelection}}" ng-model="data.timeSelection">
+                {{(timestamp-timeAdjustedBy+28800000) | date:'shortTime'}}
+              </div>
+              <div class="time-buttons">
+
+                 
+
+                <button class="button button-block button-positive button-timeshift" ng-click="setNewTime();toggleDrawer('timeshift');">{{timestamp-timeAdjustedBy-(-data.timeSelection) | date:'shortTime'}}
+                </button>
+                  
+                <button class="button button-block button-positive button-timeshift" value="0" ng-click="data.timeSelection = 0;setNewTime();toggleDrawer('timeshift');">Real-time</button>   
+
+              </div>
+            </div>  
+        </ion-drawer-vertical-content>
+    
+      </ion-drawer-vertical-wrapper>
+      <button class="add-deal-tab icon ion-plus-round" ng-click="openAddDeal()"></button>
+      
+      <ion-tabs style="z-index:999999;background-color:#e4e4e4;" class="tabs-icon-top">
+
+          <ion-tab class="map map-icon-tab" title="Map" on-select="viewOptions.displayType='map';mapTabSelected();" icon-on="map-filled" icon-off="map">
+            
+          </ion-tab>
+
+          <ion-tab class="list-icon-tab" on-select="viewOptions.displayType='list';listTabSelected();" title="List" icon-on="list-filled" icon-off="list">
+            
+          </ion-tab>
+          
+          <ion-tab class="list-icon-tab">
+            
+          </ion-tab>
+          
+<!--
+          <ion-tab class="list-icon-tab" ng-click="openAddDeal()" title="Add" icon-on="list-filled" icon-off="list">
+            
+          </ion-tab>
+-->
+          
+          <ion-tab class="featured-icon-tab" on-select="viewOptions.displayType='featured';trendingTab()" title="Trending" icon-on="ion-pound" icon-off="ion-pound">
+            
+          </ion-tab>
+          
+          <ion-tab class="event-icon-tab" on-select="viewOptions.displayType='explore';userLocation()" title="Explore" icon-on="ion-android-globe" icon-off="ion-android-globe" badge="" badge-style="badge-assertive">
+            
+          </ion-tab>
+
+        </ion-tabs>
+      
+  </ion-content>
+</ion-view>

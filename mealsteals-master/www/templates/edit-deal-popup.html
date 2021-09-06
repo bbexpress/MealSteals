@@ -1,0 +1,74 @@
+
+        
+        
+        <div>
+            <button class="button-edit-close" ng-click="closeEditPopup()">Close</button>
+            
+            <div class="list">
+                <div class="item item-input item-stacked-label">
+                    <span class="input-label">Days of week</span>
+                    <div style="display: block;text-align: center;margin-left: -16px;margin-top: 7px;">
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.monday=='yes'}" class="button-day" ng-click="selectMonday()">M</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.tuesday=='yes'}" class="button-day" ng-click="selectTuesday()">Tu</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.wednesday=='yes'}" class="button-day" ng-click="selectWednesday()">W</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.thursday=='yes'}" class="button-day" ng-click="selectThursday()">Th</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.friday=='yes'}" class="button-day" ng-click="selectFriday()">F</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.saturday=='yes'}" class="button-day" ng-click="selectSaturday()">S</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.sunday=='yes'}" class="button-day" ng-click="selectSunday()">S</button>
+                    </div>
+                    
+                </div>
+                <div class="item item-input item-stacked-label">
+                    <span class="input-label">Type</span>
+                    <div style="display: block;margin-bottom:7px;margin-top: 7px;">
+                        <button ng-class="{'button-positive':newDeal.foodOrDrink=='food'}" class="button button-small" ng-click="newDeal.foodOrDrink='food'">Food</button>
+                        <button ng-class="{'button-positive':newDeal.foodOrDrink=='drink'}" class="button button-small" ng-click="newDeal.foodOrDrink='drink'">Drink</button> 
+                        <button ng-class="{'button-positive':newDeal.foodOrDrink=='both'}" class="button button-small" ng-click="newDeal.foodOrDrink='both'">Both</button>
+                    </div>
+                </div>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Deal Name</span>
+                    <input ng-model="newDeal.name" type="text" placeholder="Taco Tuesday">
+                </label>
+                <label style="margin:-1px;" class="item item-input item-stacked-label">
+                    <span class="input-label">Description</span>
+<!--                    <input ng-model="newDeal.description" type="text" placeholder="$2 tacos">-->
+                        <textarea ng-model="newDeal.description" placeholder="$2 tacos"></textarea>
+                </label>
+            </div>
+       
+            <div class="row add-time-container">
+                <div class="col">
+                    <strong>Start:</strong>
+                    <input type="time" id="exampleInput" name="input" ng-model="newDeal.startTime" placeholder="HH:mm:ss" required/>
+                </div>
+                <div class="col">
+                    <strong>End:</strong>
+                    <input type="time" id="exampleInput" name="input" ng-model="newDeal.endTime" placeholder="HH:mm:ss" required/>
+                </div>
+            </div>
+                
+            
+                
+            <div class="list list-inset">
+                <button ng-if="analyticsFlag==true" ng-click="" class="icon button-add ion-beer button button-block button-calm">Admin Submit</button>
+                <button ng-click="addDeal()" class="icon button-add ion-plus-circled button button-block button-assertive">Submit</button>
+            </div>
+            
+        </div>
+        
+<!--
+        <div style="text-align:center;" ng-if="page==4"> 
+            <img src='http://matchingtool.basic-check.ch/static/imgs/check-mark.svg' style='height:100px;width:auto;display:block;margin:auto;margin-top:20vh;'/>
+            <span>Success!</span>
+            <div ng-if="addAnotherDeal==false">
+                <button ng-click="addAnotherDealBtn()" class="button-positive">Add another deal</button>
+                <button ng-click="closeAddDeal()" class="button-positive">Close</button>
+            </div>
+            <div ng-if="addAnotherDeal==true">
+                <button ng-click="page2();resetAddAnother();startNewDeal()" class="button-positive">{{biz.businessName}}</button>
+                <button ng-click="page1();resetAddAnother();startNewDeal()" class="button-positive">New</button>
+            </div>
+        </div> 
+-->
+        

@@ -1,0 +1,21 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Chose Image</h1>
+    <div ng-switch="showDeleteButton" class="buttons">
+      <button ng-switch-when="false" class="button button-clear" ng-click="closeImageGallery()">Close</button>
+      <button ng-switch-when="true" class="button button-clear" ng-click="hideDeleteButton()">Done</button>
+    </div>
+<!--       <button class="button button-clear" ng-click="closeImageGallery()">Close</button>-->
+  </ion-header-bar> 
+      <ion-content> 
+          <div style="display:flex;flex-wrap: wrap;">    
+            <div style="width:33%;" ng-repeat="img in bizImages" ng-hide="img.largeImage=='http://s3.amazonaws.com/mealstealsyes/1445043359608food-icon.png'">
+                <div ng-class="{wiggle:showDeleteButton==true}" class="list" on-hold="holdGalleryButton()" on-release="releaseGalleryButton()" ng-click="selectImage(img)"> 
+                    <button ng-show="showDeleteButton==true" ng-click="deleteGalleryImage(img)" class="btn-delete">X</button>
+                    <img style="max-width:100%;width:100%;border-radius:10px;height:auto;padding:5px;" ng-src="{{img.largeImage}}"/>
+                </div>
+                
+            </div>
+        </div> 
+      </ion-content>
+</ion-modal-view>

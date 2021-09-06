@@ -1,0 +1,33 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Test</h3>
+    </div>
+    <div ng-if="adPreview=='map'">
+        <div id="ad-map" class="ad-map-body modal-body">
+        </div>
+    </div>
+    
+    <div ng-if="adPreview=='ad'" id="ad-map" class="ad-map-body modal-body">
+        <div class="col-md-6">       
+            <div class="popup-phone-container popup-phone-container-modal" style="background-image:url('home/phone-map.png')">
+                <div class="popup-preview-container popup-preview-container-modal">
+                    <span class="glyphicon glyphicon-remove popup-preview-close popup-preview-close-modal"></span>
+                    <div class="popup-preview-head popup-preview-head-modal">
+                        {{adDetails.locName || "You're business name"}}
+                    </div>
+                    <div class="popup-preview-img popup-preview-img-modal" ng-style="{'background-image':'url('+adDetails.dealFullImage+')'}"></div>
+<!--                            <img class="popup-preview-img" ng-src='{{customAd.dealFullImage}}'/>-->
+                    <div class="popup-preview-name popup-preview-name-modal">
+                        {{adDetails.name || "Ad name"}}
+                    </div>
+                    <div class="popup-preview-details popup-preview-details-modal">
+                        View detail
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <button class="btn btn-warning btn-close-modal" type="button" ng-click="closeModal()">Close</button>
+
+</div>

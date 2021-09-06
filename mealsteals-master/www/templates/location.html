@@ -1,0 +1,72 @@
+<!--
+
+  <ion-view  hide-nav-bar="true" view-title="Location">
+    <ion-content class="background-location" scroll="false">
+        <button class="button-back-location" ng-click="myGoBack()">
+            <i style="font-size: 28px;" class="ion-chevron-left"></i>
+        </button>
+        <h3 class="location-head">Enter Location</h3>
+        
+        <div class="active-city-div">
+            <select ng-model="activeCity" ng-change="changedValue(activeCity)" 
+            data-ng-options="activeCity as activeCity for activeCity in activeCities">
+            <option value="">Active Cities</option>
+            </select>
+            <span>-or-</span>
+            <button class="real-gps-btn" ng-click="realGps()"><i class="ion-navigate"></i>My location</button>
+        </div>
+        
+        <div class="list location-input">
+            <label class="item item-input item-location-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <div>
+                    <form class="location-form" name="enterLocation">
+                      <input vs-google-autocomplete
+                             vs-autocomplete-validator
+                             ng-model="address"
+                             
+                             vs-longitude="lon"
+                             vs-latitude="lat"
+                             
+                             ng-focus="disableTap()"
+                             id="searchBar"
+                             name="address"
+                             placeholder="Street Address, City, State"
+                             type="text">
+                      
+                    </form>
+                </div>
+            </label>
+            <div class="location-submit">
+                    <form ng-submit="submitLocation(lat,lon);closeChangeLocation();toggleDrawer('timeshift')">
+                         <input type="hidden" value="{{lat}}" id="{{lat}}" ng-model="new.lat"/>
+                         <input style="margin:0px;" type="submit" id="submit" value="Go" style="" class="button button-block button-positive"/>
+                    </form>
+            </div>
+        </div>
+        
+        <div class="location-logo-container">
+            <img class="location-logo" src="img/burgerlogo.png"/>
+        </div>
+
+    </ion-content>
+</ion-view>-->
+
+  <ion-view  hide-nav-bar="true" view-title="Location">
+    <ion-content style="background-color:#f0f0f0;" scroll="false">
+       
+       <div class="location-card">
+            <img src="img/burgerlogo.png"/>
+            <h3>Welcome!</h3>
+            <center>
+                <span>Let's find some deals.</span>
+           </center>
+           <div style="border-bottom: 1px solid #d8d8d8;margin: 35px 20px 20px 20px;"></div>
+           <button ng-click="realGps()" class="icon-left ion-navigate button-positive button button-location">Current Location</button>
+<!--           <button ng-click="submitLocation(41.8,-87.6);closeChangeLocation();toggleDrawer('timeshift')" style="background-color:#cecece;" class="button-stable button">Search</button>-->
+<!--           <button ng-click="chooseLocation()" class="button-stable button">Search</button>-->
+           <input style="background-color:#cecece;" type="button" style="position:absolute;right:0px;" class="button-stable button" value="Search" placeholder="Change address" google-autocomplete-suggestion location="data.location" place="address" country-code="US" on-selection="onAddressSelection(location)" ng-model="data.location.name">
+       </div> 
+        
+    </ion-content>
+</ion-view>

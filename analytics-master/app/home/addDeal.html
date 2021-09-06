@@ -1,0 +1,237 @@
+<div class="modal-header">
+    <div ng-if="newDeal.userSubmitted!=true">
+        <h3 ng-if="displayOptions.addDeal=='details' && newDeal.recurringDealID!=false" class="modal-title">Add Deal</h3>
+        <h3 ng-if="displayOptions.addDeal=='details' && newDeal.recurringDealID==false" class="modal-title">{{newDeal.specialEventName}}</h3>
+        <h3 ng-if="displayOptions.addDeal=='options' && showGallery!=true || displayOptions.addDeal=='image' && showGallery!=true" class="modal-title">{{newDeal.name}}</h3>
+    </div>
+    <div ng-if="newDeal.userSubmitted==true">
+        <h3 class="modal-title">User Submitted</h3>
+    </div>
+    <div ng-hide="newDeal.type=='restricted'">
+        <span ng-if="displayOptions.addDeal=='options' && showGallery!=true || displayOptions.addDeal=='image' && showGallery!=true">{{daysOfWeekAdd(newDeal)}}</span>
+        <span ng-if="displayOptions.addDeal=='options' && showGallery!=true || displayOptions.addDeal=='image' && showGallery!=true">{{newDeal.date | date : 'mediumDate'}}</span>
+    </div>
+    <h3 ng-if="showGallery==true && displayOptions.addDeal=='image'" class="modal-title">Choose Image</h3>
+    <button ng-if="showGallery==true" ng-click="closeGallery()" class="btn btn-warning modal-header-button-left">Back</button>
+    <button class="btn btn-danger modal-header-button-right" ng-click="closeAddDeal()">Close</button>
+</div>
+
+<div ng-if="loadingImage==true" style="position:absolute;">
+    <div style="width:100%;height:100%;position:fixed;top:0;left:0;z-index:10000 !important;background-color:#d6d6d6;">
+    </div>
+    <div style="width:100%;height:100%;position:fixed;top:0;left:0;z-index:11000 !important;color:#9e9e9e;">
+      <table style="width:100%;height:100%;text-align:center;">
+        <tr><td style="font-size:22px;">
+          <i class="fa fa-spinner fa-spin" style="font-size:32px;"></i>&nbsp; Please Wait a Moment...
+        </td></tr>
+      </table>
+    </div>
+</div>
+
+<div ng-if="dealError==true" class="more-info-needed-deal">
+            {{errorMessage}}
+    </div>
+<div class="modal-body add-body">
+    
+                   
+    <div ng-if="newDeal.type==false">
+        <div class="deal-options-container">
+            <div class="deal-type-button-container">
+                <button class="deal-type-button" ng-click="newDeal.type='recurring'">
+                    <i class="fa fa-cutlery" aria-hidden="true"></i>
+                    <span>Weekly</span>
+                </button>
+            </div>
+            <div ng-if="newDeal.timeType=='deal'" class="deal-type-button-container">
+                <button class="deal-type-button" ng-click="newDeal.type='onetime'">
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <span>FlashSteal</span>
+                </button>
+            </div>
+            <div ng-if="newDeal.timeType=='event'" class="deal-type-button-container">
+                <button class="deal-type-button" ng-click="newDeal.type='onetime'">
+                    <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                    <span>One time</span>
+                </button>
+            </div>
+<!--
+            <div class="deal-type-button-container">
+                <button class="deal-type-button" ng-click="newDeal.type='restricted'">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <span>Send to followers</span>
+                </button>
+            </div>
+-->
+<!--
+            <div ng-if="newDeal.timeType=='deal' && biz.city=='Chicago'" class="deal-type-button-container">
+                <button class="deal-type-button" ng-click="specialEvent()">
+                    <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+                    <span>Chicago Happy Hour Birthday</span>
+                </button>
+            </div>
+-->
+            <p style="position: absolute;bottom: 0;text-align: center;width: 100%;" ng-if="newDeal.timeType=='deal'" class="md-caption">
+              <b>Note</b>: FlashSteals are not edible once they have started
+            </p>
+        </div>
+    </div>
+    
+    <div ng-if="">
+        Crowdsourced
+    </div>
+    
+    <div ng-if="newDeal.type!=false">
+        <div ng-if="displayOptions.addDeal=='details'" class="add-details">
+            
+            <div class="row row-type" style="margin-top:10px!important;" ng-show="newDeal.type=='restricted'">
+                <div style="text-align: center;margin-right: 50px;" flex-gt-xs>
+                      <md-datepicker ng-model="newDeal.date" md-placeholder="Expiration date"
+                          md-min-date="minDate"></md-datepicker>
+                </div>
+                <center>
+                    <strong>Available dates</strong>
+                </center>
+                <div class="row" style="text-align:center;">
+                    <button ng-class="{'btn-day-active':newDeal.daysOfWeek.monday=='yes'}" class="btn btn-secondary col" ng-click="selectMonday()">Mon</button>
+                    <button ng-class="{'btn-day-active':newDeal.daysOfWeek.tuesday=='yes'}" class="btn btn-secondary col" ng-click="selectTuesday()">Tue</button>
+                    <button ng-class="{'btn-day-active':newDeal.daysOfWeek.wednesday=='yes'}" class="btn btn-secondary col" ng-click="selectWednesday()">Wed</button>
+                    <button ng-class="{'btn-day-active':newDeal.daysOfWeek.thursday=='yes'}" class="btn btn-secondary col" ng-click="selectThursday()">Thur</button>
+                    <button ng-class="{'btn-day-active':newDeal.daysOfWeek.friday=='yes'}" class="btn btn-secondary col" ng-click="selectFriday()">Fri</button>
+                    <button ng-class="{'btn-day-active':newDeal.daysOfWeek.saturday=='yes'}" class="btn btn-secondary col" ng-click="selectSaturday()">Sat</button>
+                    <button ng-class="{'btn-day-active':newDeal.daysOfWeek.sunday=='yes'}" class="btn btn-secondary col" ng-click="selectSunday()">Sun</button>
+                </div>
+            </div>
+            
+            <div class="row row-type" style="margin-top:10px!important;" ng-show="newDeal.type=='onetime'">
+                <div style="text-align: center;margin-right: 50px;" flex-gt-xs>
+                      <md-datepicker ng-model="newDeal.date" ng-disabled="newDeal.recurringDealID==false" md-placeholder="Enter date"
+                          md-min-date="minDate"></md-datepicker>
+                </div>
+            </div>
+
+            <div class="row row-weekly" ng-show="newDeal.type=='recurring'">
+                <button ng-class="{'btn-day-active':newDeal.daysOfWeek.monday=='yes'}" class="btn btn-secondary col" ng-click="selectMonday()">Mon</button>
+                <button ng-class="{'btn-day-active':newDeal.daysOfWeek.tuesday=='yes'}" class="btn btn-secondary col" ng-click="selectTuesday()">Tue</button>
+                <button ng-class="{'btn-day-active':newDeal.daysOfWeek.wednesday=='yes'}" class="btn btn-secondary col" ng-click="selectWednesday()">Wed</button>
+                <button ng-class="{'btn-day-active':newDeal.daysOfWeek.thursday=='yes'}" class="btn btn-secondary col" ng-click="selectThursday()">Thur</button>
+                <button ng-class="{'btn-day-active':newDeal.daysOfWeek.friday=='yes'}" class="btn btn-secondary col" ng-click="selectFriday()">Fri</button>
+                <button ng-class="{'btn-day-active':newDeal.daysOfWeek.saturday=='yes'}" class="btn btn-secondary col" ng-click="selectSaturday()">Sat</button>
+                <button ng-class="{'btn-day-active':newDeal.daysOfWeek.sunday=='yes'}" class="btn btn-secondary col" ng-click="selectSunday()">Sun</button>
+            </div>
+
+            <div class="row add-time">
+                <div class="col-time-left">
+                    <center>
+                        <strong style="margin-left:-60px;">Start Time</strong>
+                        <timepicker ng-model="newDeal.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+                    </center>
+                </div>
+                <div class="col-time-right">
+                    <center>
+                        <strong style="margin-left:-60px;">End Time</strong>
+                        <timepicker ng-model="newDeal.endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+                    </center>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Deal Title</label><span ng-show="nameFocus" class="character-limit">{{30 - newDeal.name.length}} char available</span>
+                <input type="text" maxlength="30" ng-focus="nameFocus=true" ng-blur="nameFocus=false" class="form-control" ng-model="newDeal.name" placeholder="Taco Tuesday"/>
+            </div>
+            <div class="form-group">
+                <label>Deal Description</label><span ng-show="descriptionFocus" class="character-limit">{{300 - newDeal.description.length}} char available</span>
+                <textarea type="text" maxlength="300" ng-focus="descriptionFocus=true" ng-blur="descriptionFocus=false" class="form-control" ng-model="newDeal.description" placeholder="Come and enjoy $2 tacos and $2 shots tequila. $3 Dos Equis!"></textarea>
+            </div>
+        </div>
+        <div ng-if="displayOptions.addDeal=='image'" style="text-align:center;">
+            <div ng-if="showGallery==true">
+            <!--
+                <md-content layout-padding>
+                    <md-grid-list
+                        md-cols-gt-md="12" md-cols="3" md-cols-md="8"
+                        md-row-height-gt-md="1:1" md-row-height="4:3"
+                        md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
+                      <md-grid-tile
+                          ng-repeat="img in bizImages">
+                          <img ng-src="{{img.largeImage}}" layout-fill/>
+                      </md-grid-tile>
+                    </md-grid-list>
+              </md-content>
+            -->
+                <div style="display:flex;flex-wrap: wrap;">    
+                        <div style="width:33%;" ng-repeat="img in bizImages" ng-hide="img.largeImage=='http://s3.amazonaws.com/mealstealsyes/1445043359608food-icon.png'">
+                            <div class="list" ng-click="selectImage(img)"> 
+                                <button ng-click="deleteGalleryImage(img)" class="btn btn-danger btn-delete-image btn-sm">Delete</button>
+                                <img style="max-width:100%;width:100%;border-radius:10px;height:auto;padding:5px;" ng-src="{{img.largeImage}}"/>
+                            </div>
+
+                        </div>
+                        <div style="margin:auto;" ng-if="bizImages.length==0">
+                            <div class="empty-data-icon"><span class="glyphicon glyphicon glyphicon-picture"></span></div>
+                            <h3>Upload an image</h3>
+                        </div>
+                </div> 
+            </div>
+            <div ng-if="showGallery!=true">
+                <div type="file" ngf-select="uploadFiles($file, 'dealFullImage', 800, 600)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB" class="add-image-container" ng-style="{'background-image':'url('+newDeal.dealFullImage+')'}">
+                    <div ng-if="newDeal.dealFullImage==false" class="add-upload-container">
+                       <span class="glyphicon glyphicon-plus"></span>
+                       <span class="add-upload-message">Add Image</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary" ng-click="loadImageGallery();" class="button button-clear button-icon-container-right">Gallery</button>
+                <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file, 'dealFullImage', 800, 600)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB" class="button button-clear button-icon-container-left">Upload</button>
+            </div>
+        </div>
+
+        <div ng-if="displayOptions.addDeal=='options'">
+            <div class="add-container">
+                <div ng-show="newDeal.timeType=='deal'" class="row row-type">
+                    <button ng-class="{'btn-day-active':newDeal.foodOrDrink=='food'}" class="btn btn-secondary col" ng-click="newDeal.foodOrDrink='food'">Food</button>
+                    
+                    <button ng-class="{'btn-day-active':newDeal.foodOrDrink=='drink'}" class="btn btn-secondary col" ng-click="newDeal.foodOrDrink='drink'">Drink</button>
+                    
+                    <button ng-class="{'btn-day-active':newDeal.foodOrDrink=='both'}" class="btn btn-secondary col" ng-click="newDeal.foodOrDrink='both'">Both</button>
+
+                </div>
+                <div ng-if="newDeal.userSubmitted!=true" class="row" style="margin-top:20px;">
+                    <button ng-class="{'btn-day-active':newDeal.exclusive=='yes'}" class="btn btn-secondary col" ng-click="selectExclusive()">Exclusive</button>
+                    <button ng-class="{'btn-day-active':newDeal.redeemable=='yes'}" class="btn btn-secondary col" ng-click="selectRedeemable()">Redeemable</button>
+                </div>
+                <div ng-if="newDeal.userSubmitted==true">
+                  <span>{{newDeal.submittedByUsername}}</span>
+                  <span>{{newDeal.submittedByUID}}</span>
+                </div>
+            </div>
+            <md-content class="md-padding" layout="column">
+                <md-chips
+                    ng-model="newDeal.tags"
+                    readonly="readonly"
+                    md-removable="removable"
+                    placeholder="Enter a tag"
+                    delete-button-label="Remove Tag"
+                    delete-hint="Press delete to remove tag"
+                    secondary-placeholder="+Tag">
+                </md-chips>
+            </md-content>
+        </div>
+    </div>
+</div>
+<div ng-if="newDeal.type!=false && showGallery!=true" class="modal-footer">
+    <div ng-if="displayOptions.addDeal=='details'">
+        <button ng-click="goImage();testDeal()" class="btn btn-primary pull-right">Next</button>
+        <button ng-click="newDeal.type=false" class="btn btn-warning pull-left">Back</button>
+    </div>
+
+    <div ng-if="displayOptions.addDeal=='image'">
+        <button ng-click="goOptions();testDeal()" class="btn btn-primary pull-right">Next</button>
+        <button ng-click="displayOptions.addDeal='details'" class="btn btn-warning pull-left">Back</button>
+    </div>
+
+    <div ng-if="displayOptions.addDeal=='options'">
+        <button ng-click="finishDeal();testDeal()" class="btn btn-primary pull-right">Add Deal</button>
+        <button ng-click="displayOptions.addDeal='image'" class="btn btn-warning pull-left">Back</button>
+    </div>
+</div>
+
+

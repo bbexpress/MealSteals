@@ -1,0 +1,218 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Deals</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeExploreDeals()">Close</button>
+    </div>
+  </ion-header-bar>
+  
+    <ion-content>
+     
+      <ion-scroll direction="y" style="width:100%;height:100%;border-top: 1px rgb(169, 169, 169) solid;">
+ 
+            <div id="listdeal" style="padding:0px;border:none;" class="item item-thumbnail-left" ng-repeat="deal in busRecurringDeals">
+              <div style="margin-bottom:10px;" class="list">
+
+                  <div style="border-bottom:none;border-radius: 15px 15px 0 0;" class="item item-avatar item-button-right">
+                    <img style="border-radius:0px;" ng-src={{deal.icon}}>
+                    <h2>{{deal.name}}</h2>
+                    <p ng-show="
+                                                           deal.daysOfWeek.monday=='yes' &&
+                                                           deal.daysOfWeek.tuesday=='yes' &&
+                                                           deal.daysOfWeek.wednesday=='yes' &&
+                                                           deal.daysOfWeek.thursday=='yes' &&
+                                                           deal.daysOfWeek.friday=='yes' &&
+                                                           deal.daysOfWeek.saturday=='yes' &&
+                                                           deal.daysOfWeek.sunday=='yes'
+                                                           ">Everyday of the week!
+                                            </p>
+                                             
+                                             <p ng-show="
+                                                           deal.daysOfWeek.monday=='yes' &&
+                                                           deal.daysOfWeek.tuesday=='yes' &&
+                                                           deal.daysOfWeek.wednesday=='yes' &&
+                                                           deal.daysOfWeek.thursday=='yes' &&
+                                                           deal.daysOfWeek.friday=='yes' &&
+                                                           deal.daysOfWeek.saturday=='yes' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Monday - Saturday
+                                            </p>
+                                             
+                                             <p ng-show="
+                                                           deal.daysOfWeek.monday=='no' &&
+                                                           deal.daysOfWeek.tuesday=='no' &&
+                                                           deal.daysOfWeek.wednesday=='no' &&
+                                                           deal.daysOfWeek.thursday=='no' &&
+                                                           deal.daysOfWeek.friday=='yes' &&
+                                                           deal.daysOfWeek.saturday=='yes' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Friday & Saturday
+                                            </p>
+
+
+
+                                            <p ng-show="
+                                                           deal.daysOfWeek.monday=='yes' &&
+                                                           deal.daysOfWeek.tuesday=='yes' &&
+                                                           deal.daysOfWeek.wednesday=='yes' &&
+                                                           deal.daysOfWeek.thursday=='yes' &&
+                                                           deal.daysOfWeek.friday=='yes' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Monday - Friday
+                                            </p>
+                                             
+                                             <p ng-show="
+                                                           deal.daysOfWeek.monday=='no' &&
+                                                           deal.daysOfWeek.tuesday=='yes' &&
+                                                           deal.daysOfWeek.wednesday=='yes' &&
+                                                           deal.daysOfWeek.thursday=='yes' &&
+                                                           deal.daysOfWeek.friday=='yes' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Tuesday - Friday
+                                            </p>
+                                             
+                                            <p ng-show="
+                                                           deal.daysOfWeek.monday=='yes' &&
+                                                           deal.daysOfWeek.tuesday=='yes' &&
+                                                           deal.daysOfWeek.wednesday=='yes' &&
+                                                           deal.daysOfWeek.thursday=='yes' &&
+                                                           deal.daysOfWeek.friday=='no' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Monday - Thursday
+                                            </p> 
+                                             
+                                             <p ng-show="
+                                                           deal.daysOfWeek.monday=='no' &&
+                                                           deal.daysOfWeek.tuesday=='yes' &&
+                                                           deal.daysOfWeek.wednesday=='no' &&
+                                                           deal.daysOfWeek.thursday=='yes' &&
+                                                           deal.daysOfWeek.friday=='no' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Tuesday & Thursday
+                                            </p>
+                                             
+                                             <p ng-show="
+                                                           deal.daysOfWeek.monday=='yes' &&
+                                                           deal.daysOfWeek.tuesday=='yes' &&
+                                                           deal.daysOfWeek.wednesday=='no' &&
+                                                           deal.daysOfWeek.thursday=='no' &&
+                                                           deal.daysOfWeek.friday=='no' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Monday & Tuesday
+                                            </p>
+
+                                            <p ng-show="
+                                                           deal.daysOfWeek.monday=='no' &&
+                                                           deal.daysOfWeek.tuesday=='no' &&
+                                                           deal.daysOfWeek.wednesday=='no' &&
+                                                           deal.daysOfWeek.thursday=='no' &&
+                                                           deal.daysOfWeek.friday=='no' &&
+                                                           deal.daysOfWeek.saturday=='yes' &&
+                                                           deal.daysOfWeek.sunday=='yes'
+                                                           ">Saturday & Sunday
+                                            </p>
+
+                                            <p ng-show="
+                                                           deal.daysOfWeek.monday=='yes' &&
+                                                           deal.daysOfWeek.tuesday=='no' &&
+                                                           deal.daysOfWeek.wednesday=='no' &&
+                                                           deal.daysOfWeek.thursday=='no' &&
+                                                           deal.daysOfWeek.friday=='no' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Monday's
+                                            </p>
+
+                                            <p ng-show="
+                                                           deal.daysOfWeek.monday=='no' &&
+                                                           deal.daysOfWeek.tuesday=='yes' &&
+                                                           deal.daysOfWeek.wednesday=='no' &&
+                                                           deal.daysOfWeek.thursday=='no' &&
+                                                           deal.daysOfWeek.friday=='no' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Tuesday's
+                                            </p>
+
+                                            <p ng-show="
+                                                           deal.daysOfWeek.monday=='no' &&
+                                                           deal.daysOfWeek.tuesday=='no' &&
+                                                           deal.daysOfWeek.wednesday=='yes' &&
+                                                           deal.daysOfWeek.thursday=='no' &&
+                                                           deal.daysOfWeek.friday=='no' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Wednesday's
+                                            </p>
+
+                                            <p ng-show="
+                                                           deal.daysOfWeek.monday=='no' &&
+                                                           deal.daysOfWeek.tuesday=='no' &&
+                                                           deal.daysOfWeek.wednesday=='no' &&
+                                                           deal.daysOfWeek.thursday=='yes' &&
+                                                           deal.daysOfWeek.friday=='no' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Thursday's
+                                            </p>
+
+                                            <p ng-show="
+                                                           deal.daysOfWeek.monday=='no' &&
+                                                           deal.daysOfWeek.tuesday=='no' &&
+                                                           deal.daysOfWeek.wednesday=='no' &&
+                                                           deal.daysOfWeek.thursday=='no' &&
+                                                           deal.daysOfWeek.friday=='yes' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Friday's
+                                            </p>
+
+                                            <p ng-show="
+                                                           deal.daysOfWeek.monday=='no' &&
+                                                           deal.daysOfWeek.tuesday=='no' &&
+                                                           deal.daysOfWeek.wednesday=='no' &&
+                                                           deal.daysOfWeek.thursday=='no' &&
+                                                           deal.daysOfWeek.friday=='no' &&
+                                                           deal.daysOfWeek.saturday=='yes' &&
+                                                           deal.daysOfWeek.sunday=='no'
+                                                           ">Saturday's
+                                            </p>
+
+                                            <p ng-show="
+                                                           deal.daysOfWeek.monday=='no' &&
+                                                           deal.daysOfWeek.tuesday=='no' &&
+                                                           deal.daysOfWeek.wednesday=='no' &&
+                                                           deal.daysOfWeek.thursday=='no' &&
+                                                           deal.daysOfWeek.friday=='no' &&
+                                                           deal.daysOfWeek.saturday=='no' &&
+                                                           deal.daysOfWeek.sunday=='yes'
+                                                           ">Sunday's
+                                            </p>
+                      
+                    <p>{{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}</p>
+                      
+
+                  </div>
+
+                  <div style="border-top:none;padding-top:0px;border-radius: 0px 0px 15px 15px;" class="item item-body">
+                    <img class="full-image" ng-src="{{deal.dealFullImage}}">
+                    <h3>{{deal.locName}}</h3>
+                    <p>{{deal.description}}</p>
+                  </div>
+
+                </div>
+
+            </div>
+            
+        
+
+      </ion-scroll>
+        
+  </ion-content>
+    
+</ion-modal-view>

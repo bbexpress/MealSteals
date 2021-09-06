@@ -1,0 +1,20 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Purchase Ads</h3>
+    </div>
+    <div class="modal-body">                
+        <span>$10 minimum</span>
+        <form name="myForm" class="ad-purchase-form">
+              <input placeholder="number of ads" style="" type="number" ng-model="purchaseAd"><br>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-warning" type="button" style="float:left;" ng-click="closeTransaction()">Close</button>
+         <button ng-click="payCustom(displayOptions.currentLoc, purchaseAd)" class="btn btn-primary btn-buy-popup">
+                                  <span ng-show="purchaseAd > 99">Pay ${{purchaseAd/10}}</span>
+                                  <span ng-show="purchaseAd < 100 || purchaseAd==undefined">100 ad min.</span>    
+         </button>
+    </div>
+</div>
+

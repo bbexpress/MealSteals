@@ -1,0 +1,27 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Users/briankopp/Repos/bizapp/platforms/android/build/intermediates/assets/debug/www/js/moment.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/lib/ngCordova/dist/ng-cordova-mocks.min.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/lib/ngCordova/dist/ng-cordova-mocks.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/lib/jr-crop/dist/jr-crop.min.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/lib/jr-crop/examples/app.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/lib/jr-crop/gulpfile.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/lib/jr-crop/src/jr-crop.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/plugins/cordova-plugin-camera/www/CameraConstants.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/lib/ngCordova/dist/ng-cordova.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/lib/ngCordova/dist/ng-cordova.min.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/lib/vsgoogleautocomplete.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/plugins/cordova-plugin-camera/www/Camera.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/plugins/cordova-plugin-camera/www/CameraPopoverHandle.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/plugins/cordova-plugin-device/www/device.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/plugins/cordova-plugin-dialogs/www/android/notification.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/plugins/cordova-plugin-statusbar/www/statusbar.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/plugins/cordova-plugin-dialogs/www/notification.js",
+        "/Users/briankopp/Repos/bizapp/www/upgrade/upgrade.js",
+        "moment.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/auth/controllers-account.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/auth/services-auth.js",
+        "/Users/briankopp/Repos/bizapp/platforms/android/assets/www/auth/services-profile.js"
+    ]
+}

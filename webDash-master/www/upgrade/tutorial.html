@@ -1,0 +1,100 @@
+<ion-modal-view style="background-color:#f7f7f7;">
+  <ion-header-bar style="background-color:transparent;">
+    <div ng-switch="tutorialSlide" class="buttons">
+      <button ng-switch-when="1" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="2" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="3" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="4" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="5" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="6" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="7" class="button button-clear btn-nav-switch" ng-click="closeTutorialModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content scroll="false" has-bouncing="false" style="padding:15px;" on-swipe-left="next()" on-swipe-right="previous()" ng-switch="tutorialSlide">
+     <div ng-switch-when="1">
+        <h4>
+            <center>
+                Upgrade
+            </center>
+        </h4>
+        <span class="tutorial-txt">
+            <center>
+                Upgrade your deals in real time to reach deal hunters looking to convert right now!
+            </center>
+         </span>
+     </div>  
+      <div ng-switch-when="2">
+         <h4>
+            <center>
+                $5 Boosts
+            </center>
+        </h4>
+        <span class="tutorial-txt">
+            <center>
+                Boost a deal for the day and exponentially increase its visibilty on all three tabs of the app.
+            </center>
+         </span>
+     </div>  
+      <div ng-switch-when="3">
+         <h4>
+            <center>
+                $5 Boosts
+            </center>
+        </h4>
+        <span class="tutorial-txt">
+            <center>
+                Be listed first on Top Rated tab.
+            </center>
+         </span>
+     </div>  
+      <div ng-switch-when="4">
+         <h4>
+            <center>
+                $5 Boosts
+            </center>
+        </h4>
+        <span class="tutorial-txt">
+            <center>
+                Increased map marker size and overlay over other businesses markers.
+            </center>
+         </span>
+     </div>  
+      <div ng-switch-when="5">
+         <h4>
+            <center>
+                $5 Boosts
+            </center>
+        </h4>
+        <span class="tutorial-txt">
+            <center>
+                Stand out on the list view.
+            </center>
+         </span>
+     </div>  
+      <div ng-switch-when="6">
+        <h4>
+            <center>
+                $0.10 Ads
+            </center>
+        </h4>
+        <span class="tutorial-txt">
+            <center>
+                Each time a local dealhunter loads up the app, they will see your deal first, front and center!
+            </center>
+         </span>
+     </div>  
+      <div ng-switch-when="7">
+        <h4>
+            <center>
+                $0.10 Ads
+            </center>
+        </h4>
+        <span class="tutorial-txt">
+            <center>
+                Your ad will only be shown on days your deal is available.
+            </center>
+         </span>
+     </div>  
+
+  </ion-content>
+</ion-modal-view>

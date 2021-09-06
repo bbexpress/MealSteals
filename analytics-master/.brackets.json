@@ -1,0 +1,8 @@
+{
+    "jscodehints.detectedExclusions": [
+        "C:/Sites/login/app/bower_components/angular-material/modules/js/autocomplete/autocomplete.js",
+        "/Users/briankopp/Repos/login/app/bower_components/angular-material/modules/closure/toolbar/toolbar.min.js",
+        "/Users/briankopp/Repos/login/app/bower_components/angular-material/modules/closure/tooltip/tooltip.js",
+        "/Users/briankopp/Repos/login/app/bower_components/angular-material/modules/closure/tooltip/tooltip.min.js"
+    ]
+}

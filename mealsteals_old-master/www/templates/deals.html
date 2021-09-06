@@ -1,0 +1,306 @@
+<ion-view view-title="MealSteals">
+  <ion-content scroll="false">
+      
+  
+
+<!--
+      <i ng-class="{'hide':hasSeenTimeShiftBefore=='yes'}" class="my-icon">
+          <i></i>
+          <div class="info-box" style="padding-left:10px;">
+              <h5 style="margin-left:8px;margin-bottom:5px;">Welcome to MealSteals!</h5>
+              <span style="font-size:smaller;">All deals & events are displayed in real-time. Press the clock to see what's upcoming!</span>
+          </div>
+      </i>
+      <i ng-class="{'hide':hasSeenTimeShiftBefore=='yes'}" class="my-icon-under">
+          <i></i>
+          <div class="info-box-under">
+              
+          </div>
+      </i>
+-->
+
+  
+      
+
+  <!--<div style="background:#2C3E50;height:40px;width:100%;">
+      <div id="all" class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='all'}" ng-click="filterOptions.categoryTab='all';clearAndAddMarkers()" style="width:25%;">All</div><div class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='food'}" ng-click="filterOptions.categoryTab='food';clearAndAddMarkers()" style="width:25%;"><i class=""></i> Food</div><div class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='drinks'}" ng-click="filterOptions.categoryTab='drinks';clearAndAddMarkers()" style="width:25%;"><i class=""></i> Drinks</div><div class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='featured'}" ng-click="filterOptions.categoryTab='featured';clearAndAddMarkers();featuredClick();" style="width:25%;">Featured</div>
+  </div>-->
+      
+      
+      <ion-drawer-vertical-wrapper direction="down" state="closed" class="has-header search" delegate-handle="search" style="">
+          <div class="search_drawer item item-input-inset" style="height:40px;background-color:#F1F1F1;border:none;">
+            <label class="item-input-wrapper" style="border:solid 1px rgba(128, 128, 128, 0.4);background-color:white;">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <form ng-submit="searchBoxSubmit($event);storeSearch();">
+                    <input type="search" placeholder="Food or Drink..." style="width:100%;color:#636363;height:25px;" ng-model="filterOptions.searchVal">
+                    
+                    <!-- ng-change="searchBoxChanged($event)"> -->
+                    <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+                </form>
+            </label>
+            <button ng-model="filterOptions.searchVal" ng-click="filterOptions.searchVal='';clearAndAddMarkers();toggleDrawer('search');" style="background:none;border:none;font-size:small;color: rgba(0, 86, 255, 0.67);">Cancel</button>
+            </div>
+          </ion-drawer-vertical-wrapper>
+          
+     
+      
+
+      
+<!--
+        <div style="height:40px;width:100%;border-bottom: 41px rgb(169, 169, 169) solid;">
+         <div id="all" class="categoryTab border" ng-class="{categoryTabSelected:filterOptions.categoryTab=='all'}" ng-click="filterOptions.categoryTab='all';clearAndAddMarkers()" style="width:25%;">All</div><div class="categoryTab border" ng-class="{categoryTabSelected:filterOptions.categoryTab=='food'}" ng-click="filterOptions.categoryTab='food';clearAndAddMarkers()" style="width:25%;"><i class=""></i> Food</div><div class="categoryTab border" ng-class="{categoryTabSelected:filterOptions.categoryTab=='drinks'}" ng-click="filterOptions.categoryTab='drinks';clearAndAddMarkers()" style="width:25%;"><i class=""></i> Drinks</div><div class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='featured'}" ng-click="filterOptions.categoryTab='featured';clearAndAddMarkers();featuredClick();" style="width:25%;">Featured</div>
+        </div>
+-->
+        <ion-scroll scrollbar-x="false" has-bouncing="false" direction="x" style="height:40px;width:100%;">
+      
+            <ul style="display:flex;width:165%;">
+                <li id="all" class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='all'}" ng-click="filterOptions.categoryTab='all';clearAndAddMarkers()" style="width:22%;">All</li>
+                
+                <li class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='featured'}" ng-click="filterOptions.categoryTab='featured';clearAndAddMarkers();featuredClick();" style="width:22%;">Featured</li>
+                
+                <li class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='exclusive'}" ng-click="filterOptions.categoryTab='exclusive';clearAndAddMarkers();exclusiveClick();" style="width:22%;">Exclusive</li>
+                
+                
+                <li class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='food'}" ng-click="filterOptions.categoryTab='food';clearAndAddMarkers()" style="width:22%;">Food</li>
+                
+                <li class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='drinks'}" ng-click="filterOptions.categoryTab='drinks';clearAndAddMarkers()" style="width:22%;">Drinks</li>
+                
+                <li class="categoryTab" ng-class="{categoryTabSelected:filterOptions.categoryTab=='events'}" ng-click="filterOptions.categoryTab='events';clearAndAddMarkers();featuredClick();" style="width:22%;">Events</li>
+        </ul>
+      </ion-scroll>
+
+      <ion-scroll direction="y" style="width:100%;border-top: 1px rgb(169, 169, 169) solid;" ng-style="{height:fuHeight-130 + 'px'}" ng-if="viewOptions.displayType=='list'">
+ 
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="doRefresh()">
+        </ion-refresher>
+          
+        <div ng-if="deals.length==0" style="margin-top:25px;">
+          <center>There are no active deals right now. Check back later today!</center>
+        </div>
+
+        <ul class="list deal-list">
+            <li id="listdeal" class="item item-thumbnail-left" collection-repeat="d in deals | filter:topTabFilter(filterOptions.categoryTab) | filter:bottomSheetFilter(filterOptions.filterTo) | filter:searchValueFilter(filterOptions.searchVal) | filter:featuredFilter(filterOptions.featuredOnly) | filter:expiredFilter | orderBy:distanceSort" ng-click="quickHighlight($event);go('/deals/'+d.key,80);listClick();" ng-class="{'upgrade-list':d.businessID==''}">
+              <img src="" style="display:none;z-index:-1;">
+              <div class="imagehack" ng-style="{'background-image':'url(' + d.img + ')'}"></div>
+              <h2>{{d.locName}}</h2>
+              <p>{{d.name}}</p>
+              <div ng-if="d.exclusive=='yes'"><img src="img/exclusive.png" style="height:15px;"/></div>
+              <p>
+                <i class="icon ion-ios-clock-outline"></i>&nbsp;
+                <span ng-show="d.endTime-timestamp < 3600000">{{(d.endTime - timestamp)/60000 | number:0}} minutes left</span>
+                <span ng-show="d.endTime-timestamp >= 3600000">{{(d.endTime - timestamp)/3600000 | number:1}} hours left</span>
+                &nbsp;&nbsp;<i class="icon ion-ios-location-outline"></i> &nbsp;{{kmToMile(distAway([d.lat, d.lon])) | number:1}} mi away
+              </p>
+              
+            </li>
+        </ul>
+
+      </ion-scroll>
+      
+      <ion-scroll direction="y" style="width:100%;border-top: 1px rgb(169, 169, 169) solid;" ng-style="{height:fuHeight-130 + 'px'}" ng-if="viewOptions.displayType=='events'">
+ 
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="doRefresh()">
+        </ion-refresher>
+          
+        
+        <div class="item item-divider">
+            Events
+        </div>
+        <ul style="margin:0px;" class="list deal-list">
+        
+            <li id="listdeal" class="item item-thumbnail-left" ng-show="d.timeType=='event'" ng-repeat="d in deals | filter:expiredFilter | orderBy:distanceSort" ng-click="quickHighlight($event);go('/deals/'+d.key,80);listClick();">
+              
+              <img src="" style="display:none;z-index:-1;">
+              <div class="imagehack" ng-style="{'background-image':'url(' + d.img + ')'}"></div>
+              <h2>{{d.locName}}</h2>
+              <p>{{d.name}}</p>
+              
+              <p>
+                <i class="icon ion-ios-clock-outline"></i>&nbsp;
+                <span ng-show="d.endTime-timestamp < 3600000">{{(d.endTime - timestamp)/60000 | number:0}} minutes left</span>
+                <span ng-show="d.endTime-timestamp >= 3600000">{{(d.endTime - timestamp)/3600000 | number:1}} hours left</span>
+                &nbsp;&nbsp;<i class="icon ion-ios-location-outline"></i> &nbsp;{{kmToMile(distAway([d.lat, d.lon])) | number:1}} mi away
+              </p>
+              
+            </li>
+        </ul>
+        <ul ng-click="quickHighlight($event);go('/events/'+event.key,80);" style="margin:0px;" class="list deal-list" ng-repeat="event in events" ng-show="event.eventEndTime > (timestamp-timeAdjustedBy)">
+            <div class="item item-divider">
+            {{event.eventStartTime | date : 'fullDate'}}
+            </div>
+            <li class="item item-thumbnail-left">
+              <img src="" style="display:none;z-index:-1;">
+               <img src="{{event.eventLargeImage}}" class="imagehack">
+              <h2>{{event.eventName}}</h2>
+              <p style="white-space:normal;">{{event.eventDesc}}</p>
+              
+              <p>
+                <i class="icon ion-ios-clock-outline"></i>&nbsp;
+                <span>{{event.eventStartTime | date : 'shortTime'}} - {{event.eventEndTime | date : 'shortTime'}}</span>
+               
+                &nbsp;&nbsp;<i class="icon ion-ios-location-outline"></i> &nbsp;{{kmToMile(distAway([event.eventLat, event.eventLon])) | number:1}} mi away
+              </p>
+              
+            </li>
+        </ul>
+
+      </ion-scroll>
+
+    <div ng-show="viewOptions.displayType=='map'" style="width:100%;height:100%;">
+      <div id="map" data-tap-disabled="true"></div>
+      
+    </div>
+      
+      <ion-drawer-vertical-wrapper ng-class="{'show-clock':timeAdjusted=='yes'}" style="z-index:5;" direction="up" state="closed" class="" delegate-handle="timeshift">
+         <ion-drawer-vertical-content>
+             
+             
+             <div style="width: 100%;height:40px;display:inline-flex;background-color: white;">
+                  <div>
+                        <i class="icon ion-clock" style="font-size: 27px;position:absolute;bottom:107px;left:7px;"></i>
+                  </div>
+                <button class="button button-timeshift-drawer" ng-click="toggleDrawer('timeshift')">
+                  <span ng-if="timeAdjusted=='no'">Available Now{{searchVal}}</span>
+                  <span ng-if="timeAdjusted=='yes'">Available At {{timestamp | date:'shortTime'}}</span>
+
+                </button>
+                <div style="position:relative;margin-left:-7px;bottom:-10px;">
+                    <i class="icon ion-ios-arrow-up"></i>
+
+                  <!--<i class="icon ion-ios-arrow-down" ng-show="drawerIs('opened')"></i>
+                  <i class="icon ion-ios-arrow-down" ng-show="!drawerIs('opened') && !drawerIs('closed')"></i>
+                  <i class="icon ion-ios-arrow-up" ng-show="drawerIs('closed')"></i>-->
+                </div> 
+
+
+                <div style="position: absolute;right: 0;bottom: 100px;height: 40px;width: 60px;" on-hold="holdDataButton()" on-release="releaseDataButton()"></div>
+
+                
+          
+             </div>
+             
+            <div ng-if="timeAdjusted=='no'" style="height:100px;">
+      
+              <div class="range range-positive">
+                {{(timestamp) | date:'shortTime'}}
+                <input type="range" name="volume" min="0" max="28800000" value="{{data.timeSelection}}" ng-model="data.timeSelection">
+                {{(timestamp+28800000) | date:'shortTime'}}
+              </div>
+              <div style="display:flex;margin-top:-20px;">
+
+                
+                <button class="button button-block button-positive button-timeshift" ng-click="setNewTime();toggleDrawer('timeshift');">{{timestamp-(-data.timeSelection) | date:'shortTime'}}
+                </button>
+                  
+                <button class="button button-block button-positive button-timeshift" value="0" ng-click="data.timeSelection = 0;setNewTime();toggleDrawer('timeshift');">Real-time</button>  
+  
+
+              </div>
+            </div>  
+             
+            <div ng-if="timeAdjusted=='yes'" style="height:100px;">
+      
+              <div class="range range-positive">
+                {{(timestamp-timeAdjustedBy) | date:'shortTime'}}
+                <input type="range" name="volume" min="0" max="28800000" value="{{data.timeSelection}}" ng-model="data.timeSelection">
+                {{(timestamp-timeAdjustedBy+28800000) | date:'shortTime'}}
+              </div>
+              <div style="display:flex;margin-top:-20px;">
+
+                 
+
+                <button class="button button-block button-positive button-timeshift" ng-click="setNewTime();toggleDrawer('timeshift');">{{timestamp-timeAdjustedBy-(-data.timeSelection) | date:'shortTime'}}
+                </button>
+                  
+                <button class="button button-block button-positive button-timeshift" value="0" ng-click="data.timeSelection = 0;setNewTime();toggleDrawer('timeshift');">Real-time</button>   
+
+              </div>
+            </div>  
+        </ion-drawer-vertical-content>
+    
+      </ion-drawer-vertical-wrapper>
+      
+       <ion-drawer-vertical-wrapper direction="up" state="closed" class="data" delegate-handle="data">
+         <ion-drawer-vertical-content>
+           
+            <ul class="list diagnostic">
+                <li class="item item-divider" style="font-size:16px;padding:16px;">
+                    Upcoming Features
+                    
+                </li>
+                <li>
+                    <form name="enterLocation">
+                      <input vs-google-autocomplete
+                             vs-autocomplete-validator
+                             ng-model="address"
+                             
+                             vs-longitude="lon"
+                             vs-latitude="lat"
+                             
+                             ng-focus="disableTap()"
+                             id="searchBar"
+                             name="address"
+                             type="text">
+                      
+                    </form>
+                </li>
+    
+                
+                <div style="margin-right:5%;margin-left:5%;">
+                    <form ng-submit="submitLocation(lat,lon);toggleDrawer('data');">
+                    
+                         <input type="hidden" value="{{lat}}" id="{{lat}}" ng-model="new.lat"/>
+                         
+                    
+                    
+                    
+                         <input type="hidden" ng-model="newLon = lon"/>
+                         
+                        
+                         <input type="submit" id="submit" value="New Location" style="" class="button button-block button-positive"/>
+                    
+                
+                    </form>
+                </div>
+             </ul>
+             <button ng-click="realGps();toggleDrawer('data');" class="button button-block button-positive">GPS</button>
+             <button ng-click="toggleDrawer('data');" class="button button-block button-positive">Close</button>
+        </ion-drawer-vertical-content>
+    
+      </ion-drawer-vertical-wrapper>
+<!--
+      <div class="tabs" style="z-index:9999999999;">
+          <a ng-click="viewOptions.displayType='map';" class="tab-item">
+            Map
+          </a>
+          <a ng-click="viewOptions.displayType='list';" class="tab-item">
+            List
+          </a>
+          <a ng-click="viewOptions.displayType='events';loadFutureEvents();" class="tab-item">
+            Events
+          </a>
+          
+        </div>
+-->
+      <ion-tabs style="z-index:999999;" class="tabs-light tabs-icon-top">
+
+          <ion-tab class="map" title="Map" on-select="viewOptions.displayType='map';mapTabSelected();" icon-on="map-filled" icon-off="map">
+            
+          </ion-tab>
+
+          <ion-tab on-select="viewOptions.displayType='list';listTabSelected();" title="List" icon-on="list-filled" icon-off="list">
+            <!-- Tab 2 content -->
+          </ion-tab>
+
+          <ion-tab  on-select="viewOptions.displayType='events';loadFutureEvents();eventTabSelected();eventTabClicked();" title="Events" icon-on="event-filled" icon-off="event" badge="" badge-style="badge-assertive">
+            <!-- Tab 3 content -->
+          </ion-tab>
+
+        </ion-tabs>
+      
+  </ion-content>
+</ion-view>

@@ -1,0 +1,27 @@
+
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Events</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeFBEvents()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content style="border-radius:10px;">
+
+      <div class="item item-thumbnail-left item-biz-detail" ng-repeat="event in eventsObj">
+        <div class="list">
+          <div class="item item-avatar item-button-right">
+              {{event.start_time}}
+              {{timestamp}}
+            <h2>{{event.name}}</h2>
+            <p>{{event.start_time | date:"MM/dd/yyyy"}}</p>
+            <p>{{event.start_time | date : 'shortTime'}} - {{event.end_time | date : 'shortTime'}}</p>
+          </div>
+          <div class="item item-body item-biz-body">
+            <div class="biz-detail-deal" ng-style="{'background-image':'url('+event.cover+')'}" ></div>
+            <p>{{event.description}}</p>
+          </div>
+        </div>
+      </div>
+
+  </ion-content>
+

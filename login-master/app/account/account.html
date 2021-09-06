@@ -1,0 +1,96 @@
+<div class="container-fluid" style="background: -webkit-gradient(linear, left top, left bottom, from(rgb(226, 238, 255)), to(white));margin-top:-56px;height:100vh;">
+	<div class="center-block">
+		<div class="row" style="margin-top:15vh;text-align:center;">
+				
+			<img src="http://mealsteals.com/images/mealsteals/mealstealsblue.png" class="center-block" style="width:400px;max-width:80%;"/>
+            <div style="display:inline-flex;">
+                <div>
+                    
+                    <button style="background-color: #6698CB;border-color:#6698CB;margin:20px;" class="btn btn-primary" ng-click="logout()" ng-hide="">Log Out</button>
+                </div>
+                <div>
+                    <button style="background-color: #6698CB;border-color:#6698CB;margin:20px;" class="btn btn-primary" ng-click="displayOptions.accountTab='account'" ng-hide="">Change Credentials</button>
+                </div>
+            </div>
+			
+		</div>
+
+		<div class="row center">
+		<div class="col-md-4 center-block" style="float:none;max-width:375px;padding: 5px 20px 40px 15px;margin-top:20px;">
+			
+            
+
+            <form style="display:none;">
+                <fieldset>
+                    <legend>Profile</legend>
+
+                    <label>
+                        <span>Name:</span>
+                        <input type="text" name="name" ng-model="profile.name"/>
+                    </label>
+
+                    <label>
+                        <span>Email:</span>
+                        <br />{{profile.email}}
+                    </label>
+                </fieldset>
+            </form>
+            
+            <div style="display:inline-flex;" ng-show="displayOptions.accountTab=='account'">
+
+                <form style="margin-right:20px;">
+                    <fieldset>
+                        <legend>Change Password</legend>
+
+                        <label>
+                            <span>Old Password:</span>
+                            <input type="password" ng-keypress="clear()" ng-model="oldpass"/>
+                        </label>
+
+                        <label>
+                            <span>New Password:</span>
+                            <input type="password" ng-keypress="clear()" ng-model="newpass"/>
+                        </label>
+
+                        <label>
+                            <span>Confirm New Password:</span>
+                            <input type="password" ng-keypress="clear()" ng-model="confirm"/>
+                        </label>
+
+                        <button ng-click="changePassword(oldpass, newpass, confirm)" class="btn btn-danger">change password</button>
+
+                        <p class="error" ng-show="err">{{err}}</p>
+                        <p class="good" ng-show="msg">{{msg}}</p>
+                    </fieldset>
+                </form>
+
+                <form style="margin-left:20px;">
+                    <fieldset>
+                        <legend>Change Email</legend>
+
+                        <label>
+                            <span>New Email:</span>
+                            <input type="text" ng-keypress="clear()" ng-model="newEmail"/>
+                        </label>
+
+                        <label>
+                            <span>Password:</span>
+                            <input type="password" ng-keypress="clear()" ng-model="pass"/>
+                        </label>
+
+                        <button ng-click="changeEmail(pass, newEmail)" class="btn btn-danger">update email</button>
+
+                        <p class="error" ng-show="emailerr">{{emailerr}}</p>
+                        <p class="good" ng-show="emailmsg">{{emailmsg}}</p>
+                    </fieldset>
+                </form>
+            </div>
+            
+		</div>
+		</div>
+	</div>
+</div>
+
+
+
+

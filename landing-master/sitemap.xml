@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+<url>
+  <loc>http://www.mealsteals.com/</loc>
+  <lastmod>2016-02-14T02:16:27+00:00</lastmod>
+</url>
+<url>
+  <loc>http://www.mealsteals.com/deals/</loc>
+  <lastmod>2016-02-19T03:07:33+00:00</lastmod>
+</url>
+<url>
+  <loc>http://www.mealsteals.com/signin/</loc>
+  <lastmod>2016-02-13T14:44:04+00:00</lastmod>
+</url>
+<url>
+  <loc>http://www.mealsteals.com/business.html</loc>
+  <lastmod>2016-01-12T22:25:13+00:00</lastmod>
+</url>
+<url>
+  <loc>http://www.mealsteals.com/join.html</loc>
+  <lastmod>2016-01-12T22:26:08+00:00</lastmod>
+</url>
+<url>
+  <loc>http://www.mealsteals.com/contact.html</loc>
+  <lastmod>2016-01-12T22:25:39+00:00</lastmod>
+</url>
+</urlset>

@@ -1,0 +1,155 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+
+
+<!--
+<div ng-if="mask==true" style="position:absolute;top:0;left:0;width:999px;height:999px;background:#fff;z-index:99999;">
+  
+</div>
+-->
+
+
+
+<ion-view>
+    
+   
+
+    <ion-nav-buttons side="left">
+      <button class="button-back button-clear" ng-click="myGoBack()">
+        <i style="font-size: x-large;" class="ion-close-round"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-title style="right:0;left:0;">
+			<h4 ng-if="thisAd.showTime!=false" class="head-primary"><center>{{thisAd.locName}}</center></h4>
+            <span ng-if="thisAd.showTime!=false" class="head-secondary">0.8 mi away</span>
+            <h4 style="color:white;" ng-if="thisAd.showTime==false"><center>{{thisAd.locName}}</center></h4>
+    </ion-nav-title>    
+    <ion-nav-buttons ng-cloak side="right">
+        <img ng-click="go('/deals/biz/'+thisAd.businessID,80)" class="detail-nav-icon" ng-src="{{thisAd.icon}}"/>
+<!--
+        <button ng-click="followBus();" class="button button-icon button-clear">
+            <i ng-class="{'ion-ios-heart':busFavorited==true, 'ion-ios-heart-outline':busFavorited!=true}"></i>
+        </button>
+-->
+    </ion-nav-buttons>    
+
+	<ion-content  class="glossy-background" style="background-image:url('img/dealdetailBG.png');" has-bouncing="false" overflow-scroll='false' delegate-handle="userDetailContent" on-scroll="onUserDetailContentScroll()" header-shrink scroll-event-interval="5">
+      <div on-drag-down="swipe('down')" class="about-header">
+            <ion-slides options="slideOptions" on-double-tap="followDeal()" slider="data.slider" on-hold="imageEnlarge();" on-release="imageReturn();" class="deal-image-slider mg-image">
+                    <ion-slide-page>
+                         <div>
+                            <img id="deal-image" class="deal-detail-image" ng-src="{{thisAd.dealFullImage}}" style="width:100%;height:40vh;margin-left:auto;margin-right:auto;object-fit:cover;object-position: 50% 0%;" />
+                            </div>
+                    </ion-slide-page>
+            </ion-slides>
+            
+            
+            <div class="deal-detail-break"></div>
+     </div>
+     <div class="ad-detail-body">
+         <div class="deal-detail-details">
+                        <div class="row" style="padding-top:40px;">
+                            <div class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;">{{thisAd.name}}</h4></div>
+                        </div>
+                            
+                        <h6 ng-if="thisAd.showTime!=false" style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;">{{thisAd.startTime | date : 'shortTime'}} - {{thisAd.endTime | date : 'shortTime'}}</h6>
+                        
+                        <div style="width:90%;margin-left:auto;margin-right:auto;">
+                            <p style="text-align:center;font-size:smaller;color:rgb(80, 80, 80);font-style:italic;padding-bottom:15px;font-size: 14px;
+    padding-top: 10px;" ng-bind-html="thisAd.description"></p>
+                        </div>
+                        
+                
+                
+         </div>
+         
+         
+         
+         <div ng-if="thisAd.showTime!=false" class="row deal-detail-buttons" style="text-align:center;width:100%;margin-left:initial;padding-top:25px;">
+                            
+                        <div class="col col-detail">
+<!--
+                            <div ng-show="dealFavorited==true" ng-click="unFollowDeal();">
+                               <div><i style="font-size:30px;color:#f53737;" class="ion-ios-heart"></i></div>
+                               <div>Favorite</div>
+                           </div>
+-->
+                            <div ng-click="go('/deals/biz/'+thisAd.businessID,80)">
+<!--                               <div> <i style="font-size:30px;" class="ion-android-happy"></i></div>-->
+                                <img src="img/huggingemoji.png"/>
+                               <div>More Deals</div>
+                           </div>
+<!--
+                           <div ng-click="followDeal();">
+                               <div> <i ng-class="{'ion-ios-heart':dealFavorited==true, 'ion-ios-heart-outline':dealFavorited!=true}"></i></div>
+                               <div>Favorite</div>
+                           </div>
+-->
+                        </div>
+                      
+                        
+<!--
+                        <div class="col">
+                             <div ng-click="checkIn();" class="" ng-show="thisAd.redeemable=='no'">
+                               <div><i style="font-size:30px;" class="ion-ios-checkmark-outline"></i></div>
+                               <div>Check-In</div>
+                             </div>
+
+                            <div ng-click="redeemCheck()" class="" ng-show="thisAd.redeemable=='yes'">
+                                <div><i style="font-size:30px;" class="ion-ios-pricetag-outline"></i></div>
+                                <div>Redeem</div>
+                            </div>
+                        </div> 
+-->
+                        <div ng-click="launchNavigator()" class="col col-detail">
+                               <div>
+<!--                                   <div><i style="font-size:30px;" class="ion-ios-navigate-outline"></i></div>-->
+                                   <img src="img/directions.png"/>
+                                   <div>Directions</div>
+                               </div>
+                        </div>
+                                
+                        <div ng-click="launchUber()" class="col col-detail">
+                               <div>
+<!--                                   <div><i style="font-size:30px;" class="ion-model-s"></i></div>-->
+                                    <img src="img/uber.png"/>
+                                   <div>Uber</div>
+                               </div>
+                        </div>
+                        
+        </div>
+        
+<!--            <button class="button button-positive button-rate" ng-click="commentPopup()">What do you think of this deal?</button>-->
+<!--         <button class="button-clear" ng-click="moreComments()">View comments</button>-->
+         <!--  comment-fade -->
+         
+    </div>
+        <input type="button" id="routebtn" value="route" style="display:none;" />
+        <div id="map-canvas"></div>
+    
+  </ion-content>
+    <div ng-if="thisAd.showTime!=false" style="position:absolute!important;bottom:0;width:100%;" id="footer">
+            <ul class="list">
+                <li class="item" style="background-color: rgb(43, 43, 43);opacity:0.9;border:0;color:#fff;">
+                <center style="">
+                    <div style="">
+                        <i class="icon ion-ios-alarm-outline" style="font-size:18px;"></i> &nbsp;<span style="font-size:18px;">Today {{thisAd.startTime | date : 'shortTime'}} - {{thisAd.endTime | date : 'shortTime'}}</span>
+                     </div>
+                 </center>
+                </li>
+            </ul>
+    </div>
+
+                    
+                    
+           
+                       
+                   
+ 			
+</ion-view>
+
+   

@@ -1,0 +1,476 @@
+<ion-view view-title="Account">
+    <ion-nav-buttons side="right">
+      <button ng-show="accountTab=='account' || accountTab=='add'" class="button" ng-click="openSettings($event)">
+        <i style="font-size: 30px;" class="ion-gear-a"></i>
+      </button>
+      <button ng-show="accountTab=='change'" class="button" ng-click="changeProfile(currentLoc.id);closeAccountProfile()">
+        save
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="left">
+      <button ng-show="accountTab=='add' && noBiz!=true" class="button" ng-click="closeAddLoc()">
+        <i style="font-size: x-large;" class="ion-chevron-left"></i>
+      </button>
+      <button ng-show="accountTab=='change'" class="button" ng-click="closeProfile(currentLoc.id);closeAccountProfile()">
+        close
+      </button>
+    </ion-nav-buttons>
+    <div ng-if="bizInfo[currentLoc.id].dealsOn==false" class="deals-off-alert">Deals Off</div>
+    
+  <ion-content ng-class="{'background-white':accountTab=='add'}" ng-switch="accountTab">
+      
+    <div ng-switch-when="account">
+
+      <ion-list>
+          
+         <ion-item class="item item-divider">
+          Business
+        </ion-item>  
+        
+            <label ng-show="userOptions.superadmin=='yes'" ng-click="openSearchBiz()" class="item item-input">     
+                <div class="input-label">     
+                    Filter Businesses
+                </div>
+                <span style="position: absolute;right: 12px;" class="item-note">
+                   Admin only
+                </span>
+            </label>
+          
+          
+            <label ng-hide="currentLoc.id==null" class="item item-input item-select">     
+                <div class="input-label">     
+                    Active Business
+                </div>
+                <select ng-hide="isFiltered==true" ng-model="currentLoc.id" ng-change="triggerLocUpdate()" ng-options="b.$id as b.businessName for b in bizInfo">   
+                </select>
+                
+                <select ng-show="isFiltered==true" ng-model="currentLoc.id" ng-change="triggerLocUpdate()" ng-options="b.$id as b.businessName for b in filterBiz">   
+                </select>
+            </label>
+          
+          
+           <label ng-show="userOptions.superadmin=='yes'" class="item item-input">     
+                <div class="input-label" >     
+                    Approved: {{bizInfo[currentLoc.id].approved}}
+                    <span style="position: absolute;right: 12px;" class="item-note">
+                   <ion-toggle class="account-toggle" ng-model="approved.checked"
+                    ng-change="changeApproveStatus(currentLoc.id, approved.checked)">
+    
+                    </ion-toggle>
+                </span>
+                </div>                
+            </label>
+          
+          
+<!--
+            <label ng-show="userOptions.superadmin=='yes'" class="item item-input">     
+                <div ng-show="bizInfo[currentLoc.id].approved==false" class="input-label" >     
+                    Status: Unapproved
+                    <span style="position: absolute;right: 12px;" class="item-note">
+                   <button ng-click="changeStatus(currentLoc.id, true)" >Change Status</button>
+                </span>
+                </div>
+                <div ng-show="bizInfo[currentLoc.id].approved!=false" class="input-label" >     
+                    Status: Approved
+                    <span style="position: absolute;right: 12px;" class="item-note">
+                   <button ng-click="changeStatus(currentLoc.id, false)">Change Status</button>
+                </span>
+                </div>
+                
+            </label>
+-->
+          
+          
+          
+<!--
+            <label ng-show="userOptions.superadmin=='yes' && currentLoc.id!=null" class="item item-input">     
+                <div class="input-label">     
+                    Beta Options
+                </div>
+                <span style="position: absolute;right: 12px;" class="item-note">
+                   <ion-toggle style="border: none;height: 45px;"  ng-model="beta.checked" ng-change="betaChange()" toggle-class="toggle-calm"></ion-toggle>
+                </span>
+            </label>
+-->
+              
+<!--
+            <ion-item ng-show="currentLoc.id==null" ng-click="addBiz()">
+                Add Business
+              <span class="item-note item-alert">
+                required!
+              </span>
+            </ion-item>
+-->
+            
+
+
+        <!-- Deal Settings
+        <ion-item class="item item-divider">
+          Deal Settings
+        </ion-item>
+
+        <ion-toggle  ng-checked="dealStatus" ng-model="dealStatus" ng-model="settings.enableFriends">
+          Deals {{dealStatus ? "On" : "Off"}}
+        </ion-toggle>
+
+        <ion-item>
+          <i class="icon ion-calendar" style="float:right;"></i>
+            Change blackout dates
+          </ion-item>
+
+        <a class="item item-icon-left item-icon-left" href="#">
+          <i class="icon ion-stats-bars"></i>
+            View Deal Statistics
+        </a>
+        -->
+        <ion-item ng-show="userOptions.superadmin=='yes' && currentLoc.id!=null" class="item item-divider">
+          Admin
+        </ion-item>
+          
+        <label ng-click="showBetaAdmin=true" ng-show="userOptions.superadmin=='yes' && currentLoc.id!=null" class="item item-input">     
+                <div class="input-label">     
+                    Beta Status
+                </div>
+                <span ng-show="beta.status=='fresh'" style="position: absolute;right: 12px;" class="item-note">
+                   not requested
+                </span>
+                <span ng-show="beta.status!='fresh'" ng-class="{'green-font':beta.status=='requested'}" style="position: absolute;right: 12px;" class="item-note">
+                   {{beta.status}}
+                </span>
+        </label>
+          
+        <div style="border: 2px solid #cacaca;margin: 10px;" ng-show="showBetaAdmin==true">
+                <ion-radio ng-click="showBetaAdmin=false" ng-model="beta.status" ng-change="betaAdminChange()" value="approved">Approve</ion-radio>
+                <ion-radio ng-click="showBetaAdmin=false" ng-model="beta.status" ng-change="betaAdminChange()" value="denied">Deny</ion-radio>
+                <ion-radio ng-click="showBetaAdmin=false" ng-model="beta.status" ng-change="betaAdminChange()" value="requested">Requested</ion-radio>
+                <ion-radio ng-click="showBetaAdmin=false" ng-model="beta.status" ng-change="betaAdminChange()" value="fresh">Not Requested</ion-radio> 
+        </div>
+          
+        <label ng-click="adminAddBoosts()" ng-show="userOptions.superadmin=='yes' && currentLoc.id!=null" class="item item-input">     
+                <div class="input-label">     
+                    Add Boosts
+                </div>
+                <span style="position: absolute;right: 12px;" class="item-note">
+                   {{myUpgrades.boostCount || 0}}
+                </span>
+        </label>
+          
+        <label ng-click="adminAddAds()" ng-show="userOptions.superadmin=='yes' && currentLoc.id!=null" class="item item-input">     
+                <div class="input-label">     
+                    Add Ads
+                </div>
+                <span style="position: absolute;right: 12px;" class="item-note">
+                   {{myUpgrades.adCount || 0}}
+                </span>
+        </label>  
+          
+        <!-- Profile -->
+          <div ng-hide="currentLoc.id==null">
+            <ion-item class="item item-divider">
+             Profile
+            </ion-item>
+
+            <ion-item ng-click="openAccountProfile()">
+              <span ng-show="
+                             bizInfo[currentLoc.id].businessName==undefined ||
+                             bizInfo[currentLoc.id].address==undefined ||
+                             bizInfo[currentLoc.id].about==undefined ||
+                             bizInfo[currentLoc.id].phone==undefined ||
+                             bizInfo[currentLoc.id].timezone==undefined ||
+                             bizInfo[currentLoc.id].contactName==undefined
+                             " >Finish profile</span>
+              <span ng-show="
+                             bizInfo[currentLoc.id].businessName!=undefined &&
+                             bizInfo[currentLoc.id].address!=undefined &&
+                             bizInfo[currentLoc.id].about!=undefined &&
+                             bizInfo[currentLoc.id].phone!=undefined &&
+                             bizInfo[currentLoc.id].contactName!=undefined &&
+                             bizInfo[currentLoc.id].timezone!=undefined
+                             " >Edit profile</span>
+              <span ng-show="
+                             bizInfo[currentLoc.id].businessName==undefined ||
+                             bizInfo[currentLoc.id].address==undefined ||
+                             bizInfo[currentLoc.id].about==undefined ||
+                             bizInfo[currentLoc.id].phone==undefined ||
+                             bizInfo[currentLoc.id].timezone==undefined ||
+                             bizInfo[currentLoc.id].contactName==undefined
+                             " 
+                    class="item-note item-alert">
+                not set!
+              </span>
+              <span ng-show="
+                             bizInfo[currentLoc.id].businessName!=undefined &&
+                             bizInfo[currentLoc.id].address!=undefined &&
+                             bizInfo[currentLoc.id].about!=undefined &&
+                             bizInfo[currentLoc.id].phone!=undefined &&
+                             bizInfo[currentLoc.id].contactName!=undefined &&
+                             bizInfo[currentLoc.id].timezone!=undefined
+                             " class="item-note">
+                set
+              </span>
+
+            </ion-item>
+            <ion-item>     
+                    <span ng-show="bizInfo[currentLoc.id].dealsOn!=false">Deals on</span>
+                    <span ng-show="bizInfo[currentLoc.id].dealsOn==false">Deals off</span>
+                    
+                    <span style="position: absolute;right: 12px;" class="item-note">
+                    <button ng-show="bizInfo[currentLoc.id].dealsOn!=false" class="button-turn-deals-off" ng-click="changeDealStatus(currentLoc.id, false)">Deactivate</button>
+                    <button ng-show="bizInfo[currentLoc.id].dealsOn==false" class="button-turn-deals-on" ng-click="changeDealStatus(currentLoc.id, true)">Activate</button>
+
+                </span>
+                                
+            </ion-item>
+              
+            <ion-item ng-click="openInstructions()">     
+                <span>
+                    Instructions
+                </span>
+                                
+            </ion-item>  
+              
+            <ion-item ng-show="userOptions.superadmin=='yes'" ng-click="addAccess(currentLoc.id)">     
+                    Add Access  
+            </ion-item>
+              
+            <ion-item ng-show="userOptions.superadmin=='yes'" ng-click="accessList($event)">     
+                    Access List
+            </ion-item>
+              
+            <ion-item ng-show="userOptions.superadmin=='yes'" ng-click="deleteBiz(currentLoc.id, bizInfo[currentLoc.id])">     
+                    Delete  
+            </ion-item>
+        </div>
+
+        <!-- Account -->
+       <!--
+        <ion-item class="item item-divider">
+          Account
+        </ion-item>
+          
+        <ion-item ng-click="openWalkthroughModal()">
+          Walkthrough
+        </ion-item>
+          
+        <ion-item class="item-icon-right" ng-click="openContactModal()">
+            Contact
+            <i style="color:#cfcfcf;" class="icon ion-email"></i>
+        </ion-item>
+
+        <ion-item ng-show="AuthData.provider == 'password'">
+          E-mail
+          <span class="item-note">
+            {{AuthData.password.email}}
+          </span>
+        </ion-item>
+
+        <ion-item ng-click="changePasswordPopup()" ng-show="AuthData.provider == 'password'">
+          Password
+          <span class="item-note">
+            ********
+          </span>
+        </ion-item>  
+          
+        <ion-item ng-click="openTerms()">
+          Terms Of Service
+        </ion-item>
+
+        <ion-item ng-click="signOut()">
+          Sign out
+        </ion-item>
+-->
+
+      </ion-list>
+    </div> 
+
+    <!-- view for profile creation -->
+    <div ng-switch-when="change" style="background-color:white;" class="padding center">
+      <div class="row center">
+          <p ng-click="uploadPicture(currentLoc.id,'icon')" class="center profile-icon col">
+             <img ng-class="{'dull':changeProfileObj.icon=='', 'dulls':changeProfileObj.icon==undefined}" style="background-color='transparent'" ng-src="{{changeProfileObj.icon || 'http://s3.amazonaws.com/mealstealsyes/1445043359608food-icon.png'}}">
+             
+          </p>
+          <p ng-click="uploadPicture(currentLoc.id,'detailBackground')" class="center profile-image col">
+             <img ng-class="{'dull':changeProfileObj.detailBackground==undefined}" ng-src="{{changeProfileObj.detailBackground || 'http://s3.amazonaws.com/mealstealsyes/1445043359608food-icon.png'}}">
+          </p>
+      </div>
+    
+      <div style="margin-top:-15px!important;" class="row center">
+          <div class="col">
+              <span class="image-profile-text" ng-show="changeProfileObj.icon=='' || changeProfileObj.icon==undefined">upload</span>
+              <span class="image-profile-text">unique map icon</span>
+          </div>
+          <div class="col">
+              <span class="image-profile-text" ng-show="changeProfileObj.detailBackground==undefined">upload</span>
+              <span class="image-profile-text">business photo</span>
+          </div>
+      </div>
+        
+<!--        <button ng-click="iconStyleGuide()" class="button button-clear">Icon Style Guide</button>-->
+        <div style="text-align:left;">
+                        <span class="icon-style-guide-text">Refer to our</span>
+                        <button class="style-guide-button" ng-click="iconStyleGuide()">icon style guide</button>
+        </div> 
+        
+        <div class="row" style="margin-top: 10px !important;margin-bottom: 6px !important;">
+             <div class="" style="margin-right:10px;">
+ 
+                 <input type="checkbox" ng-model="changeProfileObj.rooftop">
+                 Rooftop
+             </div>
+             <div class="" style="margin-right:10px;">
+ 
+                 <input type="checkbox" ng-model="changeProfileObj.patio">
+                 Patio
+             </div>
+             <div class="">
+ 
+                 <input type="checkbox" ng-model="changeProfileObj.vegan">
+                 Vegan
+             </div>
+         </div>
+        
+        
+        <div class="list">
+           
+          <label class="item item-input item-stacked-label">
+            <span ng-class="{'required':changeProfileObj.businessName==undefined || changeProfileObj.businessName==''}" class="input-label item-profile">Business Name<i class="profile-locked ion-locked"></i></span>
+            <input disabled type="text" id="required" ng-model="changeProfileObj.businessName" />
+          </label>
+          <label class="item item-input item-stacked-label">
+            <span ng-class="{'required':changeProfileObj.address==undefined || changeProfileObj.address==''}"  class="input-label item-profile">Address<i class="profile-locked ion-locked"></i></span>
+            <form style="width:100%;">
+                  <input vs-google-autocomplete
+                         
+                     disabled   
+
+                     ng-model="changeProfileObj.address" 
+                     vs-latitude="changeProfileObj.lat"
+                     vs-longitude="changeProfileObj.lon"
+                     vs-place="address.place" 
+                     vs-place-id="address.components.placeId"
+                     vs-street-number="address.components.streetNumber" 
+                     vs-street="address.components.street"
+                     vs-city="changeProfileObj.city"
+                     vs-state="changeProfileObj.state"
+                     vs-country-short="address.components.countryCode"
+                     vs-country="address.components.country"
+                     vs-post-code="address.components.postCode"
+                     vs-district="address.components.district"
+
+                    ng-focus="disableTap()"
+                     type="text" 
+                     name="address"
+                     id="address"
+                     class="input-profile"
+                      style="border:1px solid #d0d0d0;"
+                     placeholder="Enter address">
+
+                </form>
+          </label>
+                        
+          <label class="item item-input item-stacked-label">
+            <span ng-class="{'required':changeProfileObj.about==undefined || changeProfileObj.about==''}" class="input-label item-profile">Business Description</span>
+            <textarea class="profile-description" id="required-textarea" ng-model="changeProfileObj.about" placeholder="Gabri's Lounge & Restaurant will feature an outstanding New American-Swedish menu with a touch of Asian influence in an upscale and cozy atmosphere.The menu is inspired from different cuisine's specialties and will appeal to a wide and varied clientele. We will offer a three course ‘business lunch' prix fixe and a three course dinner prix fixe in addition to the regular menu."></textarea>
+          </label>
+            
+          <label class="item item-input item-stacked-label">
+            <span ng-class="{'required':changeProfileObj.phone==undefined || changeProfileObj.phone==''}" class="input-label item-profile">Bar/Restaurant Phone</span>
+            <input type="text" placeholder="Phone" id="required" ng-model="changeProfileObj.phone" />
+          </label>    
+            
+          <label class="item item-input item-stacked-label">
+            <span ng-class="{'required':changeProfileObj.contactName==undefined || changeProfileObj.contactName==''}" class="input-label item-profile">Contact Name</span>
+            <input type="text" placeholder="First/last name" id="required" ng-model="changeProfileObj.contactName" />
+          </label>
+            
+          <label class="item item-input item-stacked-label">
+            <span ng-class="{'required':changeProfileObj.timezone==undefined || changeProfileObj.timezone==''}" class="input-label item-profile">Timezone</span>
+            <label class="item item-input item-select timezone-select">
+            <select ng-model="changeProfileObj.timezone">
+              <option value="America/Chicago">Central</option>
+              <option value="America/New_York">Eastern</option>
+              <option value="America/Denver">Mountain</option>
+              <option value="America/Los_Angeles">Pacific</option>
+            </select>
+          </label>
+          </label>     
+            
+          <label class="item item-input item-stacked-label">
+            <span class="input-label item-profile">Website</span>
+            <input type="text" placeholder="Website link" ng-model="changeProfileObj.website" />
+          </label>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label item-profile">Facebook</span>
+            <input type="text" placeholder="Facebook link" ng-model="changeProfileObj.facebook" />
+          </label>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label item-profile">Twitter</span>
+            <input type="text" placeholder="Twitter link" ng-model="changeProfileObj.twitter" />
+          </label>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label item-profile">Instagram</span>
+            <input type="text" placeholder="Instagram link" ng-model="changeProfileObj.instagram" />
+          </label>
+        </div>
+
+    </div> 
+      
+    <div ng-switch-when="add" class="add-div">
+        
+        
+        <img class="account-icon" src="img/iconbiz.png"/>
+        <h4 class="add-head">MealSteals for Business</h4>
+        
+        <span class="add-span">Connect your business with thousands of deal hunters looking to convert right now.</span>
+        <label ng-class="{'location-fill':newBiz.placeId!=undefined}" class="location-label item item-input item-stacked-label">
+            <form style="width:100%;">
+                  <input vs-google-autocomplete="options"
+                         
+                     ng-disabled="newBiz.placeId"   
+                         
+                     ng-model="newBiz.place.name" 
+                     vs-latitude="newBiz.lat"
+                     vs-longitude="newBiz.lon"
+                     vs-place="newBiz.place" 
+                     vs-place-id="newBiz.placeId"
+                     vs-street-number="newBiz.streetNumber" 
+                     vs-street="newBiz.street"
+                     vs-city="newBiz.city"
+                     vs-state="newBiz.state"
+                     vs-country-short="newBiz.countryCode"
+                     vs-country="newBiz.country"
+                     vs-post-code="newBiz.postCode"
+                     vs-district="address.components.district"
+
+                     ng-focus="disableTap()"
+                     type="text" 
+                     name="address"
+                     id="address"
+                     class="input-profile location-fill" 
+                     placeholder="Business Name">
+
+                </form>
+            
+<!--                <button ng-hide="newBiz.place.name=='' || newBiz.place.name==undefined" ng-click="newBiz='';" class="clear-search icon button-clear ion-close-circled"></button>-->
+          </label>
+        <button ng-hide="newBiz.placeId==undefined" ng-click="newBiz=undefined;clearMessage()" class="clear-business icon button-clear ion-close-circled"></button>
+          <div ng-hide="newBiz.placeId==undefined">
+<!--
+                <span class="add-alert-message">{{addBizMessage}}
+              </span>
+-->
+          </div>
+            
+<!--             <button ng-click="openPopup();">popup</button> -->
+            <button ng-click="addPlace(newBiz.place, newBiz.lat, newBiz.lon, newBiz.city, newBiz.state)" class="button button-positive button-block add-biz-button">Add business</button>
+        
+            <button ng-click="cantFindBiz()" class="button button-clear">Don't see your business?</button>
+<!--            <button ng-click="newBiz=undefined;clearMessage()" class="button button-positive">Clear</button>-->
+            
+         
+    </div>
+      
+    
+  </ion-content>
+</ion-view>

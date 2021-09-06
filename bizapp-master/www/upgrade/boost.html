@@ -1,0 +1,55 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Schedule Boosts</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeBoostModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+     <ion-list>
+         
+        <ion-item class="item item-divider">
+          Boost Available Deal's
+          <span class="item-note">
+            {{myUpgrades.boostCount || 0}} remaining
+          </span>    
+        </ion-item> 
+         
+         <ion-item ng-show="isToday(deal); notExpired(deal)" ng-click="boostDealNative(deal)" ng-repeat="deal in myDeals" style="padding:0px;">
+                <div class="list">
+                    <a class="item item-thumbnail-left" href="#">
+                        <img style="border-radius:10px;" ng-src="{{deal.dealFullImage}}">
+                        <h2>{{deal.name}}</h2>
+                        <span class="item-note" style="float:left;">
+          {{deal.startTime | date: 'shortDate'}} {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                        </span>
+                        <span ng-show="deal.boost==true" class="boosted">Boosted</span>
+                    </a>
+                </div>
+        </ion-item>
+         
+<!--
+         <ion-item class="item item-divider">
+          Boost Recurring Deals
+          <span class="item-note">
+          </span>    
+        </ion-item> 
+         
+         <ion-item ng-click="boostRecurring(deal)" ng-repeat="deal in myRecurringDeals" style="padding:0px;">
+                <div class="list">
+                    <a class="item item-thumbnail-left" href="#">
+                        <img style="border-radius:10px;" ng-src="{{deal.dealFullImage}}">
+                        <h2>{{deal.name}}</h2>
+                        <span class="item-note" style="float:left;">
+          {{deal.startTime | date: 'EEE'}} {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                        </span>
+                        <span ng-show="deal.boosts>0" class="boosted">Boosted</span>
+                    </a>
+                </div>
+        </ion-item>
+-->
+         
+      </ion-list>   
+
+  </ion-content>
+</ion-modal-view>

@@ -1,0 +1,42 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Contact</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="sendMail(mail.email, mail.subject, mail.message, mail.priority)">
+          <i class="icon ion-ios-paperplane"></i>
+      </button>
+    </div>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeContactModal()">
+        <i class="icon ion-ios-close-empty"></i>   
+      </button>
+    </div>
+  </ion-header-bar>
+  <ion-content style="background-color:#f1f1f1;">
+      <div class="list">
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Priority
+            </div>
+            <select ng-model="mail.priority">
+              <option selected>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
+          </label>
+          <label style="margin-top:1px;" class="item item-input">
+            <input ng-model="mail.email" type="email" placeholder="Email">
+          </label>
+          
+          <label style="margin-top:1px;" class="item item-input">
+            <input ng-model="mail.subject" type="text" placeholder="Subject">
+          </label>
+          
+          <label style="margin-top:1px;" class="item item-input">
+            <textarea ng-model="mail.message" style="height:250px;" placeholder="Message"></textarea>
+          </label>
+    </div>
+
+  </ion-content>
+    
+</ion-modal-view>

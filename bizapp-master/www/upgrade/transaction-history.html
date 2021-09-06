@@ -1,0 +1,40 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Transaction History</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeTransactionsModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+
+      
+<!--
+      <ion-item ng-repeat="history in myHistory">
+            <span class="item-deal">
+                {{history.createdAt | date: 'shortDate'}}
+            </span>
+            <span class="item-note">
+                {{history.ads}} ads
+            </span>
+      </ion-item>
+-->
+      <ion-item ng-repeat="history in myHistory | orderBy:'-createdAt'">
+          <div class="row">
+                <span class="col item-deal">
+                    {{history.createdAt | date: 'shortDate'}}
+                </span>
+                <span ng-show="history.ads!=undefined" style="text-align:center;" class="col item-deal">
+                    {{history.ads}} ads
+                </span>
+                <span ng-show="history.boosts!=undefined" style="text-align:center;" class="col item-deal">
+                    {{history.boosts}} boosts
+                </span>
+                <span style="text-align:right;" class="col item-deal">
+<!--                    {{history.payment/100 | currency : symbol : fractionSize}}-->
+                    {{history.payment}}
+                </span>
+          </div>
+      </ion-item>
+
+  </ion-content>
+</ion-modal-view>

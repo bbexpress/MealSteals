@@ -1,0 +1,56 @@
+<ion-modal-view class="background-login">
+<!--
+  <ion-header-bar class="profile-header" style="background-color:transparent;">
+    <h1 class="title">Profile settings</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="unAuth()">Sign out</button>
+    </div>
+  </ion-header-bar>
+-->
+  
+    <button style="float:right;z-index:999999;" class="button button-clear" ng-click="unAuth()">Sign out</button>
+<!--
+      <p class="center profile">
+         <img ng-src="{{ProfileData.profilePicture || 'img/ionic.png'}}">
+      </p>
+-->
+      
+      <ion-list>
+        
+        <!-- Profile -->
+<!--
+        <ion-item class="item item-divider">
+         Profile
+          <span class="item-note">
+            <ion-spinner ng-show="status.loadingProfile" class="spinner-small"></ion-spinner>
+          </span>
+        </ion-item>
+-->
+        
+   
+        <div style="position: relative;
+                    top: 35vh;
+                    z-index: 999;
+                    background-color: white;
+                    padding:10%;">
+            <ion-item style="width:100%;margin-bottom:30px;" ng-click="changeUsername()">
+              Choose Username
+              <span class="item-note">
+                {{ProfileData.meta.username || 'Not set!'}}
+              </span>
+            </ion-item>
+            <button style="background-color:#0297ff;border:none;" class="button button-block button-assertive" ng-click="finishSetProfile()">Finish</button>
+        </div>
+        
+<!--
+
+        <ion-item ng-click="changeProfilePicture()">
+          Profile picture
+        </ion-item>
+-->
+        <!-- ./ Profile -->
+        
+      </ion-list>
+
+<!--    <button style="position:fixed!important;bottom:0px;width:100%;padding:0px;margin:0px;" class="button button-block button-positive" type="submit" ng-click="finishSetProfile()">Finish</button>-->
+</ion-modal-view>

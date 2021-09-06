@@ -1,0 +1,55 @@
+<div class="row star-row">                             
+        <div class="col"
+            ng-click="userRating=1">
+            <div>
+                <i class="rate star-rate" 
+                   ng-class="{'ion-android-star':userRating>=1, 'ion-android-star-outline':userRating<1 || userRating==undefined}">
+                </i>
+            </div>
+        </div>
+        <div class="col"
+            ng-click="userRating=2">
+            <div>
+                <i class="rate star-rate" 
+                   ng-class="{'ion-android-star':userRating>=2, 'ion-android-star-outline':userRating<2 || userRating==undefined}">
+                </i>
+            </div>
+        </div>
+        <div class="col"
+            ng-click="userRating=3">
+            <div>
+                <i class="rate star-rate" 
+                   ng-class="{'ion-android-star':userRating>=3, 'ion-android-star-outline':userRating<3 || userRating==undefined}">
+                </i>
+            </div>
+        </div>
+        <div class="col"
+            ng-click="userRating=4">
+            <div>
+                <i class="rate star-rate" 
+                   ng-class="{'ion-android-star':userRating>=4, 'ion-android-star-outline':userRating<4 || userRating==undefined}">
+                </i>
+            </div>
+        </div>
+        <div class="col"
+            ng-click="userRating=5">
+            <div>
+                <i class="rate star-rate" 
+                   ng-class="{'ion-android-star':userRating>=5, 'ion-android-star-outline':userRating<5 || userRating==undefined}">
+                </i>
+            </div>
+        </div>
+
+<!--                                    <a ng-click="confirmRate()" class="button button-clear">OK</a>-->
+
+</div>
+<textarea ng-model="comment"></textarea>
+<div class="row">
+    <div class="col">
+        <button class="button button-light button-block" ng-click="closeRating()">Cancel</button>
+    </div>
+    <div class="col">
+<!--        <button ng-if="userRating==undefined || comment==undefined" class="button button-light button-block">Submit</button>-->
+        <button  class="button button-positive button-block" ng-click="submitRating(userRating, comment);">Submit</button>
+    </div>
+</div>

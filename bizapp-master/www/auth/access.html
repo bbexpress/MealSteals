@@ -1,0 +1,14 @@
+<ion-popover-view id="access-popover">
+
+  <ion-content style="background-color:#f1f1f1;">
+      <div style="text-align: center;background-color: white;margin-bottom:10px;" class="row"><span style="font-size:large;padding: 10px;right: 0;left: 0;margin-left: auto;margin-right: auto;">User Access List</span></div>
+      <div style="margin-bottom:10px!important;" class="row" ng-show="email.comma_email!=AuthData.password.email" ng-repeat="email in bizInfo[currentLoc.id].emails">
+          <div class="col">{{email.comma_email || email}}</div>
+          <div class="col">
+            <button style="float:right;" class="btn btn-danger" ng-click="removeAccess(email, currentLoc.id)">remove</button>
+          </div>
+      </div>
+
+  </ion-content>
+    
+</ion-popover-view>

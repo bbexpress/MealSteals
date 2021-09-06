@@ -1,0 +1,71 @@
+<ion-modal-view class="background-login">
+
+  
+    <button style="float:right;z-index:999999;" class="button button-clear" ng-click="unAuth()">Sign out</button>
+
+      
+      <ion-list>
+        <div class="data-collection-container">
+                 <div class="list">
+                      <label class="item item-input item-stacked-label item-profile-data">
+                        <span class="input-label">Username</span>
+                        <input ng-model="username" type="text" placeholder="username">
+                      </label>
+                     <button class="button button-block button-positive button-change-username" type="submit" ng-click="finishProfileTemporary(username)">Finish</button>
+                    </div>
+    
+                
+            </div>
+          
+          
+<!--
+        <div style="display:none;" ng-switch="ProfileData.meta.username || '_undefined_'">
+            <div ng-switch-when="_undefined_">
+  
+            <div class="data-collection-container">
+                 <div class="list">
+                      <label class="item item-input item-stacked-label item-profile-data">
+                        <span class="input-label">Username</span>
+                        <input ng-model="username" type="text" placeholder="username">
+                      </label>
+                      <label class="item item-input item-stacked-label item-profile-data item-profile-age">
+                        <span class="input-label">Age</span>
+                        <input ng-model="age" type="number" min="0" max="99" placeholder="age">
+                      </label>
+                       <label class="item item-input item-stacked-label item-profile-data item-profile-gender">
+                        <span class="input-label">Gender</span>
+                          <ion-radio ng-model="gender" ng-value="'male'">Male</ion-radio>
+                          <ion-radio ng-model="gender" ng-value="'female'">Female</ion-radio>
+                      </label>
+                    </div>
+    
+                <button style="background-color:#0297ff;border:none;" class="button button-block button-assertive" ng-click="finishProfileDataFull(username, age, gender)">Finish</button>
+            </div>
+            </div>
+            <div ng-switch-default>
+                <div class="data-collection-container">
+                 <div class="list">
+
+                      <label class="item item-input item-stacked-label item-profile-data item-profile-age">
+                        <span class="input-label">Age</span>
+                        <input ng-model="age" type="number" min="0" max="99" placeholder="age">
+                      </label>
+                       <label class="item item-input item-stacked-label item-profile-data item-profile-gender">
+                        <span class="input-label">Gender</span>
+                          <ion-radio ng-model="gender" ng-value="'male'">Male</ion-radio>
+                          <ion-radio ng-model="gender" ng-value="'female'">Female</ion-radio>
+                      </label>
+                    </div>
+                
+
+                <button style="background-color:#0297ff;border:none;" class="button button-block button-assertive" ng-click="finishProfileDataPartial(age, gender)">Finish</button>
+            </div>
+            </div>
+        </div>
+-->
+        
+        
+      </ion-list>
+
+<!--    <button style="position:fixed!important;bottom:0px;width:100%;padding:0px;margin:0px;" class="button button-block button-positive" type="submit" ng-click="finishSetProfile()">Finish</button>-->
+</ion-modal-view>

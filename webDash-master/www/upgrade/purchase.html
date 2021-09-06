@@ -1,0 +1,61 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Purchase</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closePurchaseModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+      
+      <ion-list>          
+        <ion-item class="item item-divider">
+          A La Carte
+        </ion-item>  
+
+        <ion-item ng-click="purchaseBoost()">
+            Boost
+          <span class="item-note">
+            $5
+          </span>
+        </ion-item>
+          
+        <ion-item ng-click="purchaseAd()">
+            Ad
+          <span class="item-note">
+            $0.10
+          </span>
+
+        </ion-item>
+          
+        <ion-item class="item item-divider">
+          Subscription
+        </ion-item>  
+
+        <ion-item>
+            Basic
+          <span class="item-note">
+            coming soon
+          </span>
+        </ion-item>
+          
+        <ion-item>
+            Plus
+          <span class="item-note">
+            coming soon
+          </span>
+
+        </ion-item>
+        
+        <ion-item>
+            Premium
+          <span class="item-note">
+            coming soon
+          </span>
+
+        </ion-item>
+        
+
+      </ion-list>
+
+  </ion-content>
+</ion-modal-view>

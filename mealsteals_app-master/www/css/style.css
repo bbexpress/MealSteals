@@ -1,0 +1,1087 @@
+/* Empty. Add your own CSS if you like */
+#markerLayer img {
+        border: 2px solid red !important;
+        width: 85% !important;
+        height: 90% !important;
+        border-radius: 5px;
+}
+
+.popup-vertical-buttons button
+{
+    min-width: 100%;
+    margin-bottom: 1px;
+}
+.popup-vertical-buttons .popup-buttons
+{
+    display: block;
+}
+
+.imagehack {
+  position:absolute;
+  top:10px;
+  left:10px;
+  max-width:80px;
+  max-height:80px;
+  width:100%;
+  height:100%;
+  z-index:999;
+  background-size: cover;
+  background-position: center center;
+}
+
+.imagehack-icon {
+      position:absolute;
+      top:10px;
+      left:10px;
+      max-width:50px;
+      max-height:50px;
+      width:100%;
+      height:100%;
+      z-index:999;
+      background-size: cover;
+      background-position: center center; 
+}
+
+.featured {
+    position:absolute;
+    left:15px;
+    bottom:15px;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 5px 5px 22px 10px;
+}
+
+.sponsored {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 8px;
+    background-color: #e0c52b;
+    padding: 2px 5px 2px 5px;
+    border-radius: 4px;
+}
+
+.flash {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 8px;
+    background-color: #e42525;
+    padding: 2px 5px 2px 5px;
+    border-radius: 4px;
+}
+
+.sponsored > h2 {
+    color:white;
+    font-weight:bold;
+}
+
+.sponsored > p {
+    color:white;
+}
+
+.sponsored-info >p {
+    color:white;
+}
+
+.featured > h2 {
+    color:white;
+    font-weight:bold;
+}
+
+.featured > p {
+    color:white;
+}
+
+.featured-info {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.sponsored-info {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.featured-info >p {
+    color:white;
+}
+
+.red {
+  color:#F44336 !important;
+}
+
+.search {
+    height:45px;
+    background-color:transparent;
+    border:none;
+}
+
+.search > label.item-input-wrapper {
+    border:none 1px rgba(128, 128, 128, 0.4);background-color:white;height:30px;
+}
+
+.search > label.item-input-wrapper > i {
+    font-size:20px;
+}
+
+.search > label.item-input-wrapper > form > input.search-mealsteals {
+    width:100%;color:#636363;height:25px;
+}
+
+.search > label.item-input-wrapper > form > input.search-submit {
+    position: absolute; left: -9999px; width: 1px; height: 1px;
+}
+
+.clear-search {
+    color:#aaaaaa;font-size: 20px;position: absolute;right: 12px;top: 6px;z-index: 99999;
+}
+
+.filter-tab {
+    height:40px;width:100%;border-bottom: solid #b9b9b9 1px;
+}
+
+body > div.modal-backdrop.active > div.modal-wrapper > ion-modal-view > ion-header-bar
+
+.fab{
+  width:60px;
+  height:60px;
+  line-height:60px;
+  border-radius:100%;
+  background:#F44336;
+  border:none;
+  outline:none;
+  color:#FFF;
+  font-size:36px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition:.3s;  
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.tab-selected{
+    color:#0297ff!important;
+}
+
+.tab-not-selected {
+    color:black!important;
+}
+
+.tabs .tab-item .icon.map {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 24px;
+  background-image: url(map.svg);
+  background-size:contain;
+    margin-top:7px;
+}
+
+.tabs .tab-item .icon.map-filled {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 24px;
+  background-image: url(map_filled.svg);
+  background-size:contain;
+    margin-top:7px;
+}
+
+.tabs .tab-item .icon.event {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 24px;
+  background-image: url(calendar.svg);
+  background-size:contain;
+    margin-top:7px;
+}
+
+.tabs .tab-item .icon.event-filled {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 24px;
+  background-image: url(calendar_filled.svg);
+  background-size:contain;
+    margin-top:7px;
+}
+
+.tabs .tab-item .icon.list {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 24px;
+  background-image: url(list.svg);
+  background-size:contain;
+  margin-top:7px;
+}
+
+.tabs .tab-item .icon.list-filled {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 24px;
+  background-image: url(list_filled.svg);
+  background-size:contain;
+  margin-top:7px;
+}
+
+.hide {
+    display:none!important;
+}
+
+body > ion-nav-view > div > ion-view > ion-content > ion-tabs > div > a.tab-item.tab-item-active {
+    color:#0297ff;
+}
+
+.sab{
+  width:30px;
+  height:30px;
+  line-height:30px;
+  font-size:25px;
+  background:#F44336;
+  border:none;
+  outline:none;
+  color:#fff;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition:.3s;  
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* For google maps */
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.list.deal-list {
+    top:0px;
+}
+
+.list {
+    padding-top:0px;
+}
+
+.scroll {
+  height: 100%;
+}
+
+.scroll-view {
+    margin-top:-1px;
+    overflow-y:visible;
+}
+/* End google maps */
+
+.green {
+	color:#28a54c !important;
+}
+
+/* hack to disable ion-item from highlighting when it's clicked. Why?
+Because they get highlighted when beginning scrolling (at least on android).
+Instead I quick toggle a background color on and off on an ng-click so you still
+have the tap-highlight effect, but it doesn't happen when scrolling. 
+Also, use ul class="list" and li class="item" instead of ion-list and ion-item */
+.item.activated {
+	background:rgba(0,0,0,0);
+}
+
+input::-webkit-input-placeholder {
+  color: rgba(128, 128, 128, 0.7);
+  font-weight:400;
+}
+
+#searchBar {
+    width:100%;
+}
+
+body > ion-nav-view > div > ion-view > ion-content > ion-drawer-vertical-wrapper.has-header.search.down.opened > div > label > form {
+    width:100%;!important;
+}
+
+.bar.bar-positive {
+	background:#0297ff;
+}
+
+.bar-header {
+    border-bottom: 1px solid rgba(39, 39, 39, 0.21)!important;
+}
+
+.my-icon {
+    position: absolute;
+    z-index:999;
+    top:10px;
+    right:215px;
+    
+}
+.my-icon > i {
+    position: absolute;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    border: 15.09433962264151px solid transparent;
+    margin-top: -15.09433962264151px;
+    border-bottom: 15.09433962264151px solid white;
+    left: 170px;
+    top: -5px;
+}
+.my-icon > i+i {
+    position: absolute;
+    display: inline-block;
+    width: 200px;
+    height: 98.11320754716981px;
+    background-color: white;
+    left: 0px;
+    top: 25px;
+}
+
+.info-box {
+     position: absolute;
+    display: inline-block;
+    width: 200px;
+    height: 98.11320754716981px;
+    background-color: white;
+    left: 0px;
+    top: 10px;
+    padding-left:10px;
+}
+
+.info-box > h5 {
+    margin-left:8px;margin-bottom:5px;
+}
+
+.info-box > span {
+    font-size:smaller;
+}
+
+.my-icon-under {
+    position: absolute;
+    z-index:998;
+    top:10px;
+    right:215px;
+    
+}
+.my-icon-under > i {
+    position: absolute;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    border: 15.09433962264151px solid transparent;
+    margin-top: -16.09433962264151px;
+    border-bottom: 15.09433962264151px solid #797979;
+    left: 170px;
+    top: -5px;
+}
+.my-icon-under > i+i {
+    position: absolute;
+    display: inline-block;
+    width: 202px;
+    height: 98.11320754716981px;
+    background-color: black;
+    left: 0px;
+    top: 25px;
+}
+
+.info-box-under {
+     position: absolute;
+    display: inline-block;
+    width: 202px;
+    height: 100px;
+    background-color: #a5a5a5;
+    left: -1px;
+    top: 9px;
+}
+
+
+
+ion-tabs.tabs-color-active-positive .tab-item {
+  color: #444; }
+ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-color-active-positive .tab-item.active, ion-tabs.tabs-color-active-positive .tab-item.activated {
+    color: #22313F; }
+
+/* Category tabs like lunch/dinner/drinks/etc */
+.categoryTab {
+	display:inline-block;
+	height:40px;
+	color:rgba(142, 142, 142, 0.63);
+	font-size:13.5px;
+	line-height:40px;
+	text-align:center;
+	background:#f4f4f4;
+    width:22%;
+    
+}
+
+.categoryTab.border {
+        border-right: 1px solid #C7C7C7;
+}
+
+/*
+.categoryTab:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 1px;
+    border: 6px solid #f4f4f4;
+    }
+
+.categoryTab:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 27px;
+    border: 7px solid #f4f4f4;
+    }
+*/
+
+.categoryTabSelected {
+	color:#545454;
+	
+}
+
+.button.button.button-block.button-positive.button-timeshift {
+    margin: 10px 15px 15px 15px;
+    line-height: 38px;
+    min-height: 40px;
+}
+
+.button.button-timeshift-drawer {
+    background:none;
+    border:none;
+    display:inline-flex;
+    font-size:inherit;
+    margin-left:26px;
+    bottom:4px;
+}
+
+.button.button-timeshift-drawer.activated {
+    background:none;
+    border:none;
+    box-shadow: none;
+}
+
+.show-time {
+    bottom:88px;
+}
+
+.time-drawer-top {
+    width: 100%;height:40px;display:inline-flex;background-color: white;
+}
+
+.time-drawer-clock {
+    font-size: 27px;
+    position:absolute;
+    bottom:107px;
+    left:7px;
+}
+
+.time-drawer-uparrow {
+    position:relative;margin-left:-7px;bottom:-10px;
+}
+
+.time-selection-bar {
+    height:100px;
+}
+
+.time-buttons {
+    display:flex;margin-top:-20px;
+}
+
+.secret-gps-button {
+    position: absolute;
+    right: 0;
+    bottom: 100px;
+    height: 40px;
+    width: 60px;
+}
+
+/* end category tabs */
+
+.listall {
+    width:100%;border-top: 1px rgb(169, 169, 169) solid;
+}
+
+.event-ul {
+    margin:0px;
+}
+
+.map-tab {
+    width:100%;
+    height:100%;
+}
+
+.map-error-tab{
+    position: absolute;width:100%;height:100%;
+}
+
+.map-refresh {
+    position:absolute;
+    bottom:60px;
+    right:10px;
+    width:40px;
+    height:40px;
+    background-color:white;
+    border-radius:40px;
+    min-height:40px;
+    min-width:40px;
+    border: 1px #cacaca solid;
+}
+
+.adjusted-height {
+    bottom:100px;
+}
+
+.map-refresh:before {
+    
+}
+
+.toprated-list {
+    height:250px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover!important;
+    border-bottom:solid 1px white;
+}
+
+/*.flash-list::after {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover!important;
+    border-bottom:solid 1px white;
+    background-image: url('http://i.imgur.com/bboT61c.gif');
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+    opacity:0.2;
+}*/
+
+.topmargin {
+    margin-top:5px!important;
+}
+
+body > ion-nav-view > ion-side-menus > ion-side-menu-content > ion-nav-view > ion-view > ion-content > ion-drawer-vertical-wrapper > ion-drawer-vertical-content > div.time-drawer-top > div.item.item-toggle.ng-valid {
+    position:absolute!important;
+    right:0px!important;
+    height:40px;
+    border:none;
+    margin:0px;
+}
+
+body > ion-nav-view > ion-side-menus > ion-side-menu-content > ion-nav-view > ion-view > ion-content > ion-drawer-vertical-wrapper > ion-drawer-vertical-content > div.time-drawer-top > div.item.item-toggle.ng-valid > label {
+    margin-top:-10px;
+}
+
+body > ion-nav-view > ion-side-menus > ion-side-menu-content > ion-nav-view > ion-view > ion-content > ion-drawer-vertical-wrapper > ion-drawer-vertical-content > div.time-drawer-top > div.item.item-toggle.ng-valid > div {
+    margin-top: -6px;
+    font-size: 14px;
+    color: #454545;
+    margin-right:-20px;
+}
+
+.list-message {
+    margin-top: 25px;
+}
+
+.exclusive-image {
+    height:20px;
+}
+
+body > div.popup-container.gps-error-popup.popup-showing.active > div > div.popup-body {
+    text-align:center;
+}
+
+body > div.popup-container.gps-error-popup.popup-showing.active > div > div.popup-body > input {
+    width:85%;
+    margin-top:0px;
+    height:30px;
+    border: solid 1px #e0e0e0;
+}
+
+
+body > div.popup-container.data-popup.popup-showing.active > div {
+    width:90%;
+    height:90%;
+    background-color:white;
+}
+
+body > div.popup-container.data-popup.popup-showing.active > div > div.popup-buttons > button {
+    position: fixed;
+    bottom: 10px;
+    width:100px;
+}
+
+.data-panel-time {
+    float:right;
+}
+
+body > ion-nav-view > div > ion-view > ion-content > ion-drawer-vertical-wrapper.data.up.opened > ion-drawer-vertical-content > ul > li {
+    font-size:12px;
+    padding:12px;
+}
+
+body > ion-nav-view > div > ion-view > ion-content > ion-drawer-vertical-wrapper.data.up.opened > ion-drawer-vertical-content > button {
+    width:90%;
+    bottom:10px;
+    margin-left: 5%;
+}
+
+/* Animate deal detail image */
+
+.mg-image img {
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -o-transition: all 1s ease; /* IE 9 */
+    -ms-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+        max-width: 100%;
+}
+.mg-image-drag img {
+    -webkit-transform:scale(1); /* Safari and Chrome */
+    -moz-transform:scale(1); /* Firefox */
+    -ms-transform:scale(1); /* IE 9 */
+    -o-transform:scale(1); /* Opera */
+     transform:scale(1);
+    height:50vh!important;
+}
+
+.grow {
+    height:70vh!important;
+}
+
+.return {
+    height:40vh!important;
+}
+
+.mg-image {
+    overflow:hidden;
+}
+
+.modal-flag {
+    
+}
+
+ion-modal-view.popover-redeem {
+   
+   background-color:rgba(0, 0, 0, 0.5);
+   
+}
+
+.hide {
+    display:none!important;
+}
+
+/* Spinner */
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+img.spinner
+{
+    -webkit-animation-name:             rotate; 
+    -webkit-animation-duration:         0.7s; 
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+.loading-container .loading {
+    padding: 20px;
+    border-radius: 100px;
+    background-color: rgba(34, 76, 147, .0);
+    color: #fff;
+    text-align: center;
+    text-overflow: ellipsis;
+    font-size: 15px;
+}
+
+/* Upgraded Features */
+
+.upgrade-list {
+    height:300px;
+    background-color:#ffffe6;
+}
+
+
+body > div.popup-container.popup-ad.popup-showing.active > div {
+    width:90%;
+    height:90%;
+    background:;
+    
+}
+
+body > div.popup-container.popup-ad.popup-showing.active > div > div.popup-buttons > button {
+    position:absolute;
+    top:-10px;
+    right:-10px;
+    width:30px!important;
+    min-width:30px!important;
+    height:30px!important;
+    min-height:30px!important;
+    border-radius:30px;
+    padding:0px!important;
+}
+
+.circle-popup {
+    display: block;
+    width: 290px;
+    height: 290px;
+    background: #E6E7ED;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 500px;
+    /*background-image: url(no.png);*/
+    background-position: 50% 50%;
+    background-repeat: no-repeat;  
+}
+
+.circle-profile {
+    display: block;
+    width: 150px;
+    height: 150px;
+    background: #E6E7ED;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 500px;
+    /*background-image: url(no.png);*/
+    background-position: 50% 50%;
+    background-repeat: no-repeat;  
+    border: solid #e6e6e6 1px;
+    margin-top:15px;
+}
+
+.circle-profile-small {
+    display: block;
+    width: 75px;
+    height: 75px;
+    background: #E6E7ED;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 500px;
+    /*background-image: url(no.png);*/
+    background-position: 50% 50%;
+    background-repeat: no-repeat;  
+    border: solid #e6e6e6 1px;
+    margin-top:8px;
+}
+
+/*
+.popup-ad .popup-head {
+    display:none;
+}
+*/
+
+.popup-ad .popup-body {
+    padding:0px;
+}
+
+.item-login .icon {
+    min-width: 30px!important;
+    font-size:x-large;
+    
+}
+
+.background-login {
+    background-image:url('login-background.png');
+    background-size:cover;         
+    background-position:center; 
+    top:0;
+    height:100vh;
+}
+
+
+.keyboard-open .keyboard-hide {
+    display:none!important;
+}
+
+.login-extra {
+    position:absolute;
+    bottom:30px;
+    width:100%;
+    display:none!important;
+}
+
+
+.button-clear.button-clear {
+    color: #636363;
+}
+
+/* Disable retarded slide-up animation on login */
+
+.slide-in-up {
+  -webkit-transform: none;
+  transform: none; }
+
+.slide-in-up.ng-enter, .slide-in-up > .ng-enter {
+  -webkit-transition: none;
+  transition: none; }
+
+.slide-in-up.ng-enter-active, .slide-in-up > .ng-enter-active {
+  -webkit-transform: none;
+  transform: none; }
+
+.slide-in-up.ng-leave, .slide-in-up > .ng-leave {
+  -webkit-transition: none;
+  transition: none; }
+
+.followed-business {
+    border: solid #bdbdbd 1px;
+    border-radius: 5px!important;
+    background-color: #eae6e6!important;
+}
+
+.show-ad {
+    display:flex!important;
+}
+
+
+
+/*
+.popup-ad {
+    display:none;
+}
+*/
+
+
+
+.navmenu-item {
+    background-color:transparent;
+}
+
+.item-complex .item-content, .item-radio .item-content {
+    background-color:transparent;
+}
+
+.icon-menu {
+    color:grey;
+}
+
+.icon-menu-social {
+    font-size:xx-large;
+    color:grey;
+}
+
+
+.profile-grey-item {
+    color:grey;
+    font-size:smaller;
+}
+
+body > div.popup-container.explore-popup.popup-showing.active > div > div.popup-buttons > button:nth-child(3){
+    
+    position: absolute;
+    bottom: 12px;
+    width: 90%;
+    right:5%;
+}
+
+body > div.popup-container.explore-popup.popup-showing.active > div {
+    padding-bottom:60px;
+}
+a.tab-item.active {
+    border:none!important;
+}
+
+.ion-android-star {
+    color:#ffe033;
+}
+
+.ion-android-star-outline {
+    color:#ffe033;
+}
+
+.star-div {
+    margin-right:auto;
+    margin-left:auto;
+    left:0;
+    right:0;
+    display:flex;
+    position:absolute;
+}
+
+.scroll-image {
+    height:220px;
+    background-size:cover;
+    background-position:center;
+    width:auto;
+}
+
+.horizontal-deal-scroll {
+    
+    width:100%;
+    
+}
+
+.horizontal-card {
+    width:300px;
+    text-align:center;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    padding:5px;
+    margin-top:0px;
+}
+
+.scroll-name {
+     text-align:center;
+    padding:10px;
+}
+
+.scroll-name.span {
+    font-size:x-small;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.one-line {
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+
+.rate-row {
+    text-align:center;
+    width:100%;
+    margin-left:initial;
+    position:absolute!important;
+    height: 60px!important;
+    margin:0px!important;
+}
+
+.star-row {
+    margin:0px!important;
+}
+
+.star-row-featured {
+    width:140px;
+    position:absolute;
+    bottom:-8px;
+    left:0px;
+}
+
+.item-rating {
+    position: absolute;
+    bottom: 0px;
+    left: 20px;
+    font-size: smaller;
+    color: #4a4a4a;
+}
+
+.ion-ios-heart {
+    font-size:30px;
+    color:#f53737;
+}
+
+.ion-ios-heart-outline {
+    font-size:30px;
+}
+
+.star-rate {
+    font-size:30px;
+}
+
+.star-featured {
+    font-size:20px;
+}
+
+.filter-arrow {
+    position:absolute;
+    right:5px;
+    top:11px;
+    z-index:9999;
+}
+
+.filter-arrow > i{
+    font-size: 20px;color: #8a8a8a;
+}
+
+.animate-show.ng-hide.remove {
+    animation: fadeOut 1s;
+}
+
+.animate-show.ng-hide.add {
+    animation: fadeOut 1s;
+}
+
+.profile-alert {
+    color: #b7b7b7;
+    font-weight: bold;
+}
+
+body > div.popup-container.gallery-popup.popup-showing.active > div > div.popup-head {
+    display:none!important;
+}
+
+body > div.popup-container.gallery-popup.popup-showing.active > div {
+    width:270px;
+    background-color:white;
+}
+
+a.tab-item.tab-item-active{
+    color:#0297ff;
+}
+
+.ad-day {
+    text-align:center;
+    color:rgb(62, 62, 62);
+    margin-top:0px;
+    margin-bottom:0px;
+}
+
+.col-share {
+    width:65px;
+    height:65px;
+    background-color:black;
+    border-radius:8px;
+    margin:5px;
+    text-align:center;
+    padding-top:8px;
+}
+
+.share-fb {
+    background-color: #3b5998;
+    color: white;
+    font-size: -webkit-xxx-large;
+}
+
+.share-tw {
+    background-color: #1da1f2;
+    color: white;
+    font-size: -webkit-xxx-large;
+}
+
+.share-wa {
+    background-color: #43d854;
+    color: white;
+    font-size: -webkit-xxx-large;
+}
+
+.share-em {
+    background-color: #ffd400;
+    color: white;
+    font-size: -webkit-xxx-large;
+}
+
+.share-sms {
+    background-color: #f29556;
+    color: white;
+    font-size: -webkit-xxx-large;
+}
+
+body > div.popup-container.share-popup.popup-showing.active > div > div.popup-head > h3 > span {
+    color:#444444;
+}
+
+@media screen and (max-width: 321px) {
+   .circle-popup {
+    display: block;
+    width: 80%;
+    height: 200px;
+    background: #E6E7ED;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 500px;
+    /*background-image: url(no.png);*/
+    background-position: 50% 50%;
+    background-repeat: no-repeat;  
+}
+}

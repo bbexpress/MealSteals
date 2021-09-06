@@ -1,0 +1,57 @@
+<ion-popover-view>
+<!--
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Popover</h1>
+    
+    
+      <button class="button button-clear" ng-click="closeSettings()">
+        <i class="icon ion-ios-close-empty"></i>   
+      </button>
+    
+  </ion-header-bar>
+-->
+  <ion-content style="background-color:#f1f1f1;">
+      <!-- Account -->
+          
+        <ion-item class="settings" class="item item-divider" style="font-size:smaller;">
+          {{AuthData.password.email}}
+        </ion-item>
+      
+        <ion-item class="settings" ng-click="openWalkthroughModal();closeSettings()">
+          Walkthrough
+        </ion-item>
+      
+        <ion-item class="settings" ng-click="addLocView();closeSettings()">
+          Add Location
+        </ion-item>
+
+<!--
+        <ion-item>
+            Subscription
+          <span class="item-note">
+            {{myUpgrades.plan || 'Free Account'}}
+          </span>
+
+        </ion-item>
+-->
+          
+        <ion-item class="settings" ng-click="openContactModal();closeSettings()">
+            Contact
+        </ion-item>
+
+        <ion-item class="settings" ng-click="changePasswordPopup();closeSettings()" ng-show="AuthData.provider == 'password'">
+          Change Password
+          
+        </ion-item>  
+          
+        <ion-item class="settings" ng-click="openTerms();closeSettings()">
+          Terms Of Service
+        </ion-item>
+
+        <ion-item class="settings" ng-click="signOut();closeSettings()">
+          Sign out
+        </ion-item>
+
+  </ion-content>
+    
+</ion-popover-view>

@@ -1,0 +1,160 @@
+<ion-view view-title="Premium">
+    <div ng-if="bizInfo[currentLoc.id].dealsOn==false" class="deals-off-alert">Deals Off</div>
+    
+ <ion-content scroll="false" ng-switch="beta.status" style="background-color:white;">
+        
+<!--
+        <div class="button-bar-dash button-bar">
+          <a class="button button-dash" ng-class="{'dash-active' : displayOptions.dashMain=='today'}" ng-click="newDeal.type=='recurring'">Recurring</a>
+          <a class="button button-dash" ng-class="{'dash-active' : displayOptions.dashMain=='analytics'}" ng-model="newDeal.type=='onetime'">One-time</a>
+        </div>
+-->
+
+        <div ng-switch-when="fresh" id="profile-status" class="profile-not-set" style="background-image: url('img/betaoverlay.png');background-size:cover;min-height:100vh;min-width:100%;height:auto;width:auto;">
+            <div class="beta">
+                    <span class="h-beta">Stand out against your competition with MealSteals Premium.</span>
+                    <span class="s-beta">A select group of bars and restaurants will get access to our powerful revenue driving tools - for free.</span>
+                    
+                    <button style="margin-top:40px;" ng-click="requestBeta()" class="button button-positive beta-button">Request Information</button>
+            </div>
+        </div>
+     
+        <div ng-switch-when="requested" id="profile-status" class="profile-not-set" style="background-image: url('img/betaoverlay.png');background-size:cover;min-height:100vh;min-width:100%;height:auto;width:auto;">
+            <div class="beta">
+                    <span class="h-beta">Stand out against your competition with MealSteals Premium.</span>
+                    <span class="s-beta">A select group of bars and restaurants will get access to our powerful revenue driving tools - for free.</span>
+                    
+                    <button style="margin-top:40px;" ng-click="requestedBeta()" class="button button-positive beta-button">Request Information</button>
+            </div>
+        </div>
+     
+        <div ng-switch-when="denied" id="profile-status" class="profile-not-set" style="background-image: url('img/betaoverlay.png');background-size:cover;min-height:100vh;min-width:100%;height:auto;width:auto;">
+            <div class="beta">
+                    <span class="h-beta">Stand out against your competition with MealSteals Premium.</span>
+                    <span class="s-beta">A select group of businesses will be granted early access to our powerful revenue driving tools for bars and restaurants - for free.</span>
+                    <span class="s-beta">Click below to request early access.</span>
+                    <button style="margin-top:40px;" ng-click="deniedBeta()" class="button button-assertive denied-button">Denied</button>
+            </div>
+        </div>
+      
+      <div ng-switch-when="approved">
+
+      <div class="row" style="background-color:#f1f1f1;">
+        <div class="col square square-left">
+            <center>
+                <h2 class="square-h">{{myUpgrades.boostCount || 0}}</h2>
+                <span>Boosts</span>
+<!--                <p class="square-p">last boost 12/18/16</p>-->
+                <button ng-click="openBoostModal()" class="button button-small button-balanced button-block btn-square">
+                    Manage
+                </button>
+            </center>
+        </div>
+        <div class="col square square-right">
+            <center>
+                <h2 class="square-h">{{myUpgrades.adCount || 0}}</h2>
+                <span>Ads</span>
+<!--                <p class="square-p">3 active deals</p>-->
+                <button ng-click="openPopupAdModal()" class="button button-small button-balanced button-block btn-square">
+                    Manage
+                </button>
+            </center>
+        </div>  
+      </div>  
+          
+<!--
+      <div style="padding-top:25px!important;" class="row">
+          
+            <div class="col">
+                <center ng-click="openPurchaseModal()">
+                    <button class="button btn-upgrade icon ion-plus-round button-positive"></button>
+                    <span class="btn-upgrade-text block">Add</span>
+                </center>
+            </div>  
+            <div class="col">
+                <center>
+                    <button class="button btn-upgrade icon ion-card calm-red btn-upgrade-history"></button>
+                    <span class="btn-upgrade-text block">Subscription</span>
+                </center>
+            </div>  
+            <div class="col">
+                <center>
+                    <button class="button btn-upgrade icon ion-alert orange"></button>
+                    <span class="btn-upgrade-text block">Help</span>
+                </center>
+                
+            </div>  
+          
+      </div>      
+-->
+          
+      <div style="padding-top:25px!important;" class="row">
+          
+<!--
+            <div class="col">
+                <center ng-click="openTutorialModal()">
+                    <button class="button btn-upgrade icon ion-ios-play button-assertive btn-upgrade-tutorial"></button>
+                    <span class="btn-upgrade-text block">Tutorial</span>
+                </center>
+            </div>  
+-->
+            <div class="col">
+                <center ng-click="openTransactionsModal()">
+                    <button class="button btn-upgrade icon ion-android-time button-energized btn-upgrade-history"></button>
+                    <span class="btn-upgrade-text block">History</span>
+                </center>
+            </div>  
+            <div class="col disabled">
+                <center>
+                    <button ng-click="analyticsPremium()" class="button btn-upgrade icon ion-arrow-graph-up-right blue btn-center"></button>
+                    <span class="btn-upgrade-text block">Analytics</span>
+                </center>
+            </div>  
+          
+      </div>
+      <ion-scroll ng-style="{height:fuHeight-386 + 'px'}">
+        
+        <div style="margin-top:10px;">
+            <span style="margin-left: 10px;" class="upgrade-small-text">Today's Boosted</span>
+            <i style="color:grey;" class="ion-arrow-down-b dash-small-text"></i>
+            
+                <div class="dash-item-repeat" ng-show="isTodayBoost(deal)" ng-repeat="deal in myDeals | filter:isTodayBoost as todayBoostedDeals" style="padding:0px;">
+                    <div class="list">
+                        <div style="min-height:50px!important;height:50px!important;padding-left:80px!important" class="item item-thumbnail-left" href="#">
+                            <img style="border-radius:10px;max-height:36px!important;max-width:36px!important;left:30px!important;" ng-src="{{deal.dealFullImage}}">
+                            <h4>{{deal.name}}</h4>
+                            <span class="item-note" style="float:left;">
+                                {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+            
+            <div class="upgrade-nothing" ng-if="todayBoostedDeals.length==0">
+                No boosts today
+            </div>
+        </div>
+        <div>   
+            <span style="margin-left: 10px;" class="upgrade-small-text">Today's Ads</span>
+            <i style="color:grey;" class="ion-arrow-down-b dash-small-text"></i>
+            <div ng-show="isTodayAd(ad)" ng-repeat="ad in myPopupAds" style="padding:0px;">
+                <div class="list">
+                    <div style="min-height:50px!important;height:50px!important;padding-left:80px!important" class="item item-thumbnail-left" href="#">
+                        <img style="border-radius:10px;max-height:36px!important;max-width:36px!important;left:30px!important;" ng-src="{{ad.dealFullImage}}">
+                        <h4>{{ad.name}}</h4>
+                        <span class="item-note" style="float:left;">
+                            {{ad.impressions}} impressions remaining
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="upgrade-nothing" ng-if="myPopupAds.length==0">
+                    No ads running today
+            </div>
+        </div>
+      </ion-scroll>
+    </div> <!-- ./ view has loaded -->
+  </ion-content>
+</ion-view>

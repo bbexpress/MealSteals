@@ -1,0 +1,34 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Transaction History</h3>
+    </div>
+    <div class="modal-body">
+        <h5>{{bizObj.businessName}}</h5>
+        <div ng-repeat="trans in myTransactions" class="row">
+                <div class="col-md-12" ng-class-odd="'greybg'" ng-class-even="'whitebg'" style="margin-left:1.5%;width:97%;padding:10px;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{trans.createdAt | date:'shortDate'}} 
+                             <div style="display:inline-block;background:#4ca64c;border-radius:5px;color:#fff;font-size:10px;padding:3px;" ng-if="d.featured=='yes'">Featured</div>
+                        </div>
+                        <div class="col-md-3">
+                            {{trans.ads}} ads
+                        </div>
+                        <div class="col-md-3">
+                            {{trans.payment/100 | currency}}
+                        </div>
+
+                        <div class="col-md-2">
+                            <span ng-show="trans.type!=undefined">({{trans.type}})</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-warning" type="button" ng-click="closeTransaction()">Close</button>
+    </div>
+</div>
+

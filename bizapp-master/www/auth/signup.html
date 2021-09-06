@@ -1,0 +1,43 @@
+<ion-modal-view>
+  
+  <ion-content scroll="false" class="login center padding" style="background-image: url('img/login_table.png');background-size:cover;min-height:100%;min-width:100%;height:auto;width:auto;">
+    <h1 style="margin-top:18vh;color:white;font-size:-webkit-xxx-large;margin-bottom:0px;text-shadow: 0px 0px 5px #808080;">
+      MealSteals
+    </h1>
+    <span style="color:white;text-shadow: 0px 0px 5px #808080;">
+      For Business
+    </span>  
+      
+    <div class="list max-width-detector" style="margin-top:5vh;">
+      <form ng-submit="doSignUp()">
+        <label class="item item-input login-input" style="margin-bottom:10px;border-radius:8px;">
+          <input type="email" ng-model="signUpData.userEmail"  placeholder="E-mail">
+        </label>
+          
+        <label class="item item-input login-input" style="margin-bottom:10px;">
+          <input type="password" ng-model="signUpData.userPassword1"  placeholder="Password">
+        </label>
+          
+        <label class="item item-input login-input" style="margin-bottom:10px;">
+          <input type="password" ng-model="signUpData.userPassword2"  placeholder="Confirm Password">
+        </label>
+
+        <label class="item" style="background-color: transparent;border: none;background-color:transparent;padding:0px;margin-top:-10px;">
+
+          <button class="button button-block button-positive" type="submit">Sign up</button>
+        </label>
+      </form>
+    <div class="terms-alert keyboard-hide">
+            <span>By logging in you agree to our</span> <button class="terms-link" ng-click="closeSignUp();openTermsFromSignup()">terms of service</button>
+          </div>    
+      
+
+    </div>
+      <button style="color:white;" class="button button-block button-clear login-bottom keyboard-hide" ng-click="closeSignUp()">Already have an account?</button>
+
+
+
+
+
+  </ion-content>
+</ion-modal-view>

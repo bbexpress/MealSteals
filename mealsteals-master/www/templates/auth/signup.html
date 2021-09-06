@@ -1,0 +1,58 @@
+<ion-modal-view class="background-login">
+<!--
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Sign up</h1>
+    <div class="buttons">
+      <button class="button button-icon button-clear ion-ios-close-empty" ng-click="closeSignUp()"></button>
+    </div>
+  </ion-header-bar>
+-->
+  <ion-content scroll="false" class="login" style="padding:30px;">
+      
+      <img class="signup-icon" src="img/mealstealswhite.png"/>
+
+    <div class="list" style="margin-top:30vh;">
+      <form ng-submit="doSignUp()">
+        <label class="item item-input item-signup">
+          <i class="icon ion-person placeholder-icon"></i>
+          <input class="input-email" type="email" ng-model="signUpData.userEmail"  placeholder="E-mail">
+        </label>
+        <label class="item item-input item-signup">
+          <i class="icon ion-locked placeholder-icon"></i>
+          <input class="input-password" type="password" ng-model="signUpData.userPassword1"  placeholder="Password">
+        </label>
+        <label class="item item-input item-signup">
+          <i class="icon ion-locked placeholder-icon"></i>
+          <input class="input-password" type="password" ng-model="signUpData.userPassword2"  placeholder="Confirm Password">
+        </label>
+          
+          
+          <!--
+<label class="item item-input login-input" style="margin-bottom:10px;">
+          <input type="password" ng-model="signUpData.userPassword1"  placeholder="Password">
+        </label>
+          
+        <label class="item item-input login-input" style="margin-bottom:10px;">
+          <input type="password" ng-model="signUpData.userPassword2"  placeholder="Confirm Password">
+        </label>
+-->
+          
+        <label style="border:none;padding:0px;background-color:transparent;" class="item">
+          <button class="button button-block button-assertive" type="submit">Sign up</button>
+          
+        </label>
+      </form>
+        
+    </div>
+      
+    <div style="margin-top:-20px;">
+        <button class="button button-block button-clear" ng-click="closeSignUp()">Already have an account?</button>  
+    </div>  
+      
+      
+
+
+
+
+  </ion-content>
+</ion-modal-view>

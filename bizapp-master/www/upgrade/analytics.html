@@ -1,0 +1,105 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Analytics</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeAnalyticsModal()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+      
+          
+    <div class="tabs-add-deal" style="padding:15px;">
+                <div class="tab-add-deal">
+                    <input type="radio" id="tab-rec-deal" ng-model="displayOptions.dashMain" value="boosts" name="tab-group-1">
+                    <label class="pill-tab-left" ng-class="{'tab-active' : displayOptions.dashMain=='boosts'}" for="tab-rec-deal">Boosts</label>
+
+                    <input type="radio" id="tab-flash-deal" ng-model="displayOptions.dashMain" value="ads" name="tab-group-1" checked>
+                    <label class="pill-tab-right" ng-class="{'tab-active' : displayOptions.dashMain=='ads'}" for="tab-flash-deal">Ads</label>
+                </div>
+    </div>
+    <div ng-show="displayOptions.dashMain=='boosts'">
+      
+     <ion-list>
+         
+        <ion-item class="item item-divider">
+          Boosted Deals
+          <span class="item-note">
+            {{myUpgrades.boostCount || 0}} remaining
+          </span>    
+        </ion-item> 
+         
+         <ion-item ng-show="deal.boost != undefined" ng-repeat="deal in myDeals | orderBy:'-'" style="padding:0px;">
+                <div class="list">
+                    <a class="item item-thumbnail-left" href="#">
+                        <img style="border-radius:10px;" ng-src="{{deal.dealFullImage}}">
+                        <h2>{{deal.name}}</h2>
+                        <span class="item-note" style="float:left;">
+          {{deal.startTime | date: 'EEE'}} {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}} {{deal.startTime | date : 'MM/dd'}}
+                        </span>
+                        <span class="item-note" style="float:left;">
+          Map Clicks:{{deal.analytics.mapAnalytics || 0}} List Clicks:{{deal.analytics.listAnalytics || 0}} Featured Clicks:{{deal.analytics.featuredAnalytics || 0}} Detail Clicks:{{deal.analytics.detailAnalytics || 0}} {{deal.analytics.detailAnalytics || 0}}
+                        </span>
+                        
+                    </a>
+                </div>
+        </ion-item>
+         
+<!--
+         <ion-item class="item item-divider">
+          Boost Recurring Deals
+          <span class="item-note">
+          </span>    
+        </ion-item> 
+         
+         <ion-item ng-click="boostRecurring(deal)" ng-repeat="deal in myRecurringDeals" style="padding:0px;">
+                <div class="list">
+                    <a class="item item-thumbnail-left" href="#">
+                        <img style="border-radius:10px;" ng-src="{{deal.dealFullImage}}">
+                        <h2>{{deal.name}}</h2>
+                        <span class="item-note" style="float:left;">
+          {{deal.startTime | date: 'EEE'}} {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                        </span>
+                        <span ng-show="deal.boosts>0" class="boosted">Boosted</span>
+                    </a>
+                </div>
+        </ion-item>
+-->
+         
+      </ion-list>   
+        
+                </div>
+    
+    <div ng-show="displayOptions.dashMain=='ads'">
+
+        <ion-list>
+            
+             
+        <ion-item class="item item-divider">
+          Popup Ads
+          <span class="item-note">
+            {{myUpgrades.adCount || 0}} remaining
+          </span>
+        </ion-item>   
+        
+        <ion-item ng-show="ad.adsServed != undefined" ng-repeat="ad in myDeals | orderBy:'-'" style="padding:0px;">
+             <div class="list">
+                        <a class="item item-thumbnail-left" href="#">
+                            <img style="border-radius:10px;" ng-src="{{ad.dealFullImage}}">
+                            <h2>{{ad.name}}</h2>
+                            <span class="item-note" style="float:left;">
+              {{ad.startTime | date: 'EEE'}} {{ad.startTime | date : 'shortTime'}} - {{ad.endTime | date : 'shortTime'}} {{ad.startTime | date : 'MM/dd'}}
+                            </span>
+                            <span class="item-note" style="float:left;">
+              Ads Served: {{ad.adsServed}}
+                            </span>
+
+                    </a>
+                </div>
+        </ion-item>
+           
+      </ion-list> 
+    </div>
+
+  </ion-content>
+</ion-modal-view>
+

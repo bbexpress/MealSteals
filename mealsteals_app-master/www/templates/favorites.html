@@ -1,0 +1,224 @@
+<ion-view view-title="Profile">
+    
+    
+<!--
+    <ion-tab class="map" title="Map" on-select="viewOptions.displayType='map';mapTabSelected();" icon-on="map-filled" icon-off="map">
+            
+          </ion-tab>
+-->
+    
+  <ion-content style="background-color:white;">
+      
+      <div class="profile-top" style="height:125px;">
+        <div class="row">
+            <div class="col">
+
+                <p ng-click="changeProfilePicture()" class="center profile" style="text-align:center;">
+                <img class="circle-profile-small" style="margin-left:auto;margin-right:auto;object-fit:cover;object-position: 50% 0%;" ng-src="{{currentUser1.profilePicture || 'img/avatar.gif'}}">
+
+                <span style="color:#4c4c4c;">{{currentUser.username}}</span>
+                </p>    
+            </div>
+            <div class="col col-75" style="text-align:center;">
+                <div class="row">
+                    <div class="col">
+                        <div><span>{{favorites.length}}</span></div>
+                        <div><span class="profile-grey-item">Deals</span></div>
+                    </div>
+                    <div class="col">
+                        <div><span>{{following.length}}</span></div>
+                        <div><span class="profile-grey-item">Businesses</span></div>
+                    </div>
+                    <div class="col">
+                        <div><span>{{checkIns.length}}</span></div>
+                        <div><span class="profile-grey-item">Check In's</span></div>
+                    </div>
+                </div>
+                <button ng-click="explore();userLocation()" class="button button-block button-balanced" style="height: 35px;min-height: 35px;width: 80%;line-height: 0px;margin-left:10%;margin-top:0px;border:none;font-size: smaller;font-weight: 500;">Explore</button>
+            </div>
+          
+        </div>
+      
+      </div>
+    
+      <div class="tabs-top tabs-background-light tabs-color-dark">
+        <div style="top:0px;position:relative;border-top:1px rgb(218, 218, 218) solid;" class="tabs">
+        
+           <a class="tab-item" ng-class="{active:viewOptions.favoriteTab=='gallery'}" ng-click="viewOptions.favoriteTab='gallery';scrollTop();">
+            <i class="icon ion-grid"></i>
+            
+          </a>    
+            <a class="tab-item" ng-class="{active:viewOptions.favoriteTab=='businesses'}" ng-click="viewOptions.favoriteTab='businesses';scrollTop();">   
+             <i class="icon ion-navicon"></i>
+          </a>
+
+          <a class="tab-item" ng-class="{active:viewOptions.favoriteTab=='checkin'}" ng-click="viewOptions.favoriteTab='checkin';scrollTop();">
+             <i class="icon ion-ios-checkmark-outline"></i>
+          </a>
+            
+          <a class="tab-item" ng-class="{active:viewOptions.favoriteTab=='deals'}" ng-click="viewOptions.favoriteTab='deals';scrollTop();">
+             <i class="icon ion-ios-pint-outline"></i>
+          </a>    
+<!--          
+           <a class="tab-item" ng-class="{active:viewOptions.favoriteTab=='deals'}" ng-click="viewOptions.favoriteTab='deals';scrollTop();">
+             <i class="icon ion-ios-location-outline"></i>
+          </a>
+-->
+          
+        </div>
+      </div>
+<!--
+    <div class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search favorites">
+      </label>
+      <button class="button button-clear">
+        Cancel
+      </button>
+    </div>
+-->
+    <ion-scroll direction="y" style="width:100%;height:100%;border-top: 1px rgb(169, 169, 169) solid;" ng-style="{'height': 'calc(100% - 175px)'}">
+
+        
+<!--
+     <div ng-show="viewOptions.favoriteTab=='deals'">    
+        <ul ng-repeat="d in favorites" ng-init='checkFavDeals(d)'>
+            <div style="margin-bottom:10px;" class="list">
+
+              <div style="border-bottom:none;border-radius: 15px 15px 0 0;" class="item item-avatar item-button-right">
+                <img style="border-radius:0px;" ng-src={{d.icon}}>
+                <h2>{{d.name}}</h2>
+                <p>{{d.startTime | date : 'shortTime'}} - {{d.endTime | date : 'shortTime'}}</p>
+                <button ng-click="deleteFavoriteDeal(d.$id, d)" class="button icon ion-ios-close-outline button-clear button-dark">
+                    
+                </button>
+              </div>
+
+              <div style="border-top:none;padding-top:0px;border-radius: 0px 0px 15px 15px;" class="item item-body">
+                <img class="full-image" ng-src="{{d.dealFullImage}}">
+                <h3>{{d.locName}}</h3>
+                <p>{{d.description}}</p>
+              </div>
+
+            </div>
+        </ul>
+    </div>
+-->
+        
+    <div ng-show="viewOptions.favoriteTab=='businesses'">  
+        <div ng-if="following.length==0" style="margin-top:25px;">
+                <center class="profile-alert">You are not following any businesses</center>
+            </div>
+        <ul ng-repeat="business in following" ng-init='checkFavBus(business)'>
+            
+            <div class="list">
+
+              <div style="border-bottom:none;" class="item item-avatar item-button-right">
+                <img style="border-radius:0px;" ng-src={{business.icon}}>
+                <h2>{{business.businessName}}</h2>
+                <p>{{business.address}}</p>
+                <button ng-click="deleteFollowedBusiness(business.$id, business)" class="button icon ion-ios-close-outline button-clear button-dark">
+                    
+                </button>
+              </div>
+
+            </div>
+        </ul>
+
+    </div>
+        
+    <div ng-show="viewOptions.favoriteTab=='checkin'">  
+        <div ng-if="checkIns.length==0" style="margin-top:25px;">
+                <center class="profile-alert">Check in to earn sweet offers from businesses</center>
+            </div>
+        <ul ng-repeat="checkin in checkIns">
+
+            <div class="list">
+
+              <div style="border-bottom:none;" class="item item-avatar item-button-right">
+                <img style="border-radius:0px;" ng-src={{checkin.icon}}>
+                <h2>{{checkin.locName}}</h2>
+                <p>{{checkin.checkInTime | date : 'short'}}</p>
+                
+              </div>
+
+            </div>
+        </ul>
+
+    </div>
+        
+        
+    <div ng-show="viewOptions.favoriteTab=='gallery'">
+            <div ng-if="favorites.length==0" style="margin-top:25px;">
+                <center class="profile-alert">You are not following any deals</center>
+            </div>
+            <div style="display:flex;flex-wrap: wrap;">
+            <div ng-click="galleryInfo(d.$id, d);quickHighlight(d);" style="width:33%;" ng-repeat="d in favorites">
+                <div class="list" style="background-color:white;margin:5px;border-radius:10px;height:200px;overflow:hidden;">    
+                    <img style="width:100%;border-radius:10px;height:120px" ng-src="{{d.icon}}"/>
+                    <div stle="height:70px;">
+                        <p class="block-with-text" style="text-align:center;">{{d.name}}</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+<!--
+            <div style="margin-bottom:10px;" class="list">
+
+              <div style="border-bottom:none;border-radius: 15px 15px 0 0;" class="item item-avatar item-button-right">
+                <img style="border-radius:0px;" ng-src={{d.icon}}>
+                <h2>{{d.name}}</h2>
+                <p>{{d.startTime | date : 'shortTime'}} - {{d.endTime | date : 'shortTime'}}</p>
+                <button ng-click="deleteFavoriteDeal(d.$id, d)" class="button icon ion-ios-close-outline button-clear button-dark">
+                    
+                </button>
+              </div>
+
+              <div style="border-top:none;padding-top:0px;border-radius: 0px 0px 15px 15px;" class="item item-body">
+                <img class="full-image" ng-src="{{d.dealFullImage}}">
+                <h3>{{d.locName}}</h3>
+                <p>{{d.description}}</p>
+              </div>
+
+            </div>
+-->
+    </div>
+        
+    <div ng-show="viewOptions.favoriteTab=='deals'">  
+        <div style="margin-top:25px;">
+                <center class="profile-alert">Exclusive offers for checking in</center>
+            </div>
+        <ul ng-repeat="">
+
+            <div class="list">
+
+              <div style="border-bottom:none;" class="item item-avatar item-button-right">
+                <img style="border-radius:0px;" ng-src={{checkin.icon}}>
+                <h2>Deals</h2>
+                <p></p>
+                
+              </div>
+
+            </div>
+        </ul>
+
+    </div>
+
+        <script id="my-popover.html" type="text/ng-template">
+          <ion-popover-view>
+            <ion-header-bar>
+              <h1 class="title">{{d.locName}}</h1>
+            </ion-header-bar>
+            <ion-content>
+              Hello!
+            </ion-content>
+          </ion-popover-view>
+        </script>
+        
+
+      </ion-scroll>
+  </ion-content>
+</ion-view>
+

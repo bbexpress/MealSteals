@@ -1,0 +1,6 @@
+{
+    "jscodehints.detectedExclusions": [
+        "C:/Sites/mealsteals/platforms/ios/platform_www/plugins/cordova-plugin-apprate/www/locales.js",
+        "C:/Sites/mealsteals/platforms/ios/platform_www/plugins/cordova-plugin-device/www/device.js"
+    ]
+}

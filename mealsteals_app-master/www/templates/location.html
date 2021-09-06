@@ -1,0 +1,46 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Location</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeChangeLocation();toggleDrawer('timeshift')">Close</button>
+    </div>
+  </ion-header-bar>
+    <ion-content scroll="false">
+        <div class="list list-inset" style="padding-top:5px;display:flex;height:52px;">
+            <label style="margin-right:5%;width:75%;" class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <div>
+                    <form name="enterLocation">
+                      <input vs-google-autocomplete
+                             vs-autocomplete-validator
+                             ng-model="address"
+                             
+                             vs-longitude="lon"
+                             vs-latitude="lat"
+                             
+                             ng-focus="disableTap()"
+                             id="searchBar"
+                             name="address"
+                             type="text">
+                      
+                    </form>
+                </div>
+            </label>
+            <div style="width:20%;">
+                    <form ng-submit="submitLocation(lat,lon);closeChangeLocation();toggleDrawer('timeshift')">
+                         <input type="hidden" value="{{lat}}" id="{{lat}}" ng-model="new.lat"/>
+                         <!-- <input type="hidden" ng-model="newLon = lon"/> --> 
+                         <input style="margin:0px;" type="submit" id="submit" value="Go" style="" class="button button-block button-positive"/>
+                    </form>
+            </div>
+        </div>
+        <div class="list list-inset">
+            <button ng-click="realGps();closeChangeLocation();toggleDrawer('timeshift')" style="margin-bottom:20px;" class="button button-block button-positive">Real GPS</button>
+            <button ng-click="milwaukeeLoc();closeChangeLocation();toggleDrawer('timeshift')" class="button button-block button-positive">Milwaukee</button>
+            <button ng-click="chicagoLoc();closeChangeLocation();toggleDrawer('timeshift')" class="button button-block button-positive">Chicago</button>
+            <button ng-click="madisonLoc();closeChangeLocation();toggleDrawer('timeshift')" class="button button-block button-positive">Madison</button>
+            <button ng-click="clearAndAddMarkers();closeChangeLocation();toggleDrawer('timeshift')" class="button button-block button-positive">Test</button>
+        </div>     
+    </ion-content>
+    
+</ion-modal-view>

@@ -1,0 +1,30 @@
+<div style="text-align:center;padding:0px 20px 10px 20px;"> 
+<!--    <img src='http://matchingtool.basic-check.ch/static/imgs/check-mark.svg' style='height:140px;width:auto;display:block;margin:auto;margin-top:40px;'/>-->
+    <i class="ion-checkmark-circled" style="display: block;margin-top: 25px;font-size: 130px;color: #3dbf3d;"></i>
+    <h3 style="color: #545252;margin-top: 0px;">Thanks!</h3>
+    <span style="color: #545252;">We review each deal very carefully, you're submission should be live for everyone to see within 24 hours!</span>
+    <div ng-if="addAnotherDeal==false">
+        <button style="background-color: #dddbdb;color: white;" class="button button-block button-stable"  ng-click="addAnotherDealBtn()">Add Another</button>
+        <button style="background-color:#de635a;" class="button button-block button-assertive" ng-click="closeSuccessPopup();backToDeals()">Close</button>
+    </div>
+    
+    <button ng-if="showEditDealBtn==true" style="background-color:#de635a;" class="button button-block button-assertive" ng-click="closeSuccessPopup()">Close</button>
+    
+    <div ng-if="addAnotherDeal==true">
+        <span style="background-color: #dddbdb;color: white;" class="button button-block button-stable" ng-click="page2();resetAddAnother();closeSuccessPopup()">{{biz.businessName}}</span>
+        <span style="background-color:#de635a;" class="button button-block button-assertive" ng-click="page1();resetAddAnother();closeSuccessPopup()">New</span>
+    </div>
+    
+<!--
+    <div ng-if="addAnotherDeal==false">
+        <button ng-click="addAnotherDealBtn()" class="button-positive">Add another deal</button>
+        <button ng-click="closeSuccessPopup()" class="button-positive">Close</button>
+    </div>
+-->
+<!--
+    <div ng-if="addAnotherDeal==true">
+        <button ng-click="page2();resetAddAnother();startNewDeal();closeSuccessPopup()" class="button-positive">{{biz.businessName}}</button>
+        <button ng-click="page1();resetAddAnother();startNewDeal();closeSuccessPopup()" class="button-positive">New</button>
+    </div>
+-->
+</div>

@@ -1,0 +1,209 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">Business Profile</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeBizProfile(currentLoc.id)">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content style="margin-bottom:80px;">
+      <div class="row center">
+          <p ng-click="uploadPicture(currentLoc.id,'icon')" class="center profile col">
+             <img ng-class="{'required-img':changeProfileObj.icon==undefined}" ng-src="{{changeProfileObj.icon || 'http://s3.amazonaws.com/mealstealsyes/1445043359608food-icon.png'}}">
+             
+          </p>
+          <p ng-click="uploadPicture(currentLoc.id,'detailBackground')" class="center profile col">
+             <img ng-class="{'dull':changeProfileObj.detailBackground==undefined}" ng-src="{{changeProfileObj.detailBackground || 'http://s3.amazonaws.com/mealstealsyes/1445043359608food-icon.png'}}">
+          </p>
+      </div>
+    
+      <div style="margin-top:-15px!important;" class="row center">
+          <div class="col">
+              <span class="image-profile-text" ng-show="changeProfileObj.icon==undefined">upload</span>
+              <span class="image-profile-text">icon</span>
+          </div>
+          <div class="col">
+              <span class="image-profile-text" ng-show="changeProfileObj.detailBackground==undefined">upload</span>
+              <span class="image-profile-text">business image</span>
+          </div>
+      </div>
+
+      <ion-list>
+
+        <!-- Profile -->
+        
+
+          <ion-item> 
+            <span class="profile-head">Business Name:
+            </span>
+            <div class="col-md-5 profile-input">
+
+                <input type="text" ng-class="{'required':changeProfileObj.businessName==undefined}" class="form-control" ng-model="changeProfileObj.businessName" />
+
+            </div>
+        </ion-item>
+                   
+<!--
+        <ion-item>
+            Address
+            <span class="profile-head">
+            </span>
+            <div class="col-md-5 profile-input">
+
+                <form style="width:100%;">
+                  <input vs-google-autocomplete
+
+                     ng-model="changeProfileObj.address" 
+                     vs-latitude="changeProfileObj.lat"
+                     vs-longitude="changeProfileObj.lon"
+                     vs-place="address.place" 
+                     vs-place-id="address.components.placeId"
+                     vs-street-number="address.components.streetNumber" 
+                     vs-street="address.components.street"
+                     vs-city="changeProfileObj.city"
+                     vs-state="changeProfileObj.state"
+                     vs-country-short="address.components.countryCode"
+                     vs-country="address.components.country"
+                     vs-post-code="address.components.postCode"
+                     vs-district="address.components.district"
+
+                    ng-focus="disableTap()"
+                     type="text" 
+                     name="address"
+                     id="address"
+                     class="form-control" 
+                     placeholder="Enter address">
+
+                </form>
+
+            </div>
+        </ion-item>
+-->
+          
+
+<!--
+        <ion-item>
+            <span class="profile-head">Timezone:
+            </span>
+            <div class="col-md-5 profile-input">
+
+                <select class="form-control" ng-model="changeProfileObj.timezone">
+                    <option ng-repeat="tz in timezones" value="{{tz}}">{{tz}}</option>
+                </select>
+            </div>
+        </ion-item>
+-->
+          
+        <ion-item>
+            <span class="profile-head">Timezone:
+            </span>
+            <div class="col-md-5 profile-input">
+                <div>
+                    <label>
+                        <input type="checkbox" ng-class="{'required-checkbox':changeProfileObj.timezone==undefined}" ng-model="changeProfileObj.timezone" ng-true-value="'America/Chicago'" ng-false-value="'no'">
+                        Central
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="checkbox" ng-class="{'required-checkbox':changeProfileObj.timezone==undefined}" ng-model="changeProfileObj.timezone" ng-true-value="'America/New_York'" ng-false-value="'no'">
+                        Eastern
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="checkbox" ng-class="{'required-checkbox':changeProfileObj.timezone==undefined}" ng-model="changeProfileObj.timezone" ng-true-value="'America/Denver'" ng-false-value="'no'">
+                        Mountain
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="checkbox" ng-class="{'required-checkbox':changeProfileObj.timezone==undefined}" ng-model="changeProfileObj.timezone" ng-true-value="'America/Los_Angeles'" ng-false-value="'no'">
+                        Pacific
+                    </label>
+                </div>  
+            </div>
+        </ion-item>
+             
+        <ion-item>
+            <span class="profile-head">Business Description:
+            </span>
+            <div class="col-md-5 profile-input">
+
+                <div style="width:100%;">
+                <textarea class="form-control" ng-class="{'required':changeProfileObj.about==undefined}" ng-model="changeProfileObj.about"></textarea>
+                </div>
+            </div>
+
+        </ion-item>
+          
+          <ion-item> 
+            <span class="profile-head">Contact Name:
+            </span>
+            <div class="col-md-5 profile-input">
+
+                <input type="text" ng-class="{'required':changeProfileObj.contactName==undefined}" class="form-control" ng-model="changeProfileObj.contactName" />
+
+            </div>
+        </ion-item>
+           <ion-item> 
+            <span class="profile-head">Business Phone:
+            </span>
+            <div class="col-md-5 profile-input">
+
+                <input type="text" class="form-control" ng-class="{'required':changeProfileObj.phone==undefined}" ng-model="changeProfileObj.phone" />
+
+            </div>
+        </ion-item>
+          
+        <ion-item> 
+            <span class="profile-head">Website:
+            </span>
+            <div class="col-md-5 profile-input">
+
+                <input type="text" class="form-control" ng-model="changeProfileObj.website" />
+
+            </div>
+        </ion-item>
+            <ion-item> 
+            <span class="profile-head">Facebook:
+            </span>
+            <div class="col-md-5 profile-input">
+
+                <input type="text" class="form-control" ng-model="changeProfileObj.facebook" />
+
+            </div>
+        </ion-item>
+            <ion-item> 
+            <span class="profile-head">Twitter:
+            </span>
+            <div class="col-md-5 profile-input">
+
+                <input type="text" class="form-control" ng-model="changeProfileObj.twitter" />
+
+            </div>
+        </ion-item>
+           <ion-item> 
+            <span class="profile-head">Instagram:
+            </span>
+            <div class="col-md-5 profile-input">
+
+                <input type="text" class="form-control" ng-model="changeProfileObj.instagram" />
+
+            </div>
+        </ion-item>
+          
+        <!-- ./ Profile -->
+    
+      </ion-list>
+
+<!--
+      <label class="item">
+        <button class="button button-block button-stable" type="submit" ng-click="changeProfile(currentLoc.id)">Save</button>
+      </label>
+-->
+
+  </ion-content>
+    <div class="save-profile">
+        <button class="button button-block button-stable" type="submit" ng-click="changeProfile(currentLoc.id)">Save</button>
+      </div>
+</ion-modal-view>

@@ -1,0 +1,112 @@
+<div class="smartbanner">
+    <div id="smartbanner" class="ios">
+        <div class="sb-container">
+<!--            <span class="sb-icon"></span>-->
+            <img style="background-color:transparent;" class="sb-icon" src="/app/bizicon.png"/>
+            <div class="sb-info">
+                <strong>MealSteals for Business</strong>
+                <span>Samezies LLC</span>
+                <span>App Store & Google Play</span>
+            </div>
+            <a href="http://q-r.to/baiXXQ" class="sb-button">
+                <span>Open</span>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="fixed-background"></div>
+<div class="container-fluid" style="background: -webkit-gradient(linear, left top, left bottom, from(rgb(226, 238, 255)), to(white));height:100vh;">
+	<div class="center-block">
+		<div class="row" style="margin-top:15vh;">
+				
+<!--
+			<img src="http://mealsteals.com/images/mealsteals/mealstealsblue.png" class="center-block" style="width:400px;max-width:80%;"/>
+			
+-->
+		</div>
+
+		<div ng-show="createMode==false" class="row center">
+            <div class="col-md-4 center-block" style="float:none;max-width:450px;background-color: white;padding: 10px 20px 20px 15px;box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.34);margin-top:20px;">
+                <span style="font-size:24px;">Sign In</span>
+                <p ng-show="err" class="error pull-right">{{err}}</p>
+                <form class="login">
+
+                        <div class="form-group">
+                        <span>Email</span>
+                            <div class="input-group">
+                            <input type="text" class="form-control" placeholder="email" ng-model="email" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                        <span>Password</span>
+                        <span ng-click="hideShowPassword1()" ng-if="inputTypePw1=='password'" class="pw-toggle">show</span>
+                        <span ng-click="hideShowPassword1()" ng-if="inputTypePw1=='text'" class="pw-toggle">hide</span>
+                            <div class="input-group">
+                            <input type="{{inputTypePw1}}" class="form-control" placeholder="password" ng-model="pass" />
+                            </div>
+                        </div>
+
+                        <button style="float:right;" class="btn btn-primary" ng-click="login(email, pass)">Log In</button>
+
+                        <button ng-click="createMode = true" type="button" class="btn btn-link">Sign Up</button>
+                        <!-- <a href="http://mealsteals.com/business">Sign Up</a> -->
+                        
+                </form>
+            </div>
+		</div>
+        <div ng-show="createMode==true" class="row center">
+		<div class="col-md-4 center-block" style="float:none;max-width:450px;background-color: white;padding: 10px 20px 20px 15px;box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.34);margin-top:20px;">
+            <span style="font-size:24px;">Sign Up</span>
+            <p ng-show="err" class="error pull-right">{{err}}</p>
+			<form class="login">
+    				<div class="form-group">
+                        <span>Email</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="email" ng-model="email" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span>Password</span>
+                        <span ng-click="hideShowPassword2()" ng-if="inputTypePw2=='password'" class="pw-toggle">show</span>
+                        <span ng-click="hideShowPassword2()" ng-if="inputTypePw2=='text'" class="pw-toggle">hide</span>
+                        <div class="input-group">
+                            <input type="{{inputTypePw2}}" class="form-control" placeholder="password" ng-model="pass" />
+                        </div>
+                    </div>
+
+                    <!--  ng-class="{good:pass=confirm}" -->
+
+                    <div ng-cloak ng-show="createMode">
+                        <span>Retype Password:</span>
+                        <span ng-click="hideShowPassword3()" ng-if="inputTypePw3=='password'" class="pw-toggle">show</span>
+                        <span ng-click="hideShowPassword3()" ng-if="inputTypePw3=='text'" class="pw-toggle">hide</span>
+                        <div style="margin-bottom:10px;" class="input-group">
+                            <input style="margin-bottom:7px;" type="{{inputTypePw3}}" placeholder="retype password" ng-model="confirm" class="form-control"/>
+                        </div>
+
+<!--
+                        <span>First Name:</span>
+                        <div class="input-group" style="margin-bottom:10px;">
+                            <input type="text" placeholder="first name" ng-model="firstName" class="form-control"/>
+                        </div>
+-->
+
+<!--
+                        <span>Business Name:</span>
+                        <div class="input-group" style="margin-bottom:10px;">
+                            <input type="text" placeholder="business name" ng-model="businessName" class="form-control"/>
+                        </div>
+-->
+                    </div>
+
+                    <button ng-click="createAccount()" style="float:right;" class="btn btn-danger">Sign Up</button>
+                    <button ng-click="createMode = false" type="button" class="btn btn-link">Cancel</button>
+<!--                    <a ng-click="createMode = false">Cancel</a>-->
+
+			</form>
+		</div>
+		</div>
+	</div>
+</div>

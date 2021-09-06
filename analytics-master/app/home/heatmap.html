@@ -1,0 +1,75 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Heat Map</h3>
+        <button ng-if="adPreview=='map'" class="btn btn-primary btn-ad-modal-toggle" ng-click="previewAd()">Preview</button>
+        <button ng-if="adPreview=='ad'" class="btn btn-primary btn-ad-modal-toggle" ng-click="showMap()">Map</button>
+    </div>
+    <div class="modal-body">
+        <div class="heatmap-ctrlpanel">
+                <div class="btn-group pull-left" ng-if="showCustomDateSelector!=true">
+                                      <button style="border-color: #797979;" data-toggle="dropdown" class="btn btn-default dropdown-toggle">{{heatMapDateRange}}</button>
+                                        <ul class="dropdown-menu">
+                                          <li ng-click="last30Days();initializeHeatMap()" style="padding:5px;">
+                                              Last 30 days
+                                          </li>
+                                          <li ng-click="last7Days();initializeHeatMap()" style="padding:5px;">
+                                              Last 7 days
+                                          </li>
+                                          <li ng-click="lastDay();initializeHeatMap()" style="padding:5px;">
+                                              Last day
+                                          </li>
+                                          <li ng-click="toggleCustomDateSelector()" style="padding:5px;">
+                                              Custom
+                                          </li>
+                                          <!-- Other items -->
+                                        </ul>
+                </div>
+                <div class="heatmap-customdate" ng-if="showCustomDateSelector==true">
+                    <div style="margin-bottom:15px" class="row">
+                        <strong class="type" style="margin-top:10px;">
+                        start Date:
+                        </strong>
+                        <input style="float:right;" type="date" id="exampleInput" name="input" ng-model="heatMap.startDate"
+                                   placeholder="dd-MM-yyyy" />
+
+                    </div>
+                    <div style="margin-bottom:15px" class="row">
+                        <strong class="type" style="margin-top:10px;">
+                        end Date:
+                        </strong>
+                        <input style="float:right;" type="date" id="exampleInput" name="input" ng-model="heatMap.endDate"
+                                   placeholder="dd-MM-yyyy" />
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-secondary" ng-click="toggleCustomDateSelector()">Close</button>
+                        <button class="btn btn-primary" ng-click="toggleCustomDateSelector();customDate();initializeHeatMap()">Ok</button>
+                    </div>
+                </div>
+                <div class="heatmap-stats" ng-if="showCustomDateSelector!=true">
+                    <div style="display:block;">
+                        <span>
+                            Total: 
+                        </span>
+                        <span style="float:right;margin-left: 15px;">
+                            {{heatMap.length}}
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            City:
+                        </span>
+                        <span style="float:right;margin-left: 15px;">
+                             {{cityCount}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="heat-map" style="height:70vh;width:100%;">
+            
+            </div>
+    </div>
+
+
+        <button class="btn btn-warning btn-close-modal" type="button" ng-click="closeHeatMap()">Close</button>
+
+</div>

@@ -1,0 +1,52 @@
+
+<div style="width:260px;" ng-controller="FavoritesCtrl">
+    <div style="border-bottom: 1px #636363 solid;width: 96%;">    
+        <div style="display:inline-block;height:60px;">
+            <img ng-src="{{galleryObject.icon}}" style="width:58px;height:58;">
+        </div>
+        <div style="vertical-align:top;display:inline-block;height:60px;padding-left:7px;">
+            <div style="width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                <b>{{galleryObject.locName}}</b>
+            </div>
+            <div style="width:180px;">
+                {{galleryObject.name}}
+            </div>
+        </div>
+    </div>
+    <div style="padding-left: 10px;padding-right: 10px;font-size: 12px;color: #505050;" ng-if="galleryObject.description.length>galleryObject.name.length">
+        {{galleryObject.description}}
+    </div>
+    <div class="" style="display:inline-block;width:100%;font-size:12px;">
+        <div ng-if="galleryObject.daysOfWeek.monday=='yes'" class="row">
+            <div class="col">Monday</div>
+            <div class="col">{{galleryObject.startTime | date : 'shortTime'}} - {{galleryObject.endTime | date : 'shortTime'}}</div>
+        </div>
+        <div ng-if="galleryObject.daysOfWeek.tuesday=='yes'" class="row">
+            <div class="col">Tuesday</div>
+            <div class="col">{{galleryObject.startTime | date : 'shortTime'}} - {{galleryObject.endTime | date : 'shortTime'}}</div>
+        </div>
+        <div ng-if="galleryObject.daysOfWeek.wednesday=='yes'" class="row">
+            <div class="col">Wednesday</div>
+            <div class="col">{{galleryObject.startTime | date : 'shortTime'}} - {{galleryObject.endTime | date : 'shortTime'}}</div>
+        </div>
+        <div ng-if="galleryObject.daysOfWeek.thursday=='yes'" class="row">
+            <div class="col">Thursday</div>
+            <div class="col">{{galleryObject.startTime | date : 'shortTime'}} - {{galleryObject.endTime | date : 'shortTime'}}</div>
+        </div>
+        <div ng-if="galleryObject.daysOfWeek.friday=='yes'" class="row">
+            <div class="col">Friday</div>
+            <div class="col">{{galleryObject.startTime | date : 'shortTime'}} - {{galleryObject.endTime | date : 'shortTime'}}</div>
+        </div>
+        <div ng-if="galleryObject.daysOfWeek.saturday=='yes'" class="row">
+            <div class="col">Saturday</div>
+            <div class="col">{{galleryObject.startTime | date : 'shortTime'}} - {{galleryObject.endTime | date : 'shortTime'}}</div>
+        </div>
+        <div ng-if="galleryObject.daysOfWeek.sunday=='yes'" class="row">
+            <div class="col">Sunday</div>
+            <div class="col">{{galleryObject.startTime | date : 'shortTime'}} - {{galleryObject.endTime | date : 'shortTime'}}</div>
+        </div>
+        
+    </div>
+</div>
+
+

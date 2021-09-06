@@ -1,0 +1,34 @@
+<div ng-controller="DealDetailCtrl">
+    <div class="row">
+         <div ng-click="showLoading();shareFB(deal.name, deal.locName, deal.dealFullImage)" class="col-share share-fb">
+            <i class="icon ion-social-facebook share-fb-icon"></i>
+         </div>
+         <div ng-click="shareTW(deal.name, deal.locName, deal.dealFullImage)" class="col-share share-tw">
+            <i class="icon ion-social-twitter"></i>
+         </div>
+         <div ng-click="shareSMS(deal.name, deal.locName, deal.dealFullImage)" class="col-share share-sms">
+            <i class="icon ion-chatboxes"></i>
+         </div>
+         
+    </div>
+
+     <div style="padding-left:37px;display:none;" class="row">
+         <div ng-click="shareSMS(deal.name, deal.locName, deal.dealFullImage)" class="col-share share-sms">
+            <i class="icon ion-chatboxes"></i>
+         </div>
+         
+         <div ng-click="shareWA(deal.name, deal.locName, deal.dealFullImage)" class="col-share share-wa">
+            <i class="icon ion-social-whatsapp-outline"></i>
+         </div>
+<!--
+         <div ng-click="shareEM(deal.name, deal.locName, deal.dealFullImage)" class="col-share share-em">
+            <i class="icon ion-email"></i>
+         </div>
+-->
+    </div>
+
+    
+    
+</div>
+
+

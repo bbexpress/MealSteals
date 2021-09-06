@@ -1,0 +1,43 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "com.ionic.keyboard": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-apprate": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        }
+    }
+}

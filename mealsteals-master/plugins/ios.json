@@ -1,0 +1,91 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-apprate": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-camera": {
+            "CAMERA_USAGE_DESCRIPTION": " ",
+            "PHOTOLIBRARY_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-customurlscheme": {
+            "URL_SCHEME": "mealsteals",
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-facebook4": {
+            "APP_ID": "1597614350474803",
+            "APP_NAME": "MealSteals",
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-geolocation": {
+            "GEOLOCATION_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-nativeaudio": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-nativestorage": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-firebase": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-ionic-webview": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        },
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "MealSteals.MealSteals"
+        }
+    }
+}

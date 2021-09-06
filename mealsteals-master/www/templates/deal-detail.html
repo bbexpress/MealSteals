@@ -1,0 +1,570 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+
+
+<!--
+<div ng-if="mask==true" style="position:absolute;top:0;left:0;width:999px;height:999px;background:#fff;z-index:99999;">
+  
+</div>
+-->
+
+
+
+<ion-view>
+    
+   
+
+    <ion-nav-buttons side="left">
+      <button class="button-back button-clear" ng-click="myGoBack()">
+        <i style="font-size: x-large;" class="ion-close-round"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-title style="right:0;left:0;">
+			<h4 class="head-primary"><center>{{deal.locName}}</center></h4>
+            <span class="head-secondary">0.8 mi away</span>
+    </ion-nav-title>    
+    <ion-nav-buttons ng-cloak side="right">
+        <img ng-click="go('/deals/biz/'+deal.businessID,80)" class="detail-nav-icon" ng-src="{{deal.icon}}"/>
+<!--
+        <button ng-click="followBus();" class="button button-icon button-clear">
+            <i ng-class="{'ion-ios-heart':busFavorited==true, 'ion-ios-heart-outline':busFavorited!=true}"></i>
+        </button>
+-->
+    </ion-nav-buttons>    
+<!--on-double-tap="followDeal()"-->
+	<ion-content  class="glossy-background" style="background-image:url('img/dealdetailBG.png');" has-bouncing="false" overflow-scroll='false' delegate-handle="userDetailContent" on-scroll="onUserDetailContentScroll()" header-shrink scroll-event-interval="5">
+      <div on-drag-down="swipe('down')" class="about-header" style="background-image: url('img/loading.gif');z-index: 99999999;background-size: cover;background-position: center;">
+          
+            <div ng-if="!recurringObj[deal.recurringDealID].sharedImages" on-hold="imageEnlarge();" on-release="imageReturn();" class="deal-image-slider mg-image">
+                    <img id="deal-image" class="deal-detail-image" ng-src="{{deal.dealFullImage}}" style="width:100%;height:40vh;margin-left:auto;margin-right:auto;object-fit:cover;object-position: 50% 0%;" />
+            </div>
+          
+
+            <ion-slides ng-if="recurringObj[deal.recurringDealID].sharedImages" options="slideOptions" slider="data.slider" on-hold="imageEnlarge();" on-release="imageReturn();" class="deal-image-slider mg-image">
+                    <ion-slide-page>
+                         <div>
+                            <img id="deal-image" class="deal-detail-image" ng-src="{{deal.dealFullImage}}" style="width:100%;height:40vh;margin-left:auto;margin-right:auto;object-fit:cover;object-position: 50% 0%;" />
+                            </div>
+                    </ion-slide-page>
+                    <ion-slide-page ng-repeat="thisImage in recurringObj[deal.recurringDealID].sharedImages" ng-show="thisImage.verified==true">
+                        <div>
+                            <img id="user-image" class="deal-detail-image" ng-show="thisImage.verified == true" ng-src="{{thisImage.url}}" style="width:100%;height:40vh;margin-left:auto;margin-right:auto;object-fit:cover;object-position: 50% 0%;"/>
+                            <div class="user-submitted">
+                                <i class="ion-person"></i>
+                                <span>user submitted</span>
+                            </div>
+                        </div>
+                    </ion-slide-page>
+            </ion-slides>
+          
+            <div type="file" ng-click="uploadPictureMessage();" accept="image/*" ngf-max-height="10000" ngf-max-size="3MB" class="add-image-container">
+                    <div class="add-image">
+                        <i class="ion-plus-round"></i>
+                        <span>Photo</span>
+                    </div>
+            </div>
+<!--
+           <span class="biz-badge">Business controlled</span>
+           <span class="user-badge">User submitted</span>
+-->
+<!--           <button class="button button-balanced button-share" ng-click="share()">Share</button>-->
+<!--
+          <button ng-click="shareFbPlugin()">Share</button>
+          <button ng-click="inviteFriends()">Invite</button>
+-->
+         
+<!--
+            <div ng-click="verifyDeal()" class="verified-container">
+                <img src="img/verified.png" class="verified-img"/>
+                <span class="verified-text">Last verified</span> 
+                <span ng-if="deal.verified" class="verified-date">{{deal.verified| date : 'shortDate'}}</span>
+                <span ng-if="!deal.verified" class="verified-click">Click to verify</span>
+            </div>
+-->
+<!--
+            <div class="deal-detail-favorite" ng-click="followDeal()">
+                <i ng-class="{'ion-ios-heart':dealFavorited==true}"></i>               
+            </div>
+-->         
+          
+<!--
+            <button ng-click="followBus();" class="button-follow button button-icon button-clear">
+                <i ng-class="{'ion-ios-heart':busFavorited==true, 'ion-ios-heart-outline':busFavorited!=true}"></i>
+            </button>
+-->
+          
+          
+            <div class="deal-detail-break"></div>
+<!--            <span>Open now {{placeDetails.opening_hours.open_now}}</span>-->
+            
+          
+     </div>
+<!--
+     <div class="tag-img-row-detail">
+                  <img src="img/hamburger.png" ng-if="deal.foodOrDrink == 'food' || deal.foodOrDrink == 'both'" class="tag-img"/>
+                  <img src="img/beer.png" ng-if="deal.foodOrDrink == 'drink' || deal.foodOrDrink == 'both'" class="tag-img"/>
+                  <img src="img/event.png" ng-if="deal.timeType=='event'" class="tag-img"/>
+                  <img src="img/exclusive-badge.png" ng-if="deal.exclusive=='yes'" class="tag-img"/>
+                  <img src="img/top.png" ng-if="deal.totalRating > 4" class="tag-img"/>
+                  <img src="img/summer.png" ng-if="deal.patio==true" class="tag-img"/>
+                  <img src="img/heart.png" ng-if="busFavorited==true" class="tag-img"/>
+                  <img src="img/building.png" ng-if="deal.rooftop==true" class="tag-img"/>
+                  <img src="img/flash.png" ng-if="deal.recurringDealID==undefined" class="tag-img"/>
+                  
+     </div>
+
+
+-->
+        <div ng-if="placeDetails.permanently_closed==true" class="permanently-closed-deal">
+                Permanently Closed
+        </div>
+        <div ng-if="placeDetails.permanently_closed!=true" class="deal-detail-buttons" style="text-align:center;margin: 5px;border-radius: 10px;background-color: #ffffff80;">
+             <span>{{daysVerified}}</span>
+<!--             <span ng-if="!deal.lastVerified">Be the first to verify this deal!</span>-->
+             <div class="row">
+                        <div ng-show="deal.recurringDealID!=undefined" class="col col-detail">
+                            <div ng-click="share()">
+                                <i class="ion-android-share"></i>
+                                <div>Share</div>
+                           </div>
+
+                        </div>
+        
+                        <div ng-click="followBus()" class="col col-detail">
+                               <div>
+                                   <i ng-class="{'ion-ios-heart':busFavorited==true, 'ion-ios-heart-outline':busFavorited!=true}"></i>
+                                   <div ng-if="busFavorited!=true">Follow</div>
+                                   <div ng-if="busFavorited==true">Following</div>
+                               </div>
+                        </div>
+                                
+                        <div ng-class="{'illuminate':illuminateNewFeatures==true, 'remove-illuminate':illuminateNewFeatures==false}" ng-click="openEditDeal()" class="col col-detail">
+                               <div>
+                                    <i class="ion-edit"></i>
+                                    <div>Edit</div>
+                               </div>
+                        </div>
+             
+                        <div ng-class="{'illuminate':illuminateNewFeatures==true, 'remove-illuminate':illuminateNewFeatures==false}" ng-if="analyticsFlag!=true" ng-click="verifyDealPopup()" class="col col-detail">
+                                <div>
+                                    <i class="ion-android-checkmark-circle"></i>
+                                    <div>Verify</div>
+                                </div>
+                            
+                        </div> 
+                 
+                        <div ng-class="{'illuminate':illuminateNewFeatures==true, 'remove-illuminate':illuminateNewFeatures==false}" ng-if="analyticsFlag==true" ng-click="verifyDealPopupAdmin()" class="col col-detail">
+                                <div>
+                                    <i class="ion-android-checkmark-circle"></i>
+                                    <div>Verify</div>
+                                </div>
+                            
+                        </div> 
+             </div>
+        </div>
+     <div class="deal-detail-body">
+         
+         
+         <div class="deal-detail-details">
+             
+                        
+             
+                        <div class="row" style="padding-top:15px;">
+                            <div ng-if="deal.recurringDealID!=undefined" class="col col-100"><h4 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;">{{deal.name}}
+                                </h4></div>
+                        </div>
+                        <div class="tag-img-row-detail">
+                                      <img ng-if="deal.bizAccount==true && deal.userSubmitted!=true" src="img/verified-blue.png" class="tag-img"/>
+                                      <img ng-if="deal.userSubmitted==true" src="img/user-added.png" class="tag-img"/>
+                                      <img src="img/hamburger.png" ng-if="deal.foodOrDrink == 'food' || deal.foodOrDrink == 'both'" class="tag-img"/>
+                                      <img src="img/beer.png" ng-if="deal.foodOrDrink == 'drink' || deal.foodOrDrink == 'both'" class="tag-img"/>
+                                      <img src="img/event.png" ng-if="deal.timeType=='event'" class="tag-img"/>
+                                      <img src="img/exclusive-badge.png" ng-if="deal.exclusive=='yes'" class="tag-img"/>
+                                      <img src="img/top.png" ng-if="deal.totalRating > 4" class="tag-img"/>
+                                      <img src="img/summer.png" ng-if="deal.patio==true" class="tag-img"/>
+                                      <img src="img/heart.png" ng-if="busFavorited==true" class="tag-img"/>
+                                      <img src="img/building.png" ng-if="deal.rooftop==true" class="tag-img"/>
+                                      <img src="img/flash.png" ng-if="deal.recurringDealID==undefined" class="tag-img"/>
+
+                         </div>
+                        <div ng-show="deal.recurringDealID==undefined" class="row row-redeem">
+                            <button ng-click="checkIn();" class="button button-balanced button-redeem">Redeem</button>
+                        </div>
+                            
+                        <h6 style="text-align:center;color:rgb(62, 62, 62);margin-top:-5px;">{{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}</h6>
+             
+<!--
+                        <button ng-if="deal.lastVerified && deal.recurringDealID!=undefined" ng-click="verifyDeal()" class="button button-positive verify-badge">Last verified {{deal.lastVerified | date : 'short'}}</button>
+                        <button ng-if="!deal.lastVerified && deal.recurringDealID!=undefined" ng-click="verifyDeal()" class="button button-positive verify-badge">Deal has not been verfied, verify now!</button>
+-->
+             
+                        
+                        
+                        <div style="width:90%;margin-left:auto;margin-right:auto;">
+                            <p style="text-align:center;font-size:smaller;color:rgb(80, 80, 80);font-style:italic;padding-bottom:15px;font-size: 14px;
+    padding-top: 10px;" ng-bind-html="deal.description"></p>
+                        </div>
+                        
+                        <div style="    width: 100px;right: 0;left: 0;margin-left: auto;margin-right: auto;text-align: center;height: 30px;background-color: #ffe000;padding-top: 5px;color: #3c3c3c;border-radius: 10px;" ng-show="openNow==true"><span>Closed</span></div> 
+                
+                        <div ng-click="commentPopup()" style="height:60px;">
+                        <div class="rate-row">
+                            <div class="star-row row">
+                                        
+                                    <div class="col">
+                                        <div>
+                                            <i class="rate star-rate" 
+                                               ng-class="{'ion-android-star':(showRate>=0.3), 'ion-ios-star-half':(showRate > 0.3 && showRate < 0.7), 'ion-android-star-outline':(showRate<=0.7)}">
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div>
+                                            <i class="rate star-rate" 
+                                               ng-class="{'ion-android-star':(showRate>=1.3), 'ion-ios-star-half':(showRate > 1.3 && showRate < 1.7), 'ion-android-star-outline':(showRate<=1.7)}">
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div>
+                                            <i class="rate star-rate" 
+                                               ng-class="{'ion-android-star':(showRate>=2.3), 'ion-ios-star-half':(showRate > 2.3 && showRate < 2.7), 'ion-android-star-outline':(showRate<=2.7)}">
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div>
+                                            <i class="rate star-rate" 
+                                               ng-class="{'ion-android-star':(showRate>=3.3), 'ion-ios-star-half':(showRate > 3.3 && showRate < 3.7), 'ion-android-star-outline':(showRate<=3.7)}">
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div>
+                                            <i class="rate star-rate" 
+                                               ng-class="{'ion-android-star':(showRate>=4.3), 'ion-ios-star-half':(showRate > 4.3 && showRate < 4.7), 'ion-android-star-outline':(showRate<=4.7)}">
+                                            </i>
+                                        </div>
+                                    </div>
+                                    
+<!--                                    <a ng-click="rateThisDeal()" class="button button-clear">Rate</a>-->
+                            </div>
+<!--
+                            <div class="row">
+                                <span class="item-rating">{{totalRatings}} total ratings</span>
+                            </div>
+-->
+                            
+                                
+                        </div>
+                        
+                        <span class="deal-detail-nr" ng-if="showRate==0">Be the first to rate</span>
+                    </div>
+                    
+         </div>
+         
+         
+         
+         <div class="row deal-detail-buttons" style="text-align:center;width:100%;margin-left:initial;padding-top:25px;">
+                            
+                        <div ng-show="deal.recurringDealID!=undefined" class="col col-detail">
+<!--
+                            <div ng-show="dealFavorited==true" ng-click="unFollowDeal();">
+                               <div><i style="font-size:30px;color:#f53737;" class="ion-ios-heart"></i></div>
+                               <div>Favorite</div>
+                           </div>
+-->
+                            <div ng-click="go('/deals/biz/'+deal.businessID,80)">
+<!--                               <div> <i style="font-size:30px;" class="ion-android-happy"></i></div>-->
+                                <img src="img/huggingemoji.png"/>
+                               <div>More Deals</div>
+                           </div>
+<!--
+                           <div ng-click="followDeal();">
+                               <div> <i ng-class="{'ion-ios-heart':dealFavorited==true, 'ion-ios-heart-outline':dealFavorited!=true}"></i></div>
+                               <div>Favorite</div>
+                           </div>
+-->
+                        </div>
+                        
+                        
+                        
+<!--
+                        <div class="col">
+                             <div ng-click="checkIn();" class="" ng-show="deal.redeemable=='no'">
+                               <div><i style="font-size:30px;" class="ion-ios-checkmark-outline"></i></div>
+                               <div>Check-In</div>
+                             </div>
+
+                            <div ng-click="redeemCheck()" class="" ng-show="deal.redeemable=='yes'">
+                                <div><i style="font-size:30px;" class="ion-ios-pricetag-outline"></i></div>
+                                <div>Redeem</div>
+                            </div>
+                        </div> 
+-->
+                        <div ng-click="launchNavigator()" class="col col-detail">
+                               <div>
+<!--                                   <div><i style="font-size:30px;" class="ion-ios-navigate-outline"></i></div>-->
+                                   <img src="img/directions.png"/>
+                                   <div>Directions</div>
+                               </div>
+                        </div>
+                                
+                        <div ng-click="launchUber()" class="col col-detail">
+                               <div>
+<!--                                   <div><i style="font-size:30px;" class="ion-model-s"></i></div>-->
+                                    <img src="img/uber.png"/>
+                                   <div>Uber</div>
+                               </div>
+                        </div>
+             
+                        <div ng-class="{'red':dealFlagged=='yes'}" ng-click="flagPopover();openPopover($event);" class="col col-detail">
+                            <div>
+                                <img src="img/redflag.png"/>
+                            </div>
+<!--
+                            <div><i style="font-size:30px;" ng-show="dealFlagged=='no'" class="ion-ios-flag-outline"></i></div>
+                            <div><i style="font-size:30px;" ng-show="dealFlagged=='yes'" class="ion-ios-flag"></i></div>
+-->
+                            <div ng-show="dealFlagged=='no'">Report</div>
+                            <div ng-show="dealFlagged=='yes'">Reported</div>
+                        </div>
+                        
+        </div>
+        
+<!--            <button class="button button-positive button-rate" ng-click="commentPopup()">What do you think of this deal?</button>-->
+<!--         <button class="button-clear" ng-click="moreComments()">View comments</button>-->
+         <!--  comment-fade -->
+         <div class="comments-body">
+         <div ng-repeat="rates in comments | orderBy: '-timeStamp'" class="list comment-list" ng-show="deal.recurringDealID != undefined && rates.comment.length > 0">
+             <div class="item item-avatar item-deal-comment" href="#">
+                 <img ng-src="{{ rates.profilePicture || 'img/avatar.gif'}}">
+                 <div>
+                     <i class="ion-arrow-left-b comment-caret"></i>
+                 </div>
+                 
+                 <div class="deal-detail-comment">
+                     <div class="star-row-user row">    
+                                        <div class="col">
+                                            <div>
+                                                <i class="rate star-user-rate" 
+                                                   ng-class="{'ion-android-star':(rates.rating>=0.3), 'ion-ios-star-half':(rates.rating > 0.3 && rates.rating < 0.7), 'ion-android-star-outline':(rates.rating<=0.7)}">
+                                                </i>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <i class="rate star-user-rate" 
+                                                   ng-class="{'ion-android-star':(rates.rating>=1.3), 'ion-ios-star-half':(rates.rating > 1.3 && rates.rating < 1.7), 'ion-android-star-outline':(rates.rating<=1.7)}">
+                                                </i>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <i class="rate star-user-rate" 
+                                                   ng-class="{'ion-android-star':(rates.rating>=2.3), 'ion-ios-star-half':(rates.rating > 2.3 && rates.rating < 2.7), 'ion-android-star-outline':(rates.rating<=2.7)}">
+                                                </i>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <i class="rate star-user-rate" 
+                                                   ng-class="{'ion-android-star':(rates.rating>=3.3), 'ion-ios-star-half':(rates.rating > 3.3 && rates.rating < 3.7), 'ion-android-star-outline':(rates.rating<=3.7)}">
+                                                </i>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <i class="rate star-user-rate" 
+                                                   ng-class="{'ion-android-star':(rates.rating>=4.3), 'ion-ios-star-half':(rates.rating > 4.3 && rates.rating < 4.7), 'ion-android-star-outline':(rates.rating<=4.7)}">
+                                                </i>
+                                            </div>
+                                        </div>
+                    </div>
+                 
+                 
+                    <p>"{{rates.comment}}"</p>
+                 </div>
+                 <div style="margin: -5px 10px 0px 10px;color:gray;">
+                     <span class="comment-username">{{rates.username}}</span>
+                     <span class="comment-date">{{rates.timeStamp | date : 'mediumDate'}}</span>
+                 </div>
+             </div>
+<!--
+             <div class="item item-avatar item-deal-comment" href="#">
+                 <img src="img/avatar.gif">
+                 <i class="ion-arrow-left-b comment-caret"></i>
+                 <p class="deal-detail-comment">"Super awesome deal. Food was great!"</p>
+                 <div style="margin: 3px 10px 0px 10px;color:gray;">
+                     <span class="comment-username">Ben</span>
+                     <span class="comment-date">Feb 20, 2017</span>
+                 </div>
+             </div>
+             <div class="item item-avatar item-deal-comment" href="#">
+                 <img src="img/avatar.gif">
+                 <i class="ion-arrow-left-b comment-caret"></i>
+                 <p class="deal-detail-comment">"Lit"</p>
+                 <div style="margin: 3px 10px 0px 10px;color:gray;">
+                     <span class="comment-username">LeMarc</span>
+                     <span class="comment-date">Feb 1, 2017</span>
+                 </div>
+             </div>
+-->
+         </div>
+         
+         
+         </div>
+    </div>
+    <div id="dealDetailMap"></div>
+    
+  </ion-content>
+    <div style="position:absolute!important;bottom:0;width:100%;" id="footer">
+            <ul class="list">
+                <li class="item" style="background-color: rgb(43, 43, 43);opacity:0.9;border:0;color:#fff;">
+                <center style="">
+                    <div style="">
+                        <i class="icon ion-ios-alarm-outline" style="font-size:24px;"></i> &nbsp;<span style="font-size:24px;">Remaining: {{millisecondsToTimer(deal.endTime - timestamp)}}</span>
+                     </div>
+                 </center>
+                </li>
+            </ul>
+    </div>
+
+
+    
+    
+    
+    
+    
+    
+    <script id="templates/loading.html" type="text/ng-template">
+            
+            <img src="img/rotating.png"/ class="spinner" style="height:80px;width:auto;opacity:0.7;">
+      </script>
+    
+    
+   
+                    
+                    
+                    <script id="flag-popover.html" type="text/ng-template">
+                        <ion-modal-view ng-class="{'modal-flag':flagPopoverClicked=='yes','hide':flagPopoverClicked=='no'}">
+                            <div ng-if="flagPopoverClicked=='yes'">
+                                <ion-header-bar class="bar bar-header bar-positive">
+                                  <h1 class="title">Flag Deal</h1>
+                                  <button class="button button-clear button-primary" ng-click="closePopover();closePopoverReset();">Cancel</button>
+                                </ion-header-bar>
+                                <ion-content class="padding">
+                                    <h2 style="margin-bottom:20px;">We're terribly sorry for the inconveience...</h2>
+                                <div class="list list-inset" style="padding-top:1px;">
+
+                                    <div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: business closed" ng-click="flagDeal($event);" class="item">
+                                        {{deal.locName}} is closed
+                                    </div>
+                                   <div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: not offered" ng-click="flagDeal($event);" class="item">
+                                        Deal no longer offered
+                                    </div>
+                                    <div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: time incorrect" ng-click="flagDeal($event);" class="item">
+                                        Deal time incorrect
+                                    </div>
+                                    <div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: not accurate" ng-click="flagDeal($event);" class="item">
+                                        Deal description not accurate
+                                    </div>
+                                    <div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: inappropriate" ng-click="flagDeal($event);" class="item">
+                                        Innappropriate
+                                    </div>
+                                    <!--<div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: other" ng-click="flagDeal($event);" class="item">
+                                        Other
+                                    </div>-->
+                                
+                                </div>
+
+                                </ion-content>
+                            </div>
+                        </ion-modal-view>
+                        <ion-modal-view class="popover-redeem" ng-class="{'hide':redeemPopoverClicked=='no'}">
+                            <div ng-if="redeemPopoverClicked=='yes'">
+                        
+                            <ion-header-bar class="bar bar-header bar-positive">
+                                  <h1 class="title">Redeem</h1>
+                                  <button class="button button-clear button-primary" ng-click="closePopover();closePopoverReset();">Cancel</button>
+                            </ion-header-bar>    
+                            <ion-content scroll="false" style="padding:0px;">
+                                <div style="background-color:#EAEAEA;width:100%;height:100%;">
+                                    <div style="text-align:center;">
+                                        <img style="height:50px;margin-top:15px;" src="img/MealSteals_small.png"/>
+                                    </div>
+                                    
+                                    <div style="text-align:center;padding:10px;" class="card">
+                                        <div style="display:inline-flex;">
+                                            <img style="height:22px;margin-top:10px;margin-right:8px;" ng-src="{{deal.icon}}">
+                                            <h3 style="line-height:0px;color:#383838;">{{deal.locName}}</h3>
+                                        </div>
+                                        <div style=""><p style="color:#383838;font-size:smaller;font-style:italic;">{{deal.name}}  <a ng-click="closePopover();closePopoverReset();" style="color:rgb(71, 115, 189);font-size:smaller;font-style:italic;">see deal details</a></p></div>
+                                        <div style="text-align:center;">
+                                            <img src="img/qrcode_mealsteals.png"/>
+                                            <p style="margin-top:-30px;font-size:x-small;">{{deal.key}}-</p>
+                                        </div>
+                                        <div style="float:left;margin-left:10px;margin-top:20px;color:#383838;">
+                                            <span><b>Valid:</b>  {{deal.startTime | date:'EEE'}} {{deal.startTime | date:'shortDate'}} {{deal.startTime | date:'shortTime'}} - {{deal.endTime | date:'shortTime'}}</span></div>
+                                        
+                                    </div>
+                                    
+                                    <div style="display:inline-flex;width:100%;padding:10px;position:absolute;bottom:0px;">
+
+                                        <!--<button class="button button-block button-positive" ng-click="closePopover();closePopoverReset();">Cancel</button>-->
+                                        <button class="button button-block button-positive" ng-click="closePopover();closePopoverReset();redeemConfirmed();">Redeem</button>
+
+                                    </div>
+                                </div>
+                            </ion-content>
+                            </div>
+                          </ion-modal-view>
+                          
+                    </script>
+                    
+                    <script id="redeem-popover.html" type="text/ng-template">
+                        <ion-modal-view>
+                            <ion-header-bar class="bar bar-header bar-positive">
+                              <h1 class="title">Flag Deal</h1>
+                              <button class="button button-clear button-primary" ng-click="closePopover();closePopoverReset();">Cancel</button>
+                            </ion-header-bar>
+                            <ion-content class="padding">
+                                <h2 style="margin-bottom:20px;">We're terribly sorry for the inconveience...</h2>
+                                <div class="list list-inset" style="padding-top:1px;">
+
+                                    <div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: business closed" ng-click="flagDeal($event);" class="item">
+                                        {{deal.locName}} is closed
+                                    </div>
+                                   <div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: not offered" ng-click="flagDeal($event);" class="item">
+                                        Deal no longer offered
+                                    </div>
+                                    <div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: time incorrect" ng-click="flagDeal($event);" class="item">
+                                        Deal time incorrect
+                                    </div>
+                                    <div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: not accurate" ng-click="flagDeal($event);" class="item">
+                                        Deal description not accurate
+                                    </div>
+                                    <div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: inappropriate" ng-click="flagDeal($event);" class="item">
+                                        Innappropriate
+                                    </div>
+                                    <!--<div id="Business: {{deal.locName}} Deal: {{deal.name}} Issue: other" ng-click="flagDeal($event);" class="item">
+                                        Other
+                                    </div>-->
+                                
+                                </div>
+                              
+                            </ion-content>
+                          </ion-modal-view>
+                    </script>
+                    
+                    
+           
+                       
+                   
+ 			
+</ion-view>
+   

@@ -1,0 +1,30 @@
+# To set your custom php.ini, add the following line to this file:
+# suphp_configpath /home/yourusername/path/to/php.ini
+# php_value mbstring.func_overload 4 # Required for PWSB support. Please do not uncomment this line.
+
+# BEGIN WordPress
+#<IfModule mod_rewrite.c>
+#RewriteEngine On
+#RewriteBase /
+#RewriteRule ^index\.php$ - [L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . /index.php [L]
+#</IfModule>
+# END WordPress
+
+Options -Indexes
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} /(.*)/$
+RewriteRule ^ /%1 [R=301,L]
+
+RewriteRule ^business$ /business.html [L]
+
+#RewriteRule ^index\.html$ / [L,R]
+#RewriteCond %{HTTP_HOST} ^mealsteals\.com$ [OR]
+#RewriteCond %{HTTP_HOST} ^www\.mealsteals\.com$
+#RewriteRule ^(.*)$ "https\:\/\/www\.mealsteals\.com\/$1" [R=301,L]
+

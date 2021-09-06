@@ -1,0 +1,195 @@
+<ion-view class="dash" view-title="Dashboard">
+
+    <ion-nav-bar ng-cloak ng-show="hasSeen.seenDash!=undefined" class="bar-positive dash-header">
+    
+    </ion-nav-bar>
+
+    <div ng-if="bizInfo[currentLoc.id].dealsOn==false" class="deals-off-alert">Deals Off</div>
+  <ion-content ng-class="{'no-header':hasSeen.seenDash==undefined}" scroll="true" style="background-color:#f2f2f2;" ng-switch="hasSeen.seenDash">
+    
+        
+    <div style="background-image:url('img/tutorial1.png');background-size:cover;" ng-style="{height:(fuHeight-48)+'px'}" class="dashcontent-not-seen" ng-switch-when="undefined">
+                <button class="button button-clear button-got-it" ng-click="seenDash()">Got it</button>
+    </div>  
+    
+      
+    <div ng-switch-when="true">
+        <div ng-switch="profileSet">
+            <div ng-switch-when="false" id="profile-status" class="profile-not-set">
+                <div class="profile-alert">
+                        <div>
+                            <span class="complete-profile-alert">You must complete your business profile before using this feature</span>
+                        </div>
+                        <button style="margin-top:40px;" ng-click="goToAccount()" class="button button-positive">Finish profile</button>
+                </div>
+            </div>
+            
+            <div ng-switch-when="true" class="dash-content">
+                    <div ng-if="bizInfo[currentLoc.id].approved==true || bizInfo[currentLoc.id].approved==undefined">
+                        <div class="dash-head">
+                            <h2>{{bizInfo[currentLoc.id].businessName}}</h2>
+                            <span class="dash-small-text">{{today | date : 'fullDate'}}</span>
+                        </div>
+
+                        <div>
+                            <span ng-if="todayDeals.length>0" style="margin-left: 5px;" class="dash-small-text">
+                                Today's Deals
+                            </span>
+                            <i ng-if="todayDeals.length>0" style="color:grey;" class="ion-arrow-down-b dash-small-text"></i>
+
+                            <ion-item class="dash-item-repeat" ng-show="isToday(deal)" ng-repeat="deal in todaysDeals | filter:isToday as todayDeals" style="padding:0px;">
+                                <div class="dash-list">
+                                    <div class="row tablet-dash" style="margin-bottom:10px!important;">
+                                        <div ng-style="{'background-image':'url('+deal.dealFullImage+')'}" class="col col-33 dash-img-background">
+                                            <!--<img class="dash-img" ng-src="{{deal.dealFullImage}}">-->
+                                            <div class="row">
+                                            <span ng-show="isActive(deal)" class="dash-active">Active</span>
+                                            </div>
+                                        </div>
+                                        <div class="col dash-deal-margin">
+                                           <div class="row">
+                                                <span class="dash-deal-name">{{deal.name}}</span>
+                                            </div>
+                                            <div class="row">
+                                                <span class="dash-small-text">{{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                                                </span>
+                                            </div>
+                                            <div class="row">
+                                                <ion-scroll class="scroll-description">
+                                                   <p class="dash-small-description">{{deal.description}}</p>
+                                                </ion-scroll>
+                                            </div>
+                                           
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="button-col button-col-left">
+                                            <button ng-show="deal.boost!=true" ng-click="boostDealDash(deal)" class="button button-block button-positive dash-deal-button">
+                                                Boost
+                                            </button>
+                                            <button style="background-color:rgba(228, 18, 18, 0.69)!important;" ng-show="deal.boost==true" ng-click="boostDealDash(deal)" class="button button-block button-positive dash-deal-button">
+                                                Boosted!
+                                            </button>
+                                        </div>
+
+                                        <div class="button-col button-col-right">
+                                            <button  ng-click="editDealDash(deal)" class="button button-block button-positive dash-deal-button">
+                                                Edit
+                                            </button>
+                                        </div>
+                                      
+<!--                                        ng-show="deal.recurringDealID"-->
+                                        
+<!--
+                                        <div class="button-col button-col-right">
+                                            <button  ng-click="deleteDealDash(deal)" class="button button-block button-positive dash-deal-button">
+                                                Delete
+                                            </button>
+                                        </div>
+-->
+
+                                    </div>
+                                    
+                                      
+                                      <div>
+                                               <p class="dash-small-description">Impressions: {{impressionCount(deal)}}</p>
+                                        </div>
+                                        <div>
+                                               <p class="dash-small-description">Clicks: {{clickSort(deal)}}</p>
+                                        </div>
+                                        <div ng-show='checkIns(deal)!=0'>
+                                               <p class="dash-small-description">Check-In's: {{checkIns(deal)}}</p>
+                                        </div>
+        <!--
+                                    <div class="row">
+                                        <div class="col col-50">
+                                            <button ng-show="deal.boost!=true" ng-click="boostDealDash(deal)" class="button button-block button-positive dash-deal-button">
+                                                Boost
+                                            </button>
+                                            <button style="background-color:rgba(228, 18, 18, 0.69)!important;" ng-show="deal.boost==true" ng-click="boostDealDash(deal)" class="button button-block button-positive dash-deal-button">
+                                                Boosted!
+                                            </button>
+                                        </div>
+
+                                        <div class="col col-50">
+                                            <button ng-show="deal.recurringDealID" ng-click="editDealDash(deal)" class="button button-block button-positive dash-deal-button">
+                                                Edit
+                                            </button>
+                                        </div>
+
+                                    </div>
+        -->
+                                </div>
+
+                            </ion-item>
+                            <div ng-if="todayDeals.length==0">
+                                <div class="no-deals">
+                                    <div>
+                                        <div>
+                                            <i class="ion-fork"></i>
+                                            <i class="ion-knife"></i>
+                                        </div>
+                                        <span class="no-deals-text">No Deals</span>
+                                        <span class="no-deals-text">Today</span>
+                                    </div>
+                                    <button style="margin-top:40px;" ng-click="goToAdd()" class="button button-positive">Add Deal</button>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="bizInfo[currentLoc.id].approved==false">
+                        <div class="no-deals">
+                                <div>
+                                    <div>
+                                        <i class="ion-fork"></i>
+                                        <i class="ion-knife"></i>
+                                    </div>
+                                    <span class="no-deals-text">Waiting on</span>
+                                    <span class="no-deals-text">approval</span>
+                                </div>
+                                <button style="margin-top:60px;" ng-click="waitingOnApproval()" class="button button-positive">Help</button>
+                        </div> 
+                    </div>
+                
+    <!--
+                <div class="" ng-show="displayOptions.dashMain=='analytics'">
+
+                    <div class="item item-divider">
+
+                    </div>
+                    <ion-item ng-click="grabDeal(deal, deal.$id);todaysDealOptions(deal)" ng-show="isToday(deal)" ng-repeat="deal in myDeals" style="padding:0px;">
+                        <div class="list">
+                            <a class="item item-thumbnail-left" href="#">
+                                <img ng-src="{{deal.dealFullImage}}">
+                                <h2>{{deal.name}}</h2>
+                                <span class="item-note" style="float:left;">
+                  {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                            </span>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-50">
+                                Icon Clicks: {{iconClicks}}
+                            </div>
+                            <div class="col-50">
+                                Deal Clicks: {{dealClicks}}
+                            </div>
+                        </div>
+                    </ion-item>
+                </div>
+
+
+                <div class="" ng-show="displayOptions.dashMain=='boost'">
+
+                    Coming Soon
+
+                </div>
+    -->
+                
+            </div>
+            
+        </div>
+      </div>
+  </ion-content>
+</ion-view>

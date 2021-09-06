@@ -1,0 +1,156 @@
+<ion-view>
+    <ion-nav-buttons side="left">
+        <button style="color:white;" class="button-back button-clear" ng-click="goBack()">
+            <i style="font-size: x-large;" class="ion-chevron-left"></i>
+        </button>
+    </ion-nav-buttons>
+    
+    <ion-nav-title>
+        <h4 ng-if="page==1 || page==4" style="color:white;"><center>Add Deal</center></h4>
+        <h4 ng-if="page==2 || page==3" style="color:white;"><center>{{biz.businessName}}</center></h4>
+    </ion-nav-title>     
+    
+    <ion-nav-buttons ng-cloak side="right">
+        <img ng-if="page>1" class="detail-nav-icon" ng-src="{{biz.icon}}"/>
+    </ion-nav-buttons>
+    <div ng-if="page==1" style="height:70px;margin-top:54px;" class="row">
+            <button style="position:absolute;right:68px;" ng-click="addFilterOptions.showFavorite=true" ng-class="{'add-biztab-selected':addFilterOptions.showFavorite==true}" class="button-add-icon button icon ion-ios-heart"></button>
+            <button style="position:absolute;right:125px;" ng-click="addFilterOptions.showFavorite=false" ng-class="{'add-biztab-selected':addFilterOptions.showFavorite==false}" class="button-add-icon button icon ion-grid"></button>
+            <input type="button" style="position:absolute;right:0px;" class="input-icon button-add-icon button icon ion-search" placeholder="Change address" google-autocomplete-suggestion location="data.location" place="establishment" country-code="{{countryCode}}" on-selection="onAddressSelection(location)" ng-model="data.location.name">
+    </div>
+    
+    <ion-content ng-class="{'add-margin':page==1, 'remove-margin':page==2}"> 
+<!--        ng-class="{'add-biz-topmargin-down':data.location.lat, 'add-biz-topmargin-up':!data.location.lat}"-->
+        <div ng-if="page==1">
+            
+            
+            <div style="display:flex;flex-wrap: wrap;">
+               
+<!--                <ion-scroll direction="y" ng-style="{height:fuHeight-90 + 'px'}">   -->
+                    <div style="display:flex;flex-wrap: wrap;">
+                        <div ng-if="addFilterOptions.showFavorite==false" style="width:20%;" ng-repeat="b in busObj | filter:filterBizFav(addFilterOptions.showFavorite) | orderBy:distanceSort" 
+
+                             ng-show="b.businessName!='' && 
+                                      b.businessName!=undefined &&
+                                      b.fakeBusiness!=true &&
+                                      b.icon!=undefined &&
+                                      distanceSort(b)<50 &&
+                                      b.icon!=''">
+                            <div class="list biz-list" ng-click="selectBizFromList(b)">  
+                                <img style="max-width:100%;width:auto;border-radius:10px;height:60px;padding:5px;" ng-src="{{b.icon}}"/>
+                                <div class="" style="text-align:center;">
+                                    <span class="explore-businessname">
+                                        {{b.businessName}}</span>
+                                    <p class="explore-mileaway">{{kmToMile(distAway([b.lat, b.lon])) | number:1}} mi away</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="addFilterOptions.showFavorite==true" style="width:20%;" ng-repeat="b in following | filter:filterBizFav(addFilterOptions.showFavorite) | orderBy:distanceSort" 
+
+                             ng-show="b.businessName!='' && 
+                                      b.businessName!=undefined &&
+                                      b.fakeBusiness!=true &&
+                                      b.icon!=undefined &&
+                                      b.icon!=''">
+                            <div class="list biz-list" ng-click="selectBizFromList(b)">  
+                                <img style="max-width:100%;width:auto;border-radius:10px;height:60px;padding:5px;" ng-src="{{b.icon}}"/>
+                                <div class="" style="text-align:center;">
+                                    <span class="explore-businessname">
+                                        {{b.businessName}}</span>
+                                    <p class="explore-mileaway">{{kmToMile(distAway([b.lat, b.lon])) | number:1}} mi away</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<!--                </ion-scroll>-->
+            </div>
+        </div>
+        
+        
+<!--
+        <div ng-if="page==2">
+            <h3>{{biz.businessName}}</h3>
+            <span>{{biz.address}}</span>
+            <div id="addDealMap" class="add-deal-map"></div>
+            <span style="display:block;">is this correct?</span>
+            <button class="button button-positive" ng-click="page1()">No</button>
+            <button class="button button-positive" ng-click="page3()">Yes</button>
+        </div>
+-->
+        
+        <div ng-if="page==2">
+<!--            <ion-scroll direction="y" ng-style="{height:fuHeight-60 + 'px'}">-->
+            <div class="list">
+                <div class="item item-input item-stacked-label">
+                    <span class="input-label">Days of week</span>
+                    <div style="display: block;text-align: center;margin-left: -16px;margin-top: 7px;">
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.monday=='yes'}" class="button-day" ng-click="selectMonday()">M</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.tuesday=='yes'}" class="button-day" ng-click="selectTuesday()">Tu</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.wednesday=='yes'}" class="button-day" ng-click="selectWednesday()">W</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.thursday=='yes'}" class="button-day" ng-click="selectThursday()">Th</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.friday=='yes'}" class="button-day" ng-click="selectFriday()">F</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.saturday=='yes'}" class="button-day" ng-click="selectSaturday()">S</button>
+                        <button ng-class="{'button-day-positive':newDeal.daysOfWeek.sunday=='yes'}" class="button-day" ng-click="selectSunday()">S</button>
+                    </div>
+                    
+                </div>
+                <div class="item item-input item-stacked-label">
+                    <span class="input-label">Type</span>
+                    <div style="display: block;margin-bottom:7px;margin-top: 7px;">
+                        <button ng-class="{'button-positive':newDeal.foodOrDrink=='food'}" class="button button-small" ng-click="newDeal.foodOrDrink='food'">Food</button>
+                        <button ng-class="{'button-positive':newDeal.foodOrDrink=='drink'}" class="button button-small" ng-click="newDeal.foodOrDrink='drink'">Drink</button> 
+                        <button ng-class="{'button-positive':newDeal.foodOrDrink=='both'}" class="button button-small" ng-click="newDeal.foodOrDrink='both'">Both</button>
+                    </div>
+                </div>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Deal Name</span>
+                    <input ng-model="newDeal.name" type="text" placeholder="Taco Tuesday">
+                </label>
+                <label style="margin:-1px;" class="item item-input item-stacked-label">
+                    <span class="input-label">Description</span>
+<!--                    <input ng-model="newDeal.description" type="text" placeholder="$2 tacos">-->
+                        <textarea ng-model="newDeal.description" placeholder="$2 tacos"></textarea>
+                </label>
+            </div>
+       
+            <div class="row add-time-container">
+                <div class="col">
+                    <strong>Start:</strong>
+                    <input type="time" id="exampleInput" name="input" ng-model="newDeal.startTime" placeholder="HH:mm:ss" required/>
+                </div>
+                <div class="col">
+                    <strong>End:</strong>
+                    <input type="time" id="exampleInput" name="input" ng-model="newDeal.endTime" placeholder="HH:mm:ss" required/>
+                </div>
+            </div>
+                
+            <div ng-if="newDeal.dealFullImage" ng-style="{'background-image':'url('+newDeal.dealFullImage+')'}" class="add-deal-image-container">
+                
+                
+            </div>
+                
+            <div class="list list-inset">
+                <button type="file" ng-click="uploadPictureMessage();" accept="image/*" ngf-max-height="10000" ngf-max-size="3MB" class="icon ion-camera button button-block button-add button-stable">Upload</button>
+                <button ng-if="biz.$id" ng-click="viewDeals()" class="icon button-add ion-beer button button-block button-calm">Current Deals</button>
+                <button ng-click="addDeal()" class="icon button-add ion-plus-circled button button-block button-assertive">Add</button>
+            </div>
+<!--            </ion-scroll>-->
+        </div>
+        
+<!--
+        <div style="text-align:center;" ng-if="page==4"> 
+            <img src='http://matchingtool.basic-check.ch/static/imgs/check-mark.svg' style='height:100px;width:auto;display:block;margin:auto;margin-top:20vh;'/>
+            <span>Success!</span>
+            <div ng-if="addAnotherDeal==false">
+                <button ng-click="addAnotherDealBtn()" class="button-positive">Add another deal</button>
+                <button ng-click="closeAddDeal()" class="button-positive">Close</button>
+            </div>
+            <div ng-if="addAnotherDeal==true">
+                <button ng-click="page2();resetAddAnother();startNewDeal()" class="button-positive">{{biz.businessName}}</button>
+                <button ng-click="page1();resetAddAnother();startNewDeal()" class="button-positive">New</button>
+            </div>
+        </div> 
+-->
+        
+    </ion-content>
+</ion-view>

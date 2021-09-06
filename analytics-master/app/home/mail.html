@@ -1,0 +1,88 @@
+<div ng-if="type=='request'" class="modal-header">
+    <h3 class="modal-title">Request</h3>
+</div>
+<div ng-if="type=='claim'" class="modal-header">
+    <h3 class="modal-title">Claim</h3>
+</div>
+<div ng-if="mailStatus==false" class="modal-body" style="text-align:left;">
+    <form ng-if="type=='claim'">
+        <div class="form-group">
+            <label for="formGroupExampleInput2">Business</label>
+            <input ng-model="mail.place" disabled type="text" class="form-control" id="formGroupExampleInput2" placeholder="Name of bar or restaurant">
+        </div>
+        
+        <div class="form-group">
+            <label for="formGroupExampleInput">Email</label>
+            <input ng-model="mail.email" type="text" class="form-control" id="formGroupExampleInput" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Contact Name</label>
+            <input ng-model="mail.contactName" type="text" class="form-control" id="formGroupExampleInput" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Contact Phone</label>
+            <input ng-model="mail.phone" type="text" class="form-control" id="formGroupExampleInput" placeholder="Phone">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Optional Message</label>
+            <input ng-model="mail.message" type="text" class="form-control" id="formGroupExampleInput" placeholder="Message">
+        </div>
+    </form>
+    <form ng-if="type=='request'">
+        <div class="form-group">
+            <label for="formGroupExampleInput2">Business*</label>
+            <input ng-model="mail.place" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Bar or restaurant">
+        </div>
+        
+        <div class="form-group">
+            <label for="formGroupExampleInput">Address, City, Zip*</label>
+            <input ng-model="mail.address" type="text" class="form-control" id="formGroupExampleInput" placeholder="Address">
+        </div>
+        
+        <div class="form-group">
+            <label for="formGroupExampleInput">Email*</label>
+            <input ng-model="mail.email" type="text" class="form-control" id="formGroupExampleInput" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Contact Name*</label>
+            <input ng-model="mail.contactName" type="text" class="form-control" id="formGroupExampleInput" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Contact Phone*</label>
+            <input ng-model="mail.phone" type="text" class="form-control" id="formGroupExampleInput" placeholder="Phone">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Optional Message</label>
+            <input ng-model="mail.message" type="text" class="form-control" id="formGroupExampleInput" placeholder="Message">
+        </div>
+    </form>
+</div>
+<div style="margin: 150px 0px;text-align: center;" ng-if="mailStatus=='success'">
+    <h2>Thanks!</h2>
+    <span>One of our customer support staff will be in contact with you shortly</span>
+</div>
+
+<div style="margin: 150px 0px;text-align: center;" ng-if="mailStatus=='sending'">
+    <h2>Sending...</h2>
+</div>
+
+<div style="margin: 150px 0px;text-align: center;" ng-if="mailStatus=='fail'">
+    <h2>Oops!</h2>
+    <h4>your message failed, try again or email contact@mealsteals.com</h4>
+</div>
+
+
+<div ng-if="mailStatus==false" class="modal-footer">
+    <button ng-if="type=='request'" class="btn btn-primary" type="button" ng-click="sendRequest(mail.email, mail.message, mail.contactName, mail.phone, mail.place, mail.address)">Send</button>
+    <button ng-if="type=='claim'" class="btn btn-primary" type="button" ng-click="sendClaim(mail.email, mail.message, mail.contactName, mail.phone)">Send</button>
+    <button class="btn btn-warning" type="button" ng-click="cancelMail()">Cancel</button>
+</div>
+
+<div ng-if="mailStatus=='success'" class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="cancelMail()">Close</button>
+</div>
+
+<div ng-if="mailStatus=='fail'" class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="retry()">Retry</button>
+    <button class="btn btn-warning" type="button" ng-click="cancelMail()">Cancel</button>
+</div>

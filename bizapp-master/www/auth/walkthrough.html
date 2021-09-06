@@ -1,0 +1,50 @@
+<ion-modal-view style="background-color:#f7f7f7;">
+<!--
+  <ion-header-bar style="background-color:transparent;">
+    <div ng-switch="walkthroughSlide" class="buttons">
+      <button ng-switch-when="1" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="2" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="3" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="4" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="5" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="6" class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+      <button ng-switch-when="7" class="button button-clear btn-nav-switch" ng-click="closeWalkthroughModal()">Close</button>
+    </div>
+  </ion-header-bar>
+-->
+  <ion-content  class="no-animate" scroll="false" has-bouncing="false" on-swipe-left="next()" on-swipe-right="previous()" ng-switch="walkthroughSlide">
+     <div ng-switch-when="1" class="no-animate" style="background-color:#528cb6;">
+         <div style="background-image:url('img/tutorial1.png');" class="walkthrough">
+            <button class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+         </div>
+     </div>
+      
+     <div ng-switch-when="2" class="no-animate" style="background-color:#ddab7b">
+         <div style="background-image:url('img/tutorial2.png');" class="walkthrough">
+            <button class="button button-clear btn-nav-switch" ng-click="next()">Next</button>
+         </div>
+     </div>
+      
+    <div ng-switch-when="3" class="no-animate" style="background-color:#606060">
+        <div style="background-image:url('img/tutorial3.png');" class="walkthrough">
+            <button class="button button-clear btn-nav-switch" ng-click="next()">Close</button>
+        </div>
+     </div>
+<!--
+      <div ng-switch-when="4">
+         <h4>
+            <center>
+                Upgrade
+            </center>
+        </h4>
+        <span class="tutorial-txt">
+            <center>
+                Increased map marker size and overlay over other businesses markers.
+            </center>
+         </span>
+     </div>  
+       
+-->
+
+  </ion-content>
+</ion-modal-view>

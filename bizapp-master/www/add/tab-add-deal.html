@@ -1,0 +1,191 @@
+
+<ion-view view-title="Add Deal">
+    <ion-nav-bar ng-cloak ng-show="hasSeen.seenAdd!=undefined" class="bar-positive dash-header">
+    
+    </ion-nav-bar>
+    
+    <div ng-if="bizInfo[currentLoc.id].dealsOn==false" class="deals-off-alert">Deals Off</div>
+  
+    <ion-content ng-class="{'no-header':hasSeen.seenAdd==undefined}" ng-switch="hasSeen.seenAdd">
+        <div style="background-image:url('img/tutorial3.png');background-size:cover;" ng-style="{height:(fuHeight-48)+'px'}" class="addcontent-not-seen" ng-switch-when="undefined">                
+                <button class="button button-clear button-got-it" ng-click="seenAdd()">Got it</button>
+        </div>  
+        <div ng-switch-when="true" class="background">
+            <div ng-switch="profileSet">
+                <div ng-switch-when="false" id="profile-status" class="profile-not-set">
+                    <div class="profile-alert">
+                        <div>
+                            <span class="complete-profile-alert">You must complete your business profile before using this feature</span>
+                        </div>
+                        <button style="margin-top:40px;" ng-click="goToAccount()" class="button button-positive">Finish profile</button>
+                    </div>
+                </div>
+                <div ng-switch-when="true" style="padding-bottom:2vh;">
+                    <div class="upload-background" ng-style="{'background-image':'url('+newDeal.dealFullImage+')'}">
+
+                        <div class="tabs-add-deal" style="">
+                            <div class="tab-add-deal">
+                                <input type="radio" id="tab-2" ng-model="newDeal.type" value="recurring" name="tab-group-1">
+                                <label class="pill-tab-left" ng-class="{'tab-active' : newDeal.type=='recurring'}" for="tab-2">Weekly</label>
+
+                                <input type="radio" id="tab-1" ng-model="newDeal.type" value="onetime" name="tab-group-1" checked>
+                                <label class="pill-tab-right" ng-class="{'tab-active' : newDeal.type=='onetime'}" for="tab-1">FlashSteal</label>
+                            </div>
+                        </div>
+                        <div ng-if="newDeal.dealFullImage==backgroundImage" class="row row-upload-background">
+                            <div class="col col-upload">
+                                <div class="col-icon-container-left">
+                                    <i ng-click="uploadPicture();" class="ion-camera"></i>
+                                </div>
+                                <button style="color:white;font-weight:bold;margin-left: 12%!important;margin-top: 10px!important;" ng-click="uploadPicture();" class="button button-clear button-icon-container-left">Upload</button>
+
+                            </div>
+                            <div class="col col-upload">
+                                <div class="col-icon-container-right">
+                                    <i ng-click="loadImageGallery();" class="ion-images"></i>
+                                </div>
+                                <button style="color:white;font-weight:bold;margin-right: 12%!important;margin-top: 10px!important;" ng-click="loadImageGallery();" class="button button-clear button-icon-container-right">Gallery</button>
+                            </div>
+                        </div>
+                        <button ng-if="newDeal.dealFullImage!=backgroundImage" ng-click="newDeal.dealFullImage=backgroundImage" class="button-reset-image button icon ion-close-circled button-clear"></button>
+
+                    </div>
+                    <div>
+                        <span class="style-guide-text">Refer to our</span>
+                        <button class="style-guide-button" ng-click="loadStyleGuide()">style guide</button>
+                    </div>
+                    <div class="row row-days" ng-show="newDeal.type=='recurring'">
+
+
+                        <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.monday" ng-true-value="'yes'" ng-false-value="'no'">Mon</ion-checkbox>
+                        <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.tuesday" ng-true-value="'yes'" ng-false-value="'no'">Tue</ion-checkbox>
+                        <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.wednesday" ng-true-value="'yes'" ng-false-value="'no'">Wed</ion-checkbox>
+                        <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.thursday" ng-true-value="'yes'" ng-false-value="'no'">Thu</ion-checkbox>
+                        <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.friday" ng-true-value="'yes'" ng-false-value="'no'">Fri</ion-checkbox>
+                        <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.saturday" ng-true-value="'yes'" ng-false-value="'no'">Sat</ion-checkbox>
+                        <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.sunday" ng-true-value="'yes'" ng-false-value="'no'">Sun</ion-checkbox>
+                    </div>
+
+
+                    <div class="add-container">
+                        <div class="row row-type" style="margin-top:10px!important;" ng-show="newDeal.type=='onetime'">
+
+                                <strong class="type" style="margin-top:10px;">
+                            Enter Date:
+                                </strong>
+                                <input type="date" id="exampleInput" name="input" ng-model="newDeal.date"
+                                       placeholder="dd-MM-yyyy" />
+
+                        </div>
+
+
+
+                        <strong>Deal Name:</strong><span ng-show="nameFocus" class="character-limit">{{30 - newDeal.name.length}} char available</span>
+                        <input type="text" maxlength="30" ng-focus="nameFocus=true" ng-blur="nameFocus=false" class="form-control input-add-deal" style="padding-left:10px;width:100%;" ng-model="newDeal.name" placeholder="Taco Tuesday"/>
+
+                        <strong>Description:</strong><span ng-show="descriptionFocus" class="character-limit">{{200 - newDeal.description.length}} char available</span>
+                        <textarea type="text" maxlength="200" ng-focus="descriptionFocus=true" ng-blur="descriptionFocus=false" class="form-control input-add-deal" ng-model="newDeal.description" placeholder="Come and enjoy $2 tacos and $2 shots tequila. $3 Dos Equis!" style="height:100px;width:100%;"></textarea>
+
+                        <div class="row row-type">
+                            <strong class="type">Type:</strong>
+
+                            <label>
+                                <input type="radio" ng-model="newDeal.timeType" value="deal" style="margin-bottom:20px;">
+                                    Deal
+                            </label>
+                                &nbsp;&nbsp;
+                            <label>
+                                <input type="radio" ng-model="newDeal.timeType" value="event">
+                                    Event
+                            </label>
+                                &nbsp;&nbsp;
+                        </div>
+                        <div ng-show="newDeal.timeType=='deal'" class="row row-type">
+                            <strong class="type">Offering:</strong>
+
+                            <label>
+                                <input type="radio" ng-model="newDeal.foodOrDrink" value="food" style="margin-bottom:20px;">
+                                    Food
+                            </label>
+                                &nbsp;&nbsp;
+                            <label>
+                                <input type="radio" ng-model="newDeal.foodOrDrink" value="drink">
+                                    Drink
+                            </label>
+                                &nbsp;&nbsp;
+                            <label>
+                                <input type="radio" ng-model="newDeal.foodOrDrink" value="both">
+                                    Both
+                                </label>
+        <!--
+                            <label>
+                                <input type="radio" ng-model="newDeal.foodOrDrink" value="na">
+                                    N/A
+                                </label>
+        -->
+                        </div>
+
+
+                        <div class="row" style="margin-top:20px;padding:0px;">
+                            <div class="" style="margin-right:20px;">
+
+                                <input type="checkbox" ng-model="newDeal.exclusive" ng-true-value="'yes'" ng-false-value="'no'">
+                                Exclusive
+                            </div>
+                            <div class="">
+
+                                <input type="checkbox" ng-model="newDeal.redeemable" ng-true-value="'yes'" ng-false-value="'no'" style="margin-bottom:20px;">
+                                Redeemable
+                            </div>
+                        </div>
+
+
+                </div>
+                        <div class="row add-time">
+                            <div class="col">
+                                <center><timepicker ng-model="newDeal.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+                            </div>
+                            <div class="col">
+                                <center><timepicker ng-model="newDeal.endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+                            </div>
+                        </div>
+                <div class="add-container">
+                        <div class="col" style="margin:0px!important;">
+
+                            <button 
+                                    ng-hide="
+                                             newDeal.dealFullImage==backgroundImage"
+
+                                    style="margin-top:10px!important;" class="button button-block button-assertive" ng-click="addNewDeal()">
+                                Add Deal Now!
+                            </button>
+                            <button 
+                                    ng-show="
+                                             newDeal.dealFullImage==backgroundImage"
+
+                                    style="margin-top:10px!important;margin-top: 10px!important;" class="button button-block button-assertive" ng-click="moreInformationNeeded('Please upload image')">
+                                Add Deal Now!
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+  </ion-content>
+<!--
+    <div class="row row-days">
+                    <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.monday" ng-true-value="'yes'" ng-false-value="'no'">Mon</ion-checkbox>
+                    <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.tuesday" ng-true-value="'yes'" ng-false-value="'no'">Tue</ion-checkbox>
+                    <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.wednesday" ng-true-value="'yes'" ng-false-value="'no'">Wed</ion-checkbox>
+                    <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.thursday" ng-true-value="'yes'" ng-false-value="'no'">Thu</ion-checkbox>
+                    <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.friday" ng-true-value="'yes'" ng-false-value="'no'">Fri</ion-checkbox>
+                    <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.saturday" ng-true-value="'yes'" ng-false-value="'no'">Sat</ion-checkbox>
+                    <ion-checkbox class="daysofweek" ng-model="newDeal.daysOfWeek.sunday" ng-true-value="'yes'" ng-false-value="'no'">Sun</ion-checkbox>
+            
+            
+                </div>
+-->
+</ion-view>
+

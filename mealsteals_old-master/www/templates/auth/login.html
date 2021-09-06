@@ -1,0 +1,51 @@
+<ion-modal-view>
+  
+  <ion-content class="login center padding">
+      
+    
+    <h1>
+      Firebase Auth Pack | Sidemenu
+    </h1>
+    
+    <div class="list">
+      <form ng-submit="doLogin()">
+        <label class="item item-input ">
+          <input type="email" ng-model="loginData.userEmail" placeholder="E-mail">
+        </label>
+        <label class="item item-input ">
+          <input type="password" ng-model="loginData.userPassword" placeholder="Password">
+        </label>
+      </form>
+      <button class="button button-block button-stable" ng-click="doLogin()">Sign in</button>
+        
+      
+
+      
+      <div class="row">
+        <div class="col">
+            <a class="button button-block button-stable button icon icon-center ion-social-facebook center" ng-click="doLoginSocial('facebook')"></a>
+        </div>
+        <div class="col">
+            <a class="button button-block button-stable button icon icon-center ion-social-twitter center" ng-click="doLoginSocial('twitter')"></a>
+        </div>
+        <div class="col">
+            <a class="button button-block button-stable button icon icon-center ion-social-google center" ng-click="doLoginSocial('google')"></a>
+        </div>
+      </div>
+      
+      
+      <div class="row">
+        <div class="col">
+           <button class="button button-block button-clear" ng-click="signUp()">Sign up</button>
+        </div>
+        <div class="col">
+          <button class="button button-block button-clear" ng-click="changePassword('lost')">Forgot password?</button>
+        </div>
+      </div>
+    
+      
+
+    </div>
+
+  </ion-content>
+</ion-modal-view>

@@ -1,0 +1,21 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Users/briankopp/Repos/mealsteals/gulpfile.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/lib/vsGoogleAutocomplete/dist/vs-autocomplete-validator.min.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/lib/vsGoogleAutocomplete/dist/vs-google-autocomplete.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/ios/MealSteals.xcarchive/Products/Applications/MealSteals.app/www/plugins/cordova-plugin-apprate/www/AppRate.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/lib/vsGoogleAutocomplete/dist/vs-google-autocomplete.min.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/plugins/cordova-plugin-apprate/www/AppRate.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/lib/ionic/js/ionic.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/plugins/cordova-plugin-camera/www/Camera.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/plugins/cordova-plugin-camera/www/CameraConstants.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/plugins/cordova-plugin-camera/www/CameraPopoverHandle.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
+        "/Users/briankopp/Repos/mealsteals/www/js/controllers/favorites-controller.js",
+        "/Users/briankopp/Repos/mealsteals/www/js/controllers/deal-detail-controller.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/plugins/cordova-plugin-dialogs/www/notification.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/lib/vsGoogleAutocomplete/dist/vs-autocomplete-validator.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
+        "/Users/briankopp/Repos/mealsteals/platforms/android/assets/www/plugins/cordova-plugin-apprate/www/locales.js"
+    ]
+}

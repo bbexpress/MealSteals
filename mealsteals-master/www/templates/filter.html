@@ -1,0 +1,85 @@
+<!--<ion-content id="filter" scroll="y" scrollbar-y="false" has-bouncing="false" has-header="false" hide-nav-bar="true" has-tabs="false" class="filter-container">-->
+<div class="filter-container">
+    <div class="filter-head">
+<!--
+        <span>Your location</span>
+        <span>{{userCity}}, {{userState| limitTo: 3}}</span>
+-->
+        <span class="filter-span-head">Whatcha in the mood for?</span>
+    </div>
+    <div class="filter-body">
+        <div class="row filter-row">
+<!--            <div class="col filter-pill" ng-class="{pillSelected:filterOptions.categoryTab=='all'}" ng-click="filterOptions.categoryTab='all';clearAndAddMarkers()">All</div>-->
+            <div class="col filter-pill-middle filter-pill" ng-click="toggleFoodFilter()">
+                <img ng-class="{pillSelected:filterOptions.categoryTab=='food'}" src="img/hamburger.png"/>
+                <p>Food only</p>
+            </div>
+            <div class="col filter-pill" ng-click="toggleDrinkFilter()">
+                <img ng-class="{pillSelected:filterOptions.categoryTab=='drinks'}" src="img/beer.png"/>
+                <p>Drinks only</p>
+            </div>
+            <div class="col filter-pill" ng-click="toggleEventFilter()">
+                <img ng-class="{pillSelected:filterOptions.categoryTab=='events'}" src="img/event.png"/>
+                <p>Events only</p>
+            </div>
+            
+            <div class="col filter-pill" ng-click="toggleTopRatedFilter()">
+                <img ng-class="{pillSelected:filterOptions.showTopRated==true}" src="img/top.png"/>
+                <p>Top Rated</p>
+            </div>
+        </div>   
+         <div class="row filter-row">
+         
+            <div class="col filter-pill" ng-click="toggleFlashFilter()">
+                <img ng-class="{pillSelected:filterOptions.showFlash==true}" src="img/flash.png"/>
+                <p>FlashSteals</p>
+            </div>
+            
+            <div class="col filter-pill" ng-click="toggleFavoriteFilter()">
+                <img ng-class="{pillSelected:filterOptions.showFavorite==true}" src="img/heart.png"/>
+                <p>Favorites</p>
+            </div>
+            
+            <div class="col filter-pill" ng-click="togglePatioFilter()">
+                <img ng-class="{pillSelected:filterOptions.showPatio==true}" src="img/summer.png"/>
+                <p>Patio</p>
+            </div>
+             
+            <div class="col filter-pill" ng-click="toggleRooftopFilter()">
+                <img ng-class="{pillSelected:filterOptions.showRooftop==true}" src="img/building.png"/>
+                <p>Rooftop</p>
+            </div>
+            
+        </div>
+        <div class="row filter-row">
+            
+            <div class="col filter-pill" ng-click="toggleUserSub()">
+                <img ng-class="{pillSelected:filterOptions.showAddedType=='user'}" src="img/user-added.png"/>
+                <p>User Submitted</p>
+            </div>
+            
+            <div class="col filter-pill" ng-click="toggleBizVer()">
+                <img ng-class="{pillSelected:filterOptions.showAddedType=='biz'}" src="img/verified-blue.png"/>
+                <p>Business Verified</p>
+            </div>
+             
+            <div class="col filter-pill" ng-click="toggle6Mo()">
+                <img ng-class="{pillSelected:filterOptions.showVerifiedMo==6}" src="img/last6.png"/>
+                <p>Verified last 6 mo.</p>
+            </div>
+            <div class="col filter-pill" ng-click="toggle12Mo()">
+                <img ng-class="{pillSelected:filterOptions.showVerifiedMo==12}" src="img/last12.png"/>
+                <p>Verified last 12 mo.</p>
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <button class="button button-positive button-block button-filter" ng-click="closeFilter();filterCheck();clearAndAddMarkers()">Ok</button>
+        <button  class="button button-light button-block button-filter border" ng-click="filterOptions.categoryTab='all';filterOptions.showFlash=false;filterOptions.showTopRated=false;filterOptions.showFavorite=false;filterOptions.showPatio=false;filterOptions.showRooftop=false;filterOptions.searchVal='';clearAndAddMarkers();closeFilter()">Clear</button>
+    </div>
+</div>
+
+    
+<!--</ion-content>-->
+

@@ -1,0 +1,104 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 ng-if="request.type=='request'" class="title">Request</h1>
+     <h1 ng-if="request.type=='claim'" class="title">Claim</h1>
+    
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeRequestModal()">
+        <i class="icon ion-ios-close-empty"></i>   
+      </button>
+    </div>
+  </ion-header-bar>
+  <ion-content style="background-color:#f1f1f1;padding:10px;">
+      <div ng-switch="request.type"> 
+          <div ng-switch-when="request">
+            <label class="item item-input item-stacked-label item-mail">
+                <span class="input-label">Business Name</span>
+                <input type="text" id="request" ng-model="request.business" />
+            </label>
+
+          <label class="item item-input item-stacked-label item-mail">
+                <span class="input-label">Address/Street</span>
+                <input type="text" id="request" ng-model="request.address" />
+            </label>
+
+          <label class="item item-input item-stacked-label item-mail">
+                <span class="input-label">City</span>
+                <input type="text" id="request" ng-model="request.city" />
+            </label>
+
+
+          <label class="item item-input item-stacked-label item-mail">
+                <span class="input-label">Zip</span>
+                <input type="text" id="request" ng-model="request.zip" />
+            </label>
+
+          <label class="item item-input item-stacked-label item-mail">
+                <span class="input-label">Contact Name</span>
+                <input type="text" id="request" ng-model="request.contactName" />
+            </label>
+
+          <label class="item item-input item-stacked-label item-mail">
+                <span class="input-label">Phone</span>
+                <input type="text" id="request" ng-model="request.contactPhone" />
+            </label>
+          </div>
+          
+          
+          <div ng-switch-when="claim">
+            <label class="item item-input item-stacked-label item-mail">
+                <span class="input-label">Business Name</span>
+                <input disabled type="text" id="request" ng-model="request.business" />
+            </label>
+
+          <label class="item item-input item-stacked-label item-mail">
+                <span class="input-label">Address</span>
+                <input disabled type="text" id="request" ng-model="request.address" />
+            </label>
+
+
+          <label class="item item-input item-stacked-label item-mail">
+                <span class="input-label">Contact Name</span>
+                <input type="text" id="request" ng-model="request.contactName" />
+            </label>
+
+          <label class="item item-input item-stacked-label item-mail">
+                <span class="input-label">Phone</span>
+                <input type="text" id="request" ng-model="request.contactPhone" />
+            </label>
+          </div>
+      </div>
+      <button ng-click="sendRequest(request.type, request.business, request.address, request.city, request.zip, request.contactName, request.contactPhone, request.email)" class="button button-positive button-block">Request</button>
+      
+    
+      
+      
+<!--
+      <div class="list">
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Priority
+            </div>
+            <select ng-model="request.priority">
+              <option selected>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
+          </label>
+          <label style="margin-top:1px;" class="item item-input">
+            <input ng-model="request.email" type="email" placeholder="Email">
+          </label>
+          
+          <label style="margin-top:1px;" class="item item-input">
+            <input ng-model="request.subject" type="text" placeholder="Subject">
+          </label>
+          
+          <label style="margin-top:1px;" class="item item-input">
+            <textarea ng-model="request.message" style="height:250px;" placeholder="Message"></textarea>
+          </label>
+    </div>
+-->
+    
+  </ion-content>
+    
+</ion-modal-view>

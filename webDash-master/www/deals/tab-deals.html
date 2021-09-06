@@ -1,0 +1,180 @@
+<ion-view view-title="Deals">
+    <ion-nav-bar ng-cloak ng-show="hasSeen.seenDeals!=undefined" class="bar-positive deals-header">
+    
+    </ion-nav-bar>
+    
+    <div ng-if="bizInfo[currentLoc.id].dealsOn==false" class="deals-off-alert">Deals Off</div>
+    
+    <ion-content ng-class="{'no-header':hasSeen.seenDeals==undefined}" ng-switch="hasSeen.seenDeals">
+        <div style="background-image:url('img/tutorial2.png');background-size:cover;" ng-style="{height:(fuHeight-48)+'px'}" class="dealscontent-not-seen" ng-switch-when="undefined">
+                <button class="button button-clear button-got-it" ng-click="seenDeals()">Got it</button>
+        </div>
+        
+        <div ng-switch-when="true" style="background-color:white;">
+            <div ng-switch="profileSet">
+                <div ng-switch-when="false" id="profile-status" class="profile-not-set">
+                    <div class="profile-alert">
+                            <div>
+                                <span class="complete-profile-alert">You must complete your business profile before using this feature</span>
+                            </div>
+                            <button style="margin-top:40px;" ng-click="goToAccount()" class="button button-positive">Finish profile</button>
+                    </div>
+                </div>
+                <div ng-switch-when="true">
+                    <div class="deal-background" style="background-image:url('img/deal_back.png');">    
+                        <div class="tabs-add-deal" style="padding:15px;">
+                                <div class="tab-add-deal">
+                                    <input type="radio" id="tab-rec-deal" ng-model="displayOptions.dashMain" value="recurring" name="tab-group-1">
+                                    <label class="pill-tab-left" ng-class="{'tab-active' : displayOptions.dashMain=='recurring'}" for="tab-rec-deal">Weekly</label>
+
+                                    <input type="radio" id="tab-flash-deal" ng-model="displayOptions.dashMain" value="onetime" name="tab-group-1" checked>
+                                    <label class="pill-tab-right" ng-class="{'tab-active' : displayOptions.dashMain=='onetime'}" for="tab-flash-deal">FlashSteals</label>
+                                </div>
+                        </div>
+                    </div>
+                <div ng-show="displayOptions.dashMain=='recurring'">
+
+                    <ion-list ng-if="myRecurringDeals.length>0">
+                        <div class="item item-divider">
+                            Monday
+                        </div>
+                        <ion-item ng-click="dealsTabOptions(deal)" ng-show="isMonday(deal)" ng-repeat="deal in myRecurringDeals">
+                            <span class="item-deal">
+                                {{deal.name}}
+                            </span>
+                            <span class="item-note">
+                                {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                            </span>
+                                        
+                        </ion-item>
+
+                        <div class="item item-divider">
+                            Tuesday
+                        </div>
+                        <ion-item ng-click="dealsTabOptions(deal)" ng-show="isTuesday(deal)"ng-repeat="deal in myRecurringDeals">
+                            <span class="item-deal">
+                                {{deal.name}}
+                            </span>
+                            <span class="item-note">
+                                {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                            </span>
+                        </ion-item>
+
+                        <div class="item item-divider">
+                            Wednesday
+                        </div>
+                        <ion-item ng-click="dealsTabOptions(deal)" ng-show="isWednesday(deal)"ng-repeat="deal in myRecurringDeals">
+                            <span class="item-deal">
+                                {{deal.name}}
+                            </span>
+                            <span class="item-note">
+                                {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                            </span>
+                        </ion-item>
+
+                        <div class="item item-divider">
+                            Thursday
+                        </div>
+                        <ion-item ng-click="dealsTabOptions(deal)" ng-show="isThursday(deal)"ng-repeat="deal in myRecurringDeals">
+                            <span class="item-deal">
+                                {{deal.name}}
+                            </span>
+                            <span class="item-note">
+                                {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                            </span>
+                        </ion-item>
+                        <div class="item item-divider">
+                            Friday
+                        </div>
+                        <ion-item ng-click="dealsTabOptions(deal)" ng-show="isFriday(deal)"ng-repeat="deal in myRecurringDeals">
+                            <span class="item-deal">
+                                {{deal.name}}
+                            </span>
+                            <span class="item-note">
+                                {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                            </span>
+                        </ion-item>
+
+                        <div class="item item-divider">
+                            Saturday
+                        </div>
+                        <ion-item ng-click="dealsTabOptions(deal)" ng-show="isSaturday(deal)"ng-repeat="deal in myRecurringDeals">
+                            <span class="item-deal">
+                                {{deal.name}}
+                            </span>
+                            <span class="item-note">
+                                {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                            </span>
+                        </ion-item>
+
+                        <div class="item item-divider">
+                            Sunday
+                        </div>
+                        <ion-item ng-click="dealsTabOptions(deal)" ng-show="isSunday(deal)"ng-repeat="deal in myRecurringDeals">
+                          <span class="item-deal">
+                                {{deal.name}}
+                            </span>
+                            <span class="item-note">
+                                {{deal.startTime | date : 'shortTime'}} - {{deal.endTime | date : 'shortTime'}}
+                            </span>
+                        </ion-item>
+
+
+
+                    </ion-list>
+                    <div ng-if="myRecurringDeals.length==0">
+                            <div class="no-deals">
+                                <div>
+                                    <div>
+                                        <i class="ion-fork"></i>
+                                        <i class="ion-knife"></i>
+                                    </div>
+                                    <span class="no-deals-text">No Weekly</span>
+                                    <span class="no-deals-text">Deals</span>
+                                </div>
+                                <button style="margin-top:40px;" ng-click="goToAdd()" class="button button-positive">Add Deal</button>
+                            </div> 
+
+
+                    </div>
+
+                </div>
+
+                <div ng-show="displayOptions.dashMain=='onetime'">
+
+                    <ion-list>
+
+                        <ion-item ng-click="editFlashDeal(thisDeal)" ng-show="thisDeal.recurringDealID==undefined" ng-repeat="thisDeal in bizInfo[currentLoc.id].flash | orderBy:thisDeal.date:false">
+                            <span class="item-deal">{{thisDeal.name}}</span>
+                            <span class="item-note">
+                      {{thisDeal.startTime | date : 'shortDate'}} {{thisDeal.startTime | date : 'shortTime'}} - {{thisDeal.endTime | date : 'shortTime'}}
+                                </span>
+                        </ion-item>
+
+                    </ion-list>
+                    <div ng-if="bizInfo[currentLoc.id].flash==undefined">
+                            <div class="no-deals">
+                                <div>
+                                    <div>
+                                        <i class="ion-fork"></i>
+                                        <i class="ion-knife"></i>
+                                    </div>
+                                    <span class="no-deals-text">No Flash</span>
+                                    <span class="no-deals-text">Steals</span>
+                                </div>
+                                <button style="margin-top:40px;" ng-click="goToAdd()" class="button button-positive">Add Deal</button>
+                            </div> 
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+        
+  </ion-content>
+           
+</ion-view>
+

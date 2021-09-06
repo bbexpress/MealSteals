@@ -1,0 +1,179 @@
+<div class="modal-header">
+    <h3 class="modal-title">Edit Deal</h3>
+</div>
+<div class="modal-body">
+    
+
+
+
+
+    <div class="row">
+        <div class="col-md-4">
+            Deal Name:
+            <input type="text" class="form-control" ng-model="dealObj.name" placeholder="Ex. 50 cent Wing Tuesday" />
+        </div>
+        <div class="col-md-8">
+            Description:
+            <input type="text" class="form-control" ng-model="dealObj.description" placeholder="Ex. Boneless and bone-in wings are 50 cents all night, so come in and get your fill." />
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px;">
+        <div class="col-md-4">
+            Type: 
+            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+            <label>
+
+            <input type="radio" ng-model="dealObj.foodOrDrink" value="food">
+                Food
+            </label>
+            &nbsp;&nbsp;
+            <label>
+              <input type="radio" ng-model="dealObj.foodOrDrink" value="drink">
+                Drink
+            </label>
+            &nbsp;&nbsp;
+            <label>
+              <input type="radio" ng-model="dealObj.foodOrDrink" value="both">
+                Both
+            </label>
+        </div>
+        </div>
+
+        <div class="col-md-8">
+            Category:
+            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+            <label>
+            <input type="radio" ng-model="dealObj.timeType" value="happyhour">
+                Happy Hour
+            </label>
+            &nbsp;&nbsp;
+            <label>
+              <input type="radio" ng-model="dealObj.timeType" value="nightlyspecial">
+                Nightly Special
+            </label>
+            &nbsp;&nbsp;
+            <label>
+              <input type="radio" ng-model="dealObj.timeType" value="event">
+                Event
+            </label>
+        </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px;">
+        <div class="col-md-4">
+            Exclusive:
+            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+            <label>
+            <input type="radio" ng-model="dealObj.exclusive" value="yes">
+                Yes
+            </label>
+            &nbsp;&nbsp;
+            <label>
+              <input type="radio" ng-model="dealObj.exclusive" value="no">
+                No
+            </label>
+        </div>
+        </div>
+        <div class="col-md-4">
+            Redeemable:
+            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+            <label>
+            <input type="radio" ng-model="dealObj.redeemable" value="yes">
+                Yes
+            </label>
+            &nbsp;&nbsp;
+            <label>
+              <input type="radio" ng-model="dealObj.redeemable" value="no">
+                No
+            </label>
+        </div>
+        </div>
+        <div class="col-md-4">
+            Deal Image:
+            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+            <img style="width:100%;" ng-src="{{dealObj.dealFullImage}}" />
+            <button type="file" ngf-select="uploadFiles($file, dealObj, 'img', 100);uploadFiles($file, dealObj, 'dealFullImage', 1000)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+                Upload New
+              </button>
+              
+              
+              
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-md-4" ng-show="dealObj.daysOfWeek">
+                Days:
+                <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.monday" ng-true-value="'yes'" ng-false-value="'no'"> Monday</label></div>
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.tuesday" ng-true-value="'yes'" ng-false-value="'no'"> Tuesday</label></div>
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.wednesday" ng-true-value="'yes'" ng-false-value="'no'"> Wednesday</label></div>
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.thursday" ng-true-value="'yes'" ng-false-value="'no'"> Thursday</label></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.friday" ng-true-value="'yes'" ng-false-value="'no'"> Friday</label></div>
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.saturday" ng-true-value="'yes'" ng-false-value="'no'"> Saturday</label></div>
+                            <div><label><input type="checkbox" ng-model="dealObj.daysOfWeek.sunday" ng-true-value="'yes'" ng-false-value="'no'"> Sunday</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                 
+            <div class="row" style="margin-top:15px;margin-bottom:15px;">
+                 <div class="col-md-4" ng-show="dealObj.daysOfWeek == undefined">
+
+                    Enter Date:
+                    <input style="margin-left:10px;" ng-model='dealObj.date' type="date" name="event">
+
+
+                </div>
+            </div>
+            
+            
+            <div class="col-md-4">
+                Start:
+                <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                <center><timepicker ng-model="dealObj.startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+            </div>
+            </div>
+            <div class="col-md-4">
+                End:
+                <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+                <center><timepicker ng-model="dealObj.endTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker></center>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+ <div class="col-md-4" ng-show="userOptions.superadmin=='yes'">
+            Featured:
+            <div style="border:1px solid #e2e2e2;border-radius:5px;padding:5px 3px 3px 10px;">
+            <label>
+            <input type="radio" ng-model="dealObj.featured" value="yes">
+                Yes
+            </label>
+            &nbsp;&nbsp;
+            <label>
+              <input type="radio" ng-model="dealObj.featured" value="no">
+                No
+            </label>
+        </div>
+    </div>
+    
+    <!-- Button to only upload high quality
+    <button type="file" ngf-select="uploadFiles($file, dealObj, 'dealFullImage', 1000)"accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+							  	Upload New
+							  </button> 
+    -->
+
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="save()">Save</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
